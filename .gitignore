@@ -36,4 +36,15 @@ ENV/
 data/
 *.log
 .DS_Store
-config/
+*/.DS_Store
+__pycache__/
+*/.__pycache__/
+*.pyc
+
+# Output files
+data/last_run.json
+data/metadata.json
+data/summary_*.md
+
+# Configuration
+config/settings.py

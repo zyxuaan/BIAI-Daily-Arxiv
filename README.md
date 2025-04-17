@@ -23,6 +23,8 @@ pip install -r requirements.txt
 
 ## 配置
 
+首先将 `config/settings.example.py` 改名为 `config/settings.py`
+
 在 `config/settings.py` 中配置：
 
 - 搜索分类 (CATEGORIES)

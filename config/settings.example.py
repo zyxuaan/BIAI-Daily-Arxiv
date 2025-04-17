@@ -30,7 +30,7 @@ QUERY = ""     # 搜索CATEGORIES中的所有文献
 
 
 # Gemini API配置
-GEMINI_API_KEY = "11111"     # 在这里输入Gemini的api-key
+GEMINI_API_KEY = "YOUR_API_HERE"     # 在这里输入Gemini的api-key
 GEMINI_CONFIG = {
     'model': 'gemini-2.0-flash',           # Gemini 模型选项
     'temperature': 0.3,                    # 温度参数
