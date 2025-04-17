@@ -36,3 +36,4 @@ ENV/
 data/
 *.log
 .DS_Store
+config/
