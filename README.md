@@ -43,6 +43,7 @@ pip install -e .
 - 搜索关键词 (QUERY)
 - AI 模型的 API 密钥 (LLM_CONFIG中的api_key参数)
 - 其他搜索参数 (SEARCH_CONFIG)
+- 输出配置 (OUTPUT_DIR): 设置存放AI summary的文件路径
 
 ## 使用方法
 
@@ -58,14 +59,18 @@ arxivsummary
 - `--output-dir`: 设置输出目录，默认使用配置文件中的 OUTPUT_DIR
 
 使用示例：
-```bash
-arxivsummary --query "nickelate" --max-results 10
-```
+- 搜索关键词`nickelate`，只搜索最新的10篇文献
+    ```bash
+    arxivsummary --query "nickelate" --max-results 10
+    ```
+- 搜索关键词`cuprate`，在凝聚态-超导或者凝聚态-强关联领域搜索，输出在指定的文件夹中
+    ```bash
+    arxivsummary --query "cuprate" --categories cond-mat.supr-con cond-mat.str-el --output-dir "G:\ArxivSummary\cuprate"
+    ```
 
 ## 输出
 
-- 论文元数据保存在 `data/metadata.json`
-- 论文总结保存在 `data/summary.md`
+- 论文总结保存在 `OUTPUT_DIR/summary_yyyyMMdd_hhmmss.md`
 
 
 
