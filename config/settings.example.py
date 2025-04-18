@@ -44,5 +44,4 @@ LLM_CONFIG = {
 
 # 输出配置
 OUTPUT_DIR = "data"
-METADATA_FILE = "metadata.json"
 LAST_RUN_FILE = "last_run.json"  # 存储上次运行的信息

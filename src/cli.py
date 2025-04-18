@@ -1,6 +1,7 @@
 import os
 import sys
 import argparse
+import json
 from datetime import datetime
 from src.arxiv_client import ArxivClient
 from src.paper_summarizer import PaperSummarizer
@@ -35,6 +36,9 @@ def main():
         print("未找到符合条件的论文")
         return
     
+    # 记录最新文章ID用于在摘要成功后保存
+    latest_entry_id = papers[0]['entry_id'] if papers else None
+    
     # 生成摘要
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_file = os.path.join(args.output_dir, f"summary_{timestamp}.md")
@@ -43,9 +47,22 @@ def main():
     os.makedirs(args.output_dir, exist_ok=True)
     
     # 生成摘要并保存
-    paper_summarizer.summarize_papers(papers, output_file)
+    try:
+        success = paper_summarizer.summarize_papers(papers, output_file)
+        if success:
+            print(f"摘要已成功生成并保存到: {output_file}")
+        else:
+            print(f"摘要生成过程中出现错误，结果可能不完整: {output_file}")
+    except Exception as e:
+        print(f"生成摘要时发生错误: {e}")
+        success = False
     
-    print(f"摘要已生成并保存到: {output_file}")
+    # 只有在摘要成功生成后才保存最新文章ID
+    if success and latest_entry_id and last_run_file:
+        arxiv_client.save_last_run_info(latest_entry_id, last_run_file, len(papers))
+        print(f"摘要成功生成，已更新运行记录。下次运行将从最新文章 ID 开始: {latest_entry_id}")
+    else:
+        print("由于摘要生成不完整或失败，未更新运行记录，下次运行将继续尝试获取这些论文。")
 
 if __name__ == '__main__':
     main()

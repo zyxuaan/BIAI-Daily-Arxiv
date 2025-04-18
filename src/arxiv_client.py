@@ -29,7 +29,6 @@ class ArxivClient:
     def _safe_get_categories(self, paper: arxiv.Result) -> List[str]:
         """安全地获取论文分类"""
         try:
-            # print(f"调试 - 分类信息: {paper.categories}, 类型: {type(paper.categories)}")
             if isinstance(paper.categories, (list, tuple, set)):
                 return list(paper.categories)
             elif isinstance(paper.categories, str):
@@ -49,10 +48,26 @@ class ArxivClient:
         except (FileNotFoundError, json.JSONDecodeError):
             return None
 
-    def _save_last_run_info(self, latest_entry_id: str, last_run_file: str):
-        """保存本次运行的最新文章ID"""
-        with open(last_run_file, 'w') as f:
-            json.dump({'latest_entry_id': latest_entry_id, 'timestamp': datetime.now().isoformat()}, f)
+    def save_last_run_info(self, latest_entry_id: str, last_run_file: str, total_results: int = 0):
+        """
+        保存本次运行的最新文章ID
+        
+        Args:
+            latest_entry_id: 最新文章的ID
+            last_run_file: 存储运行信息的文件路径
+            total_results: 本次获取的结果数量
+        """
+        try:
+            os.makedirs(os.path.dirname(last_run_file), exist_ok=True)
+            with open(last_run_file, 'w') as f:
+                json.dump({
+                    'latest_entry_id': latest_entry_id,
+                    'timestamp': datetime.now().isoformat(),
+                    'total_results': total_results
+                }, f, indent=2)
+            print(f"已更新运行记录，最新文章 ID: {latest_entry_id}")
+        except Exception as e:
+            print(f"保存运行记录时出错: {e}")
 
     def _create_search_query(self, query: str = "", 
                            categories: Optional[List[str]] = None,
@@ -106,17 +121,14 @@ class ArxivClient:
         """
         all_results = []
         
-        # 加载上次运行的最新文章ID和时间戳
+        # 加载上次运行的最新文章ID
         last_entry_id = None
         if last_run_file and os.path.exists(last_run_file):
-            try:
-                with open(last_run_file, 'r') as f:
-                    data = json.load(f)
-                    last_entry_id = data.get('latest_entry_id')
-                    print(f"找到上次运行记录，将从文章 ID: {last_entry_id} 开始检索新论文")
-            except (json.JSONDecodeError, FileNotFoundError) as e:
-                print(f"读取上次运行记录时出错: {e}")
-                last_entry_id = None
+            last_entry_id = self._load_last_run_info(last_run_file)
+            if last_entry_id:
+                print(f"找到上次运行记录，将从文章 ID: {last_entry_id} 开始检索新论文")
+            else:
+                print(f"找到上次运行记录文件，但无法获取有效的entry_id")
         
         # 构建查询
         search_query = self._create_search_query(query, categories)
@@ -182,20 +194,6 @@ class ArxivClient:
         # 去除重复的论文并排序
         unique_results = self._remove_duplicates(all_results)
         unique_results.sort(key=lambda x: x['published'], reverse=True)
-        
-        # 保存本次运行的最新文章ID
-        if latest_entry_id and last_run_file:
-            try:
-                os.makedirs(os.path.dirname(last_run_file), exist_ok=True)
-                with open(last_run_file, 'w') as f:
-                    json.dump({
-                        'latest_entry_id': latest_entry_id,
-                        'timestamp': datetime.now().isoformat(),
-                        'total_results': len(unique_results)
-                    }, f, indent=2)
-                print(f"已更新运行记录，最新文章 ID: {latest_entry_id}")
-            except Exception as e:
-                print(f"保存运行记录时出错: {e}")
 
         if not unique_results:
             print("未找到新的论文")
@@ -203,67 +201,3 @@ class ArxivClient:
             print(f"找到 {len(unique_results)} 篇新论文")
 
         return unique_results
-
-    def search_recent(self, query: str, days: int = 7, **kwargs) -> List[Dict[str, Any]]:
-        """
-        搜索最近几天发布的论文
-        
-        Args:
-            query: 搜索关键词
-            days: 最近的天数（默认7天）
-        """
-        end_date = datetime.now()
-        start_date = end_date - timedelta(days=days)
-        return self.search_papers(query, start_date=start_date, end_date=end_date, **kwargs)
-
-    def save_results(self, results: List[Dict[str, Any]], output_dir: str, filename: str):
-        """
-        保存搜索结果到JSON文件
-        """
-        os.makedirs(output_dir, exist_ok=True)
-        output_path = Path(output_dir) / filename
-        
-        with open(output_path, 'w', encoding='utf-8') as f:
-            json.dump(results, f, ensure_ascii=False, indent=2)
-
-    def load_results(self, output_dir: str, filename: str) -> List[Dict[str, Any]]:
-        """
-        从JSON文件加载之前保存的结果
-        """
-        output_path = Path(output_dir) / filename
-        if not output_path.exists():
-            return []
-            
-        with open(output_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
-
-    def filter_results(self, results: List[Dict[str, Any]], 
-                      categories: Optional[List[str]] = None,
-                      keywords: Optional[List[str]] = None) -> List[Dict[str, Any]]:
-        """
-        过滤搜索结果
-        
-        Args:
-            results: 搜索结果列表
-            categories: 要过滤的分类列表
-            keywords: 标题或摘要中必须包含的关键词列表
-        """
-        filtered = results
-        
-        if categories:
-            filtered = [
-                paper for paper in filtered
-                if any(cat in paper['categories'] for cat in categories)
-            ]
-            
-        if keywords:
-            filtered = [
-                paper for paper in filtered
-                if any(
-                    keyword.lower() in paper['title'].lower() 
-                    or keyword.lower() in paper['summary'].lower()
-                    for keyword in keywords
-                )
-            ]
-            
-        return filtered

@@ -111,7 +111,7 @@ class PaperSummarizer:
 标题：{paper['title']}
 作者：{', '.join(paper['authors'])}
 发布日期：{paper['published'][:10]}
-arXiv链接：{paper['pdf_url']}
+arXiv链接：{paper['entry_id']}
 论文摘要：{paper['summary']}
 
 """
@@ -124,16 +124,16 @@ arXiv链接：{paper['pdf_url']}
 输出格式为：
 
 #### [标题](文章链接)
-- 作者: (作者)
-- 研究目的: (研究目的)
-- 主要发现: (主要发现)
+- **作者:** (作者)
+- **研究目的:** (研究目的)
+- **主要发现:** (主要发现)
 
 ---
 
 [标题](文章链接)
-- 作者: (作者)
-- 研究目的: (研究目的)
-- 主要发现: (主要发现)
+- **作者:** (作者)
+- **研究目的:** (研究目的)
+- **主要发现:** (主要发现)
 
 ---
 
@@ -142,9 +142,9 @@ arXiv链接：{paper['pdf_url']}
 ---
 
 [标题](文章链接)
-- 作者: (作者)
-- 研究目的: (研究目的)
-- 主要发现: (主要发现)
+- **作者:** (作者)
+- **研究目的:** (研究目的)
+- **主要发现:** (主要发现)
 
 ---
 
@@ -198,12 +198,28 @@ arXiv链接：{paper['pdf_url']}
         
         return "\n".join(all_summaries)
 
-    def summarize_papers(self, papers: List[Dict[str, Any]], output_file: str):
-        """批量处理所有论文并创建Markdown报告"""
+    def summarize_papers(self, papers: List[Dict[str, Any]], output_file: str) -> bool:
+        """
+        批量处理所有论文并创建Markdown报告
+        
+        Args:
+            papers: 论文列表
+            output_file: 输出文件路径
+            
+        Returns:
+            bool: 摘要生成是否真正成功。如果生成的摘要包含错误信息则返回False
+        """
+        api_success = True  # 标记API调用是否成功
+        
         try:
             # 生成总结内容
             print(f"开始生成论文总结，共 {len(papers)} 篇...")
             summaries = self._generate_batch_summary(papers)
+            
+            # 检查生成的摘要是否包含错误信息
+            if "[生成失败:" in summaries:
+                api_success = False
+                print("警告: 摘要生成过程中出现错误，结果可能不完整")
             
             # 转换为markdown格式
             markdown_content = self._generate_markdown(papers, summaries)
@@ -213,6 +229,8 @@ arXiv链接：{paper['pdf_url']}
             with open(output_md, 'w', encoding='utf-8') as f:
                 f.write(markdown_content)
             print(f"Markdown文件已保存：{output_md}")
+            
+            return api_success
             
         except Exception as e:
             # 如果生成总结失败，保存基本信息为markdown格式
@@ -238,6 +256,8 @@ arXiv链接：{paper['pdf_url']}
             with open(error_md, 'w', encoding='utf-8') as f:
                 f.write(error_content)
             print(f"发生错误，已保存基本信息到：{error_md}")
+            
+            return False  # 发生异常，摘要生成肯定失败
 
     def _generate_markdown(self, papers: List[Dict[str, Any]], summaries: str) -> str:
         """生成markdown格式的报告"""
@@ -264,13 +284,3 @@ arXiv链接：{paper['pdf_url']}
 - 如有错误或遗漏请以原文为准
 """
         return markdown_content
-
-def create_summarizer(api_key: str, model: Optional[str] = None) -> PaperSummarizer:
-    """
-    创建论文总结器实例
-    
-    Args:
-        api_key: API密钥
-        model: 可选的模型名称，默认使用配置中的模型
-    """
-    return PaperSummarizer(api_key, model)
