@@ -1,5 +1,5 @@
 """
-论文总结模块 - 使用 Gemini API 生成论文摘要
+论文总结模块 - 使用大语言模型API生成论文摘要
 """
 import os
 import json
@@ -8,16 +8,16 @@ from pathlib import Path
 import requests
 import time
 from datetime import datetime
-from config.settings import GEMINI_CONFIG
+from config.settings import LLM_CONFIG
 
-class GeminiClient:
-    """使用 OpenAI 风格的 API 格式调用 Gemini"""
+class ModelClient:
+    """语言模型API客户端"""
     
     def __init__(self, api_key: str, model: Optional[str] = None):
         self.api_key = api_key
-        self.model = model or GEMINI_CONFIG['model']
-        self.api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent"
-        self.timeout = GEMINI_CONFIG.get('timeout', 30)  # 默认30秒超时
+        self.model = model or LLM_CONFIG['model']
+        self.api_url = f"{LLM_CONFIG['api_url']}/{self.model}:generateContent"
+        self.timeout = LLM_CONFIG.get('timeout', 30)
         
     def _create_headers(self) -> Dict[str, str]:
         """创建请求头"""
@@ -42,10 +42,10 @@ class GeminiClient:
                 }]
             }],
             "generationConfig": {
-                "temperature": temperature or GEMINI_CONFIG['temperature'],
-                "maxOutputTokens": max_tokens or GEMINI_CONFIG['max_output_tokens'],
-                "topP": GEMINI_CONFIG['top_p'],
-                "topK": GEMINI_CONFIG['top_k']
+                "temperature": temperature or LLM_CONFIG['temperature'],
+                "maxOutputTokens": max_tokens or LLM_CONFIG['max_output_tokens'],
+                "topP": LLM_CONFIG['top_p'],
+                "topK": LLM_CONFIG['top_k']
             }
         }
     
@@ -55,17 +55,17 @@ class GeminiClient:
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None
     ) -> Dict[str, Any]:
-        """创建聊天完成（模拟 OpenAI 的 chat.completions.create）"""
+        """创建聊天完成"""
         headers = self._create_headers()
         data = self._create_request_body(messages, temperature, max_tokens)
         
-        for attempt in range(GEMINI_CONFIG['retry_count']):
+        for attempt in range(LLM_CONFIG['retry_count']):
             try:
                 response = requests.post(
                     f"{self.api_url}?key={self.api_key}",
                     headers=headers,
                     json=data,
-                    timeout=self.timeout  # 添加超时设置
+                    timeout=self.timeout
                 )
                 
                 if response.status_code != 200:
@@ -89,18 +89,18 @@ class GeminiClient:
                 }
             except requests.Timeout:
                 print(f"请求超时（{self.timeout}秒），正在重试...")
-                if attempt == GEMINI_CONFIG['retry_count'] - 1:
-                    raise TimeoutError(f"API调用在{self.timeout}秒内未响应，已重试{GEMINI_CONFIG['retry_count']}次")
-                time.sleep(GEMINI_CONFIG['retry_delay'] * (2 ** attempt))
+                if attempt == LLM_CONFIG['retry_count'] - 1:
+                    raise TimeoutError(f"API调用在{self.timeout}秒内未响应，已重试{LLM_CONFIG['retry_count']}次")
+                time.sleep(LLM_CONFIG['retry_delay'] * (2 ** attempt))
             except Exception as e:
-                if attempt == GEMINI_CONFIG['retry_count'] - 1:
+                if attempt == LLM_CONFIG['retry_count'] - 1:
                     raise
-                time.sleep(GEMINI_CONFIG['retry_delay'] * (2 ** attempt))
+                time.sleep(LLM_CONFIG['retry_delay'] * (2 ** attempt))
 
 class PaperSummarizer:
     def __init__(self, api_key: str, model: Optional[str] = None):
-        self.client = GeminiClient(api_key, model)
-        self.max_papers_per_batch = 25  # 修改为每批处理25篇论文
+        self.client = ModelClient(api_key, model)
+        self.max_papers_per_batch = 25
 
     def _generate_batch_summaries(self, papers: List[Dict[str, Any]], start_index: int) -> str:
         """为一批论文生成总结"""
@@ -259,7 +259,7 @@ arXiv链接：{paper['pdf_url']}
 ---
 
 ## 生成说明
-- 本报告由 Gemini AI 自动生成
+- 本报告由AI模型自动生成
 - 每篇论文的总结包含研究目的和主要发现
 - 如有错误或遗漏请以原文为准
 """
@@ -270,7 +270,7 @@ def create_summarizer(api_key: str, model: Optional[str] = None) -> PaperSummari
     创建论文总结器实例
     
     Args:
-        api_key: Gemini API密钥
+        api_key: API密钥
         model: 可选的模型名称，默认使用配置中的模型
     """
     return PaperSummarizer(api_key, model)

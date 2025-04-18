@@ -10,8 +10,9 @@ from pathlib import Path
 from config.settings import SEARCH_CONFIG, QUERY
 
 class ArxivClient:
-    def __init__(self):
+    def __init__(self, config=None):
         self.client = arxiv.Client()
+        self.config = config or SEARCH_CONFIG
 
     def _remove_duplicates(self, papers: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """去除重复的论文（基于论文ID）"""
@@ -61,11 +62,11 @@ class ArxivClient:
         
         # 添加基本查询
         if query:
-            if SEARCH_CONFIG['title_only']:
+            if self.config['title_only']:
                 search_parts.append(f"ti:{query}")
-            elif SEARCH_CONFIG['abstract_only']:
+            elif self.config['abstract_only']:
                 search_parts.append(f"abs:{query}")
-            elif SEARCH_CONFIG['author_only']:
+            elif self.config['author_only']:
                 search_parts.append(f"au:{query}")
             else:
                 search_parts.append(query)
@@ -77,7 +78,7 @@ class ArxivClient:
                 for cat in categories:
                     if not cat:
                         continue
-                    if SEARCH_CONFIG['include_cross_listed']:
+                    if self.config['include_cross_listed']:
                         cat_parts.append(f"cat:{cat}")
                     else:
                         cat_parts.append(f"primary_cat:{cat}")
@@ -89,7 +90,6 @@ class ArxivClient:
                 print(f"调试 - 构建分类查询出错: {e}")
 
         final_query = " AND ".join(search_parts) if search_parts else "*:*"
-        # print(f"调试 - 最终查询: {final_query}")
         return final_query
 
     def search_papers(self, 
@@ -104,46 +104,53 @@ class ArxivClient:
             query: 搜索关键词
             last_run_file: 存储上次运行信息的文件路径（可选）
         """
-        # 加载上次运行的最新文章ID
+        all_results = []
+        
+        # 加载上次运行的最新文章ID和时间戳
         last_entry_id = None
         if last_run_file and os.path.exists(last_run_file):
             try:
                 with open(last_run_file, 'r') as f:
                     data = json.load(f)
                     last_entry_id = data.get('latest_entry_id')
-            except (json.JSONDecodeError, FileNotFoundError):
-                pass
-
-        all_results = []
+                    print(f"找到上次运行记录，将从文章 ID: {last_entry_id} 开始检索新论文")
+            except (json.JSONDecodeError, FileNotFoundError) as e:
+                print(f"读取上次运行记录时出错: {e}")
+                last_entry_id = None
         
         # 构建查询
         search_query = self._create_search_query(query, categories)
         print(f"使用查询: {search_query}")
         
         # 设置排序标准
-        sort_criterion = getattr(arxiv.SortCriterion, SEARCH_CONFIG['sort_by'])
-        sort_order = getattr(arxiv.SortOrder, SEARCH_CONFIG['sort_order'])
+        sort_criterion = getattr(arxiv.SortCriterion, self.config['sort_by'])
+        sort_order = getattr(arxiv.SortOrder, self.config['sort_order'])
         
         try:
             # 创建搜索参数字典
             search_kwargs = {
                 'query': search_query,
-                'max_results': SEARCH_CONFIG['max_total_results'],
+                'max_results': self.config['max_total_results'],
                 'sort_by': sort_criterion,
                 'sort_order': sort_order
             }
             
             # 只在 id_list 不为 None 时添加到参数中
-            if SEARCH_CONFIG['id_list'] is not None:
-                search_kwargs['id_list'] = SEARCH_CONFIG['id_list']
+            if self.config['id_list'] is not None:
+                search_kwargs['id_list'] = self.config['id_list']
             
             search = arxiv.Search(**search_kwargs)
+            latest_entry_id = None
 
-            # print("调试 - 开始获取结果")
             for paper in self.client.results(search):
                 try:
+                    # 如果是第一篇文章，记录其ID
+                    if not latest_entry_id:
+                        latest_entry_id = paper.entry_id
+
                     # 如果遇到上次处理过的文章，就停止查询
                     if last_entry_id and paper.entry_id == last_entry_id:
+                        print(f"遇到上次处理过的文章（ID: {last_entry_id}），停止检索")
                         break
 
                     metadata = {
@@ -161,14 +168,13 @@ class ArxivClient:
                         'comment': getattr(paper, 'comment', '')
                     }
                     all_results.append(metadata)
-                    # print(f"调试 - 成功处理文章: {metadata['title'][:30]}...")
                     
                 except Exception as e:
-                    print(f"调试 - 处理单篇文章时出错: {e}")
+                    print(f"处理单篇文章时出错: {e}")
                     continue
                 
         except Exception as e:
-            print(f"调试 - 搜索过程出错: {e}")
+            print(f"搜索过程出错: {e}")
             print(f"错误类型: {type(e)}")
             import traceback
             print(f"错误堆栈: {traceback.format_exc()}")
@@ -178,8 +184,23 @@ class ArxivClient:
         unique_results.sort(key=lambda x: x['published'], reverse=True)
         
         # 保存本次运行的最新文章ID
-        if unique_results and last_run_file:
-            self._save_last_run_info(unique_results[0]['entry_id'], last_run_file)
+        if latest_entry_id and last_run_file:
+            try:
+                os.makedirs(os.path.dirname(last_run_file), exist_ok=True)
+                with open(last_run_file, 'w') as f:
+                    json.dump({
+                        'latest_entry_id': latest_entry_id,
+                        'timestamp': datetime.now().isoformat(),
+                        'total_results': len(unique_results)
+                    }, f, indent=2)
+                print(f"已更新运行记录，最新文章 ID: {latest_entry_id}")
+            except Exception as e:
+                print(f"保存运行记录时出错: {e}")
+
+        if not unique_results:
+            print("未找到新的论文")
+        else:
+            print(f"找到 {len(unique_results)} 篇新论文")
 
         return unique_results
 

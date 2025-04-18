@@ -28,18 +28,18 @@ CATEGORIES = [
 # QUERY = "nickelate AND cuprate"   # 搜索包含关键词nickelate和cuprate,并且在CATEGORIES中的所有文献
 QUERY = ""     # 搜索CATEGORIES中的所有文献
 
-
-# Gemini API配置
-GEMINI_API_KEY = "YOUR_API_HERE"     # 在这里输入Gemini的api-key
-GEMINI_CONFIG = {
-    'model': 'gemini-2.0-flash',           # Gemini 模型选项
-    'temperature': 0.3,                    # 温度参数
-    'max_output_tokens': 32648,            # 最大输出长度
-    'top_p': 0.8,                          # Top P 参数
-    'top_k': 40,                           # Top K 参数
-    'retry_count': 3,                      # API调用失败时的重试次数
-    'retry_delay': 2,                      # 重试间隔（秒）
-    'timeout': 30,                         # API请求超时时间（秒）
+# 语言模型API配置
+LLM_CONFIG = {
+    'api_key': "YOUR_API_HERE",                                             # 在这里输入API密钥
+    'model': 'gemini-2.0-flash',                                            # 模型名称
+    'api_url': "https://generativelanguage.googleapis.com/v1beta/models",   # API基础URL
+    'temperature': 0.3,                                                     # 温度参数
+    'max_output_tokens': 32648,                                             # 最大输出长度
+    'top_p': 0.8,                                                           # Top P 参数
+    'top_k': 40,                                                            # Top K 参数
+    'retry_count': 3,                                                       # API调用失败时的重试次数
+    'retry_delay': 2,                                                       # 重试间隔（秒）
+    'timeout': 30,                                                          # API请求超时时间（秒）
 }
 
 # 输出配置

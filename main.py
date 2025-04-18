@@ -8,8 +8,8 @@ from src.arxiv_client import ArxivClient
 from src.paper_summarizer import create_summarizer
 from datetime import datetime
 from config.settings import (
-    SEARCH_CONFIG, OUTPUT_DIR, METADATA_FILE, 
-    LAST_RUN_FILE, GEMINI_API_KEY, GEMINI_CONFIG,
+    OUTPUT_DIR, METADATA_FILE, 
+    LAST_RUN_FILE, LLM_API_KEY, LLM_CONFIG,
     CATEGORIES, QUERY
 )
 
@@ -17,8 +17,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description='ArXiv论文搜索和总结工具')
     parser.add_argument(
         '--model',
-        default=GEMINI_CONFIG['model'],
-        help='使用的Gemini模型名称'
+        default=LLM_CONFIG['model'],
+        help='使用的LLM模型名称'
     )
     return parser.parse_args()
 
@@ -56,7 +56,7 @@ def main():
     
     # 生成论文总结
     print(f"正在使用模型 {args.model} 生成论文总结...")
-    summarizer = create_summarizer(GEMINI_API_KEY, args.model)
+    summarizer = create_summarizer(LLM_API_KEY, args.model)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_path = output_dir / f"summary_{timestamp}.md"
     summarizer.summarize_papers(results, str(output_path))
