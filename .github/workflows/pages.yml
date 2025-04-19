@@ -61,6 +61,14 @@ jobs:
           ls ./data
           mv ./data/*.md ./data/index.md
       
+      # 在 Rename md 步骤后添加
+      - name: Add Jekyll configuration
+        run: |
+          echo "theme: jekyll-theme-cayman" > ./data/_config.yml
+          echo "markdown: kramdown" >> ./data/_config.yml
+          echo "kramdown:" >> ./data/_config.yml
+          echo "  input: GFM" >> ./data/_config.yml
+      
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
