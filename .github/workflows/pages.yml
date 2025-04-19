@@ -1,0 +1,63 @@
+name: pages
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Get pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+          
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install package
+        run: pip install .
+
+      - name: Make Configuartion
+        run: |
+          cp ./config/settings.example.py ./config/settings.py
+          sed -i 's/"YOUR_API_HERE"/os.getenv("ARXIV_API_KEY")/' ./config/settings.py
+      
+      # Cache the built data
+      - name: Cache build
+        uses: actions/cache@v3
+        with:
+          path: ./data/last_run.json
+          key: ${{ runner.os }}-dist-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-dist-
+
+      - name: Build the data
+        env:
+          ARXIV_API_KEY: ${{ secrets.ARXIV_API_KEY }}
+        run: arxivsummary --categories cond-mat.mtrl-sci cond-mat.mes-hall --query "ferroelectric OR microscopy OR polar OR ptychography"
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./data
+          publish_branch: gh-pages
