@@ -58,8 +58,24 @@ jobs:
 
       - name: Rename md
         run: |
-          mv ./data/*.md ./data/_index.md
-          mv ./data/_index.md ./data/index.md
+          # 检查是否有 Markdown 文件
+          if ls ./data/*.md 2>/dev/null > /dev/null; then
+            echo "Found markdown files, updating index.md"
+            
+            # 找到最新的 md 文件（按照修改时间排序）
+            LATEST_MD=$(ls -t ./data/*.md | head -1)
+            echo "Latest markdown file: $LATEST_MD"
+            
+            # 直接重命名为 index.md (覆盖任何现有文件)
+            mv "$LATEST_MD" ./data/index.md
+            
+            echo "Updated index.md successfully"
+          else
+            echo "No markdown files found"
+            # 如果没有找到 md 文件，创建一个简单的索引
+            echo "# ArXiv Summary Daily" > ./data/index.md
+            echo "No summaries available yet." >> ./data/index.md
+          fi
       
       # 在 Rename md 步骤后添加
       - name: Add Jekyll configuration
