@@ -65,9 +65,8 @@ jobs:
       - name: Add Jekyll configuration
         run: |
           echo "theme: jekyll-theme-cayman" > ./data/_config.yml
-          echo "markdown: kramdown" >> ./data/_config.yml
-          echo "kramdown:" >> ./data/_config.yml
-          echo "  input: GFM" >> ./data/_config.yml
+          echo "title: ArXiv Summary Daily" >> ./data/_config.yml
+          rm -f ./data/.nojekyll || true
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -75,3 +74,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./data
           publish_branch: gh-pages
+          jekyll: true
