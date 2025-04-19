@@ -67,7 +67,8 @@ jobs:
             echo "Latest markdown file: $LATEST_MD"
             
             # 直接重命名为 index.md (覆盖任何现有文件)
-            mv "$LATEST_MD" ./data/index.md
+            mv "$LATEST_MD" ./data/_index.md
+            mv ./data/_index.md ./data/index.md
             
             echo "Updated index.md successfully"
           else
