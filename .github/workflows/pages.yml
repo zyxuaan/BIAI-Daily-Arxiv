@@ -39,6 +39,7 @@ jobs:
       - name: Make Configuartion
         run: |
           cp ./config/settings.example.py ./config/settings.py
+          sed -i '1i import os' ./config/settings.py
           sed -i 's/"YOUR_API_HERE"/os.getenv("ARXIV_API_KEY")/' ./config/settings.py
       
       # Cache the built data
