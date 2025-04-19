@@ -56,6 +56,10 @@ jobs:
           ARXIV_API_KEY: ${{ secrets.ARXIV_API_KEY }}
         run: arxivsummary --categories cond-mat.mtrl-sci cond-mat.mes-hall --query "ferroelectric OR microscopy OR polar OR ptychography"
 
+      - name: Rename md
+        run: |
+            mv ./data/*.md ./data/index.md
+      
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
