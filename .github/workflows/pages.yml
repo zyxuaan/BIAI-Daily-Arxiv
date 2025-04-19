@@ -58,8 +58,8 @@ jobs:
 
       - name: Rename md
         run: |
-          ls ./data
-          mv ./data/*.md ./data/index.md
+          mv ./data/*.md ./data/_index.md
+          mv ./data/_index.md ./data/index.md
       
       # 在 Rename md 步骤后添加
       - name: Add Jekyll configuration
