@@ -1,0 +1,93 @@
+name: pages
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Get pip cache dir
+        id: pip-cache
+        run: |
+          echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
+          
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install package
+        run: pip install -e .
+
+      - name: Make Configuartion
+        run: |
+          cp ./config/settings.example.py ./config/settings.py
+          sed -i '1i import os' ./config/settings.py
+          sed -i 's/"YOUR_API_HERE"/os.getenv("ARXIV_API_KEY")/' ./config/settings.py
+      
+      # Cache the built data
+      - name: Cache build
+        uses: actions/cache@v4
+        with:
+          path: ./data
+          key: ${{ runner.os }}-dist-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-dist-
+
+      - name: Build the data
+        env:
+          ARXIV_API_KEY: ${{ secrets.ARXIV_API_KEY }}
+        run: arxivsummary --categories cond-mat.mtrl-sci cond-mat.mes-hall --query "ferroelectric OR microscopy OR polar OR ptychography"
+
+      - name: Rename md
+        run: |
+          # 检查是否有 Markdown 文件
+          if ls ./data/*.md 2>/dev/null > /dev/null; then
+            echo "Found markdown files, updating index.md"
+            
+            # 找到最新的 md 文件（按照修改时间排序）
+            LATEST_MD=$(ls -t ./data/*.md | head -1)
+            echo "Latest markdown file: $LATEST_MD"
+            
+            # 直接重命名为 index.md (覆盖任何现有文件)
+            mv "$LATEST_MD" ./data/_index.md
+            mv ./data/_index.md ./data/index.md
+            
+            echo "Updated index.md successfully"
+          else
+            echo "No markdown files found"
+            # 如果没有找到 md 文件，创建一个简单的索引
+            echo "# ArXiv Summary Daily" > ./data/index.md
+            echo "No summaries available yet." >> ./data/index.md
+          fi
+      
+      # 在 Rename md 步骤后添加
+      - name: Add Jekyll configuration
+        run: |
+          cp ./.github/_config.yml ./data/_config.yml
+          rm -f ./data/.nojekyll || true
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./data
+          publish_branch: gh-pages
+          enable_jekyll: true
