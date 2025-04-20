@@ -105,47 +105,61 @@ def create_archive_page(data_dir, sorted_files=None):
     return True
 
 def setup_site_structure(data_dir, github_dir):
-    """设置整个网站结构，包括Jekyll配置、导航和布局文件"""
-    # 创建必要的目录
-    includes_dir = os.path.join(data_dir, "_includes")
-    layouts_dir = os.path.join(data_dir, "_layouts")
-    os.makedirs(includes_dir, exist_ok=True)
-    os.makedirs(layouts_dir, exist_ok=True)
-    
+    """设置Jekyll部署环境，直接部署index.md，不使用导航栏"""
     # 1. 复制配置文件
-    # 复制_config.yml文件
     config_src = os.path.join(github_dir, "_config.yml")
     config_dest = os.path.join(data_dir, "_config.yml")
     shutil.copy2(config_src, config_dest)
     
-    # 复制mathjax包含文件 - 保留为HTML因为它包含特定的MathJax配置
+    # 2. 创建简单的Gemfile以支持GitHub Pages
+    gemfile_path = os.path.join(data_dir, "Gemfile")
+    with open(gemfile_path, 'w', encoding='utf-8') as f:
+        f.write('source "https://rubygems.org"\n')
+        f.write('gem "github-pages", group: :jekyll_plugins\n')
+        f.write('gem "jekyll-theme-cayman"\n')
+    
+    # 3. 确保index.md有正确的前置元数据
+    index_path = os.path.join(data_dir, "index.md")
+    if os.path.exists(index_path):
+        with open(index_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # 如果没有front matter，添加一个
+        if not content.startswith('---'):
+            with open(index_path, 'w', encoding='utf-8') as f:
+                f.write('---\n')
+                f.write('layout: default\n')
+                f.write('title: ArXiv Summary Daily\n')
+                f.write('---\n\n')
+                f.write(content)
+    
+    # 4. 清理不再需要的文件和目录
+    includes_dir = os.path.join(data_dir, "_includes")
+    layouts_dir = os.path.join(data_dir, "_layouts")
+    
+    # 删除导航文件和自定义布局
+    nav_html = os.path.join(includes_dir, "navigation.html")
+    nav_md = os.path.join(includes_dir, "navigation.md")
+    default_html = os.path.join(layouts_dir, "default.html")
+    default_md = os.path.join(layouts_dir, "default.md")
+    
+    for file_path in [nav_html, nav_md, default_html, default_md]:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+    
+    # 保留mathjax.html（如果需要）
     mathjax_src = os.path.join(github_dir, "_includes", "mathjax.html")
-    mathjax_dest = os.path.join(includes_dir, "mathjax.html")
     if os.path.exists(mathjax_src):
+        os.makedirs(includes_dir, exist_ok=True)
+        mathjax_dest = os.path.join(includes_dir, "mathjax.html")
         shutil.copy2(mathjax_src, mathjax_dest)
-    
-    # 2. 创建导航部分
-    nav_path = os.path.join(includes_dir, "navigation.md")
-    with open(nav_path, 'w', encoding='utf-8') as f:
-        f.write('## 导航\n\n')
-        f.write('[主页](index.md) | [历史归档](archive.md)\n\n')
-        f.write('---\n\n')
-    
-    # 3. 创建default布局
-    default_layout_path = os.path.join(layouts_dir, "default.md")
-    with open(default_layout_path, 'w', encoding='utf-8') as f:
-        f.write('---\n')
-        f.write('layout: default\n')
-        f.write('---\n\n')
-        f.write('{% include navigation.md %}\n\n')
-        f.write('{{ content }}\n')
     
     # 删除可能存在的.nojekyll文件，因为我们希望使用Jekyll
     nojekyll_path = os.path.join(data_dir, ".nojekyll")
     if os.path.exists(nojekyll_path):
         os.remove(nojekyll_path)
     
-    print("网站结构设置完成 - 使用Markdown文件")
+    print("Jekyll部署配置完成 - 直接部署index.md文件")
     return True
 
 def main():
