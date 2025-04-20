@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # Runs at 12:00 PM Beijing Time (UTC+8) from Monday to Friday
+    - cron: '0 4 * * 1-5'
 
 jobs:
   build:
@@ -40,7 +43,7 @@ jobs:
         run: |
           cp ./config/settings.example.py ./config/settings.py
           sed -i '1i import os' ./config/settings.py
-          sed -i 's/"YOUR_API_HERE"/os.getenv("ARXIV_API_KEY")/' ./config/settings.py
+          sed -i 's/"YOUR_API_HERE"/os.getenv("LLM_API_KEY")/' ./config/settings.py
       
       # Cache the built data
       - name: Cache build
@@ -53,8 +56,8 @@ jobs:
 
       - name: Build the data
         env:
-          ARXIV_API_KEY: ${{ secrets.ARXIV_API_KEY }}
-        run: arxivsummary --categories cond-mat.mtrl-sci cond-mat.mes-hall --query "ferroelectric OR microscopy OR polar OR ptychography"
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+        run: arxivsummary
 
       - name: Rename md
         run: |
