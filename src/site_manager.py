@@ -14,9 +14,8 @@ class SiteManager:
     
     # 默认前置元数据模板
     DEFAULT_FRONT_MATTER = """---
-layout: default
+include: mathjax
 title: {title}
-mathjax: true
 ---
 
 """
