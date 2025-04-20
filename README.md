@@ -44,7 +44,7 @@
 
 **设置步骤:**
 
-1.  **Fork 本仓库 (如果需要)**: 如果你想在自己的 GitHub 账号下运行，请先 Fork 这个仓库。
+1.  **Fork 本仓库**: 如果你想在自己的 GitHub 账号下运行，请先 Fork 这个仓库。
 2.  **配置 Secrets**:
     *   在你的 GitHub 仓库页面，进入 `Settings` -> `Secrets and variables` -> `Actions`。
     *   点击 `New repository secret`。
@@ -52,13 +52,7 @@
 3.  **(可选) 修改配置**:
     *   如果你想更改搜索的分类或关键词，请直接修改仓库中的 `config/settings.example.py` 文件并提交。工作流将使用最新提交的配置。
     *   *注意：* 不要在 `settings.example.py` 中直接写入 API 密钥，应始终使用 GitHub Secrets。
-4.  **启用 GitHub Pages**:
-    *   在你的 GitHub 仓库页面，新建一个branch名为`gh-pages`。
-    *   进入 `Settings` -> `Pages`，在 `Build and deployment` 下：
-        *   选择 `Source` 为 `Deploy from a branch`。
-        *   选择 `Branch` 为 `gh-pages`，文件夹保持 `/ (root)`。
-    *   点击 `Save`。
-5.  **查看结果**: 工作流运行成功后，生成的论文摘要网站将发布在你的 GitHub Pages 地址 (通常是 `https://<your-username>.github.io/<repository-name>/`)。
+4.  **查看结果**: 工作流运行成功后，生成的论文摘要网站将发布在你的 GitHub Pages 地址 (通常是 `https://<your-username>.github.io/<repository-name>/`)。
 
 ## 使用方法 2: 本地运行
 
@@ -107,5 +101,4 @@ arxivsummary
 ## 输出 (本地运行)
 
 - 论文总结保存在 `OUTPUT_DIR/summary_yyyyMMdd_hhmmss.md`
-
 

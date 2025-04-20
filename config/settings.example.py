@@ -39,7 +39,7 @@ LLM_CONFIG = {
     'top_k': 40,                                                            # Top K 参数
     'retry_count': 3,                                                       # API调用失败时的重试次数
     'retry_delay': 2,                                                       # 重试间隔（秒）
-    'timeout': 30,                                                          # API请求超时时间（秒）
+    'timeout': 300,                                                          # API请求超时时间（秒）
 }
 
 # 输出配置
