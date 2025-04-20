@@ -138,7 +138,7 @@ def setup_site_structure(data_dir, github_dir):
     default_layout_path = os.path.join(layouts_dir, "default.html")
     with open(default_layout_path, 'w', encoding='utf-8') as f:
         f.write('---\n')
-        f.write('layout: {{ site.remote_theme }}\n')
+        f.write('layout: default\n')  # 修正这里，使用固定的default布局，而不是变量
         f.write('---\n')
         f.write('{% include navigation.html %}\n')
         f.write('{{ content }}\n')
@@ -148,7 +148,11 @@ def setup_site_structure(data_dir, github_dir):
     with open(gemfile_path, 'w', encoding='utf-8') as f:
         f.write('source "https://rubygems.org"\n')
         f.write('gem "github-pages", group: :jekyll_plugins\n')
-        f.write('gem "jekyll-remote-theme"\n')
+        # 根据配置文件决定是否需要remote_theme插件
+        with open(config_dest, 'r', encoding='utf-8') as config_file:
+            config_content = config_file.read()
+            if 'remote_theme:' in config_content:
+                f.write('gem "jekyll-remote-theme"\n')
     
     # 删除可能存在的.nojekyll文件
     nojekyll_path = os.path.join(data_dir, ".nojekyll")
