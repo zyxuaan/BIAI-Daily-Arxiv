@@ -91,7 +91,7 @@ def create_archive_page(data_dir, sorted_files=None):
         f.write("# ArXiv 摘要归档\n\n")
         f.write("以下是所有可用的ArXiv摘要文件，按日期排序（最新在前）：\n\n")
         
-        f.write("<ul>\n")
+        # 使用纯Markdown列表格式，去除HTML标记
         for file_path in sorted_files:
             filename = os.path.basename(file_path)
             # 从文件名中提取日期部分 (格式: summary_YYYYMMDD_HHMMSS.md)
@@ -99,8 +99,7 @@ def create_archive_page(data_dir, sorted_files=None):
             if match:
                 year, month, day = match.groups()
                 formatted_date = f"{year}-{month}-{day}"
-                f.write(f'<li><a href="{filename}">{formatted_date} 摘要</a></li>\n')
-        f.write("</ul>\n")
+                f.write(f'- [{formatted_date} 摘要]({filename})\n')
     
     print("归档页面创建成功")
     return True
@@ -125,14 +124,13 @@ def setup_site_structure(data_dir, github_dir):
     if os.path.exists(mathjax_src):
         shutil.copy2(mathjax_src, mathjax_dest)
     
-    # 2. 创建导航栏HTML
+    # 2. 创建导航栏 - 使用纯Markdown替代HTML
     nav_path = os.path.join(includes_dir, "navigation.html")
     with open(nav_path, 'w', encoding='utf-8') as f:
-        f.write('<!-- 创建网站导航栏 -->\n')
-        f.write('<div class="navigation" style="margin-bottom: 20px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">\n')
-        f.write('  <a href="index.html" style="margin-right: 15px; text-decoration: none; color: #0366d6;">主页</a>\n')
-        f.write('  <a href="archive.html" style="text-decoration: none; color: #0366d6;">历史归档</a>\n')
-        f.write('</div>\n')
+        f.write('<!-- 创建网站导航栏 (使用Markdown) -->\n')
+        f.write('## 导航\n\n')
+        f.write('[主页](index.html) | [历史归档](archive.html)\n\n')
+        f.write('---\n\n')
     
     # 3. 创建default布局
     default_layout_path = os.path.join(layouts_dir, "default.html")
@@ -142,17 +140,6 @@ def setup_site_structure(data_dir, github_dir):
         f.write('---\n')
         f.write('{% include navigation.html %}\n')
         f.write('{{ content }}\n')
-    
-    # 4. 创建Gemfile
-    gemfile_path = os.path.join(data_dir, "Gemfile")
-    with open(gemfile_path, 'w', encoding='utf-8') as f:
-        f.write('source "https://rubygems.org"\n')
-        f.write('gem "github-pages", group: :jekyll_plugins\n')
-        # 根据配置文件决定是否需要remote_theme插件
-        with open(config_dest, 'r', encoding='utf-8') as config_file:
-            config_content = config_file.read()
-            if 'remote_theme:' in config_content:
-                f.write('gem "jekyll-remote-theme"\n')
     
     # 删除可能存在的.nojekyll文件
     nojekyll_path = os.path.join(data_dir, ".nojekyll")
