@@ -41,7 +41,7 @@ jobs:
       - name: Install package
         run: pip install -e .
 
-      - name: Make Configuartion
+      - name: Make Configuration
         run: |
           cp ./config/settings.example.py ./config/settings.py
           sed -i '1i import os' ./config/settings.py
@@ -60,53 +60,10 @@ jobs:
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
         run: arxivsummary
-
-      - name: Rename md
-        run: |
-          # 检查是否有 Markdown 文件
-          if ls ./data/*.md 2>/dev/null > /dev/null; then
-            echo "Found markdown files, updating index.md"
-            
-            # 找到最新的 md 文件（按照修改时间排序）
-            LATEST_MD=$(ls -t ./data/*.md | head -1)
-            echo "Latest markdown file: $LATEST_MD"
-            
-            # 直接重命名为 index.md (覆盖任何现有文件)
-            mv "$LATEST_MD" ./data/_index.md
-            mv ./data/_index.md ./data/index.md
-            
-            echo "Updated index.md successfully"
-          else
-            echo "No markdown files found"
-            # 如果没有找到 md 文件，创建一个简单的索引
-            echo "# ArXiv Summary Daily" > ./data/index.md
-            echo "No summaries available yet." >> ./data/index.md
-          fi
       
-      # 在 Rename md 步骤后添加
-      - name: Add Jekyll configuration and MathJax support
-        run: |
-          cp ./.github/_config.yml ./data/_config.yml
-          rm -f ./data/.nojekyll || true
-          
-          # Create includes directory and MathJax config
-          mkdir -p ./data/_includes
-          cat <<'EOF' > ./data/_includes/head_custom.html
-          <script>
-          MathJax = {
-            tex: {
-              inlineMath: [['$', '$'], ['\\(', '\\)']],
-              displayMath: [['$$', '$$'], ['\\[', '\\]']],
-              processEscapes: true,
-              processEnvironments: true
-            },
-            options: {
-              skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-            }
-          };
-          </script>
-          <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
-          EOF
+      # Use site_manager to magane the site
+      - name: Generate site
+        run: arxivsite --data-dir ./data --github-dir ./.github --days 30
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
