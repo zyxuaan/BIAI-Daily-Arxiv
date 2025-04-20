@@ -61,7 +61,7 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
         run: arxivsummary
       
-      # Use site_manager to magane the site
+      # Use site_manager to manage the site
       - name: Generate site
         run: arxivsite --data-dir ./data --github-dir ./.github --days 30
       
