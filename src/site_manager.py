@@ -61,8 +61,31 @@ def copy_latest_to_index(data_dir, sorted_files=None):
         print(f"找到最新文件: {latest_file}")
         print(f"更新index.md...")
         
-        # 复制最新文件到index.md
-        shutil.copy2(latest_file, index_path)
+        # 读取最新文件内容
+        with open(latest_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # 读取内容中的标题部分
+        title_match = re.search(r'^# (.*?)$', content, re.MULTILINE)
+        title = title_match.group(1) if title_match else "ArXiv Summary Daily"
+        
+        # 创建新的index.md文件，添加front matter和归档链接
+        with open(index_path, 'w', encoding='utf-8') as f:
+            f.write("---\n")
+            f.write("layout: default\n")
+            f.write(f"title: {title}\n")
+            f.write("---\n\n")
+            f.write("[查看所有摘要归档](archive.md) | 更新日期: " + datetime.now().strftime('%Y-%m-%d') + "\n\n")
+            
+            # 如果内容包含标题，保留内容但跳过原有的front matter（如果有）
+            if content.startswith('---'):
+                # 跳过原有的front matter
+                parts = content.split('---', 2)
+                if len(parts) >= 3:
+                    content = parts[2].strip()
+            
+            f.write(content)
+        
         print("index.md更新成功")
     else:
         # 如果没有找到文件，创建一个简单的index.md
@@ -70,6 +93,11 @@ def copy_latest_to_index(data_dir, sorted_files=None):
         print("未找到摘要文件，创建空的index.md")
         
         with open(index_path, 'w', encoding='utf-8') as f:
+            f.write("---\n")
+            f.write("layout: default\n")
+            f.write("title: ArXiv Summary Daily\n")
+            f.write("---\n\n")
+            f.write("[查看所有摘要归档](archive.md)\n\n")
             f.write("# ArXiv Summary Daily\n\n")
             f.write("No summaries available yet.\n")
     
@@ -88,10 +116,11 @@ def create_archive_page(data_dir, sorted_files=None):
         f.write("layout: default\n")
         f.write("title: ArXiv Summary 归档\n")
         f.write("---\n\n")
+        f.write("[返回首页](index.md)\n\n")
         f.write("# ArXiv 摘要归档\n\n")
         f.write("以下是所有可用的ArXiv摘要文件，按日期排序（最新在前）：\n\n")
         
-        # 使用纯Markdown列表格式，去除HTML标记
+        # 使用纯Markdown列表格式，确保链接格式正确
         for file_path in sorted_files:
             filename = os.path.basename(file_path)
             # 从文件名中提取日期部分 (格式: summary_YYYYMMDD_HHMMSS.md)
@@ -99,10 +128,32 @@ def create_archive_page(data_dir, sorted_files=None):
             if match:
                 year, month, day = match.groups()
                 formatted_date = f"{year}-{month}-{day}"
+                
+                # 确保每个摘要文件都有front matter
+                ensure_file_has_front_matter(file_path, f"{formatted_date} ArXiv 摘要")
+                
+                # 使用相对路径，确保Jekyll能正确解析
                 f.write(f'- [{formatted_date} 摘要]({filename})\n')
     
     print("归档页面创建成功")
     return True
+
+def ensure_file_has_front_matter(file_path, title):
+    """确保文件有Jekyll前置元数据，没有则添加"""
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # 如果已经有front matter，不做修改
+    if content.startswith('---'):
+        return
+    
+    # 添加front matter
+    with open(file_path, 'w', encoding='utf-8') as f:
+        f.write("---\n")
+        f.write("layout: default\n")
+        f.write(f"title: {title}\n")
+        f.write("---\n\n")
+        f.write(content)
 
 def setup_site_structure(data_dir, github_dir):
     """设置Jekyll部署环境，直接部署index.md，不使用导航栏"""
