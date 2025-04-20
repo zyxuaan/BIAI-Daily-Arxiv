@@ -16,9 +16,7 @@
 
 ## 配置
 
-首先将 `config/settings.example.py` 改名为 `config/settings.py`
-
-在 `config/settings.py` 中配置：
+在 `config/settings.example.py` 中配置：
 
 - 搜索分类 (CATEGORIES)
 - 搜索关键词 (QUERY)
@@ -75,6 +73,10 @@ pip install -e .
 ```
 
 安装完成后，`arxivsummary` 命令将被添加到系统路径中，可以在任何目录下直接使用。
+
+### 配置
+
+参考前面的配置方法，这里需要将 `config/settings.example.py` 改名为 `config/settings.py`，以便在其中存储你的api密钥等敏感信息。
 
 ### 使用
 运行主程序：
