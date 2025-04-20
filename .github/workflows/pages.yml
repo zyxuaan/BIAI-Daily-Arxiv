@@ -84,10 +84,31 @@ jobs:
           fi
       
       # 在 Rename md 步骤后添加
-      - name: Add Jekyll configuration
+      - name: Add Jekyll configuration and MathJax support
         run: |
           cp ./.github/_config.yml ./data/_config.yml
           rm -f ./data/.nojekyll || true
+          
+          # Create includes directory and MathJax config
+          mkdir -p ./data/_includes
+          cat <<EOF > ./data/_includes/head_custom.html
+          <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+          </script>
+          <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+              tex2jax: {
+                inlineMath: [['$','$'], ['\\\\(','\\\\)']],
+                displayMath: [['$$','$$'], ['\\\\[','\\\\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                TeX: { equationNumbers: { autoNumber: "AMS" },
+                       extensions: ["AMSmath.js", "AMSsymbols.js"] }
+              }
+            });
+          </script>
+          EOF
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
