@@ -47,14 +47,17 @@
     *   在你的 GitHub 仓库页面，进入 `Settings` -> `Secrets and variables` -> `Actions`。
     *   点击 `New repository secret`。
     *   创建一个名为 `LLM_API_KEY` 的 Secret，其值为你的 AI 模型 API 密钥。工作流将自动读取这个 Secret。
-3.  **配置 Github Pages**:
+3.  **(可选) 修改配置**:
+    *   如果你想更改搜索的分类或关键词，请直接修改仓库中的 `config/settings.example.py` 文件并提交。工作流将使用最新提交的配置。
+    *   *注意：* 不要在 `settings.example.py` 中直接写入 API 密钥，应始终使用 GitHub Secrets。
+4.  **运行Github Actions**:
+    *   首次运行时，请在你的 GitHub 仓库页面，进入 `Actions` -> `pages`。
+    *   点击`Run workflow`，将在Actions中开启工作流，并自动创建仓库的`gh-pages`分支，自动将输出的markdown文件加入其中
+4.  **配置 Github Pages**:
     *   在你的 GitHub 仓库页面，进入 `Settings` -> `Pages`。
     *   部署源 (`Source`) 设置为 `Deploy from a branch`
     *   选择分支 (`Branch`) 为 `gh-pages`，
     *   文件夹 (`folder`) 为 `/(root)`。
-4.  **(可选) 修改配置**:
-    *   如果你想更改搜索的分类或关键词，请直接修改仓库中的 `config/settings.example.py` 文件并提交。工作流将使用最新提交的配置。
-    *   *注意：* 不要在 `settings.example.py` 中直接写入 API 密钥，应始终使用 GitHub Secrets。
 5.  **查看结果**: 工作流运行成功后，生成的论文摘要网站将发布在你的 GitHub Pages 地址 (通常是 `https://<your-username>.github.io/ArxivSummaryDaily/`)。
 
 ## 使用方法 2: 本地运行
