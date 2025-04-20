@@ -14,7 +14,7 @@ class SiteManager:
     
     # 默认前置元数据模板
     DEFAULT_FRONT_MATTER = """---
-include: mathjax
+layout: default
 title: {title}
 ---
 
@@ -243,12 +243,12 @@ title: {title}
                     f.write(self.DEFAULT_FRONT_MATTER.format(title=title) + main_content)
         
         # 4. 复制mathjax配置（如果需要）
-        includes_dir = self.data_dir / "_includes"
-        mathjax_src = self.github_dir / "_includes" / "mathjax.html"
+        layouts_dir = self.data_dir / "_layouts"
+        mathjax_src = self.github_dir / "_layouts" / "default.html"
         
         if mathjax_src.exists():
-            includes_dir.mkdir(exist_ok=True)
-            mathjax_dest = includes_dir / "mathjax.html"
+            layouts_dir.mkdir(exist_ok=True)
+            mathjax_dest = layouts_dir / "default.html"
             shutil.copy2(mathjax_src, mathjax_dest)
         
         # 5. 删除可能存在的.nojekyll文件，因为我们希望使用Jekyll
