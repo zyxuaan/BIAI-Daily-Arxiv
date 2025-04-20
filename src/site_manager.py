@@ -118,35 +118,34 @@ def setup_site_structure(data_dir, github_dir):
     config_dest = os.path.join(data_dir, "_config.yml")
     shutil.copy2(config_src, config_dest)
     
-    # 复制mathjax.html文件
+    # 复制mathjax包含文件 - 保留为HTML因为它包含特定的MathJax配置
     mathjax_src = os.path.join(github_dir, "_includes", "mathjax.html")
     mathjax_dest = os.path.join(includes_dir, "mathjax.html")
     if os.path.exists(mathjax_src):
         shutil.copy2(mathjax_src, mathjax_dest)
     
-    # 2. 创建导航栏 - 使用纯Markdown替代HTML
-    nav_path = os.path.join(includes_dir, "navigation.html")
+    # 2. 创建导航部分
+    nav_path = os.path.join(includes_dir, "navigation.md")
     with open(nav_path, 'w', encoding='utf-8') as f:
-        f.write('<!-- 创建网站导航栏 (使用Markdown) -->\n')
         f.write('## 导航\n\n')
-        f.write('[主页](index.html) | [历史归档](archive.html)\n\n')
+        f.write('[主页](index.md) | [历史归档](archive.md)\n\n')
         f.write('---\n\n')
     
     # 3. 创建default布局
-    default_layout_path = os.path.join(layouts_dir, "default.html")
+    default_layout_path = os.path.join(layouts_dir, "default.md")
     with open(default_layout_path, 'w', encoding='utf-8') as f:
         f.write('---\n')
-        f.write('layout: default\n')  # 修正这里，使用固定的default布局，而不是变量
-        f.write('---\n')
-        f.write('{% include navigation.html %}\n')
+        f.write('layout: default\n')
+        f.write('---\n\n')
+        f.write('{% include navigation.md %}\n\n')
         f.write('{{ content }}\n')
     
-    # 删除可能存在的.nojekyll文件
+    # 删除可能存在的.nojekyll文件，因为我们希望使用Jekyll
     nojekyll_path = os.path.join(data_dir, ".nojekyll")
     if os.path.exists(nojekyll_path):
         os.remove(nojekyll_path)
     
-    print("网站结构设置完成")
+    print("网站结构设置完成 - 使用Markdown文件")
     return True
 
 def main():
