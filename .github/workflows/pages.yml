@@ -1,16 +1,13 @@
 name: pages
 on:
-  push:
-    branches:
-      - main
   schedule:
     # Runs at 12:00 PM Beijing Time (UTC+8) from Monday to Friday
     - cron: '0 4 * * 1-5'
+  # Or you can trigger it manually
+  workflow_dispatch:
 
 jobs:
   build:
-    permissions:
-      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

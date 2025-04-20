@@ -32,7 +32,7 @@
 
 1.  **触发:**
     *   每周一至周五北京时间中午 12:00 自动运行。
-    *   每次向 `main` 分支推送代码时自动运行。
+    *   或者也可以在Github Actions界面中手动触发。
 2.  **执行:**
     *   自动拉取最新代码。
     *   根据 `config/settings.example.py` 中的 `CATEGORIES` 和 `QUERY` 设置（或 Actions 文件中硬编码的参数，如果存在）搜索 arXiv 论文。
