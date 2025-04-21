@@ -8,6 +8,7 @@ from pathlib import Path
 import requests
 import time
 from datetime import datetime
+import pytz
 from config.settings import LLM_CONFIG
 
 class ModelClient:
@@ -234,9 +235,10 @@ arXiv链接：{paper['pdf_url']}
             
         except Exception as e:
             # 如果生成总结失败，保存基本信息为markdown格式
+            beijing_time = datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d %H:%M:%S')
             error_content = f"""# Arxiv论文总结报告
 
-生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+生成时间：{beijing_time}
 
 **生成总结时发生错误，以下是论文基本信息：**
 
@@ -261,12 +263,12 @@ arXiv链接：{paper['pdf_url']}
 
     def _generate_markdown(self, papers: List[Dict[str, Any]], summaries: str) -> str:
         """生成markdown格式的报告"""
-        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        beijing_time = datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d %H:%M:%S')
         
         markdown_content = f"""# Arxiv论文总结报告
 
 ## 基本信息
-- 生成时间：{current_time}
+- 生成时间：{beijing_time}
 - 使用模型：{self.client.model}
 - 论文数量：{len(papers)} 篇
 
