@@ -20,7 +20,8 @@ SEARCH_CONFIG = {
 CATEGORIES = [
     "cond-mat.supr-con",  # 超导物理
     "cond-mat.str-el",    # 强关联电子系统
-    "cond-mat.mtrl-sci"   # 材料科学
+    "cond-mat.mtrl-sci",   # 材料科学
+    "cond-mat.mes-hall",  # 量子霍尔效应
 ]
 
 # 搜索查询配置，用OR或用AND连接关键词，或者没有关键词也可以留空
