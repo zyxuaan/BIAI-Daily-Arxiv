@@ -251,7 +251,19 @@ title: {title}
             mathjax_dest = layouts_dir / "default.html"
             shutil.copy2(mathjax_src, mathjax_dest)
         
-        # 5. 删除可能存在的.nojekyll文件，因为我们希望使用Jekyll
+        # 5. 复制logo图片
+        img_dir = self.data_dir / "img"
+        img_dir.mkdir(exist_ok=True)
+        
+        logo_src = self.github_dir / "img" / "paper.png"
+        if logo_src.exists():
+            logo_dest = img_dir / "paper.png"
+            print(f"复制网站logo: {logo_src} -> {logo_dest}")
+            shutil.copy2(logo_src, logo_dest)
+        else:
+            print(f"警告：未找到logo文件 {logo_src}")
+        
+        # 6. 删除可能存在的.nojekyll文件，因为我们希望使用Jekyll
         nojekyll_path = self.data_dir / ".nojekyll"
         if nojekyll_path.exists():
             nojekyll_path.unlink()
