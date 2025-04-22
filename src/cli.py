@@ -3,8 +3,8 @@ import sys
 import argparse
 import json
 from datetime import datetime
-from src.arxiv_client import ArxivClient
-from src.paper_summarizer import PaperSummarizer
+from .arxiv_client import ArxivClient
+from .paper_summarizer import PaperSummarizer
 from config.settings import SEARCH_CONFIG, CATEGORIES, QUERY, LLM_CONFIG, OUTPUT_DIR, LAST_RUN_FILE
 
 def main():

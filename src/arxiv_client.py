@@ -14,18 +14,6 @@ class ArxivClient:
         self.client = arxiv.Client()
         self.config = config or SEARCH_CONFIG
 
-    def _remove_duplicates(self, papers: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """去除重复的论文（基于论文ID）"""
-        seen_ids = set()
-        unique_papers = []
-        
-        for paper in papers:
-            if paper['entry_id'] not in seen_ids:
-                seen_ids.add(paper['entry_id'])
-                unique_papers.append(paper)
-                
-        return unique_papers
-
     def _safe_get_categories(self, paper: arxiv.Result) -> List[str]:
         """安全地获取论文分类"""
         try:
@@ -191,13 +179,9 @@ class ArxivClient:
             import traceback
             print(f"错误堆栈: {traceback.format_exc()}")
 
-        # 去除重复的论文并排序
-        unique_results = self._remove_duplicates(all_results)
-        unique_results.sort(key=lambda x: x['published'], reverse=True)
-
-        if not unique_results:
+        if not all_results:
             print("未找到新的论文")
         else:
-            print(f"找到 {len(unique_results)} 篇新论文")
+            print(f"找到 {len(all_results)} 篇新论文")
 
-        return unique_results
+        return all_results
