@@ -49,3 +49,4 @@ data/summary_*.md
 
 # Configuration
 config/settings.py
+.ruby-version

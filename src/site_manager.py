@@ -7,7 +7,16 @@ import argparse
 from datetime import datetime
 import re
 from pathlib import Path
+import os
+import subprocess
 
+def _escape_markdown_chars(text):
+    """Escapes '|' and '_' characters in markdown text unless already escaped."""
+    # Escape '|' that is not already escaped
+    text = re.sub(r'(?<!\\)\|', r'\\|', text) # Use r'(?<!\\)\|' to match '|' not preceded by '\'
+    # Escape '_' that is not already escaped
+    text = re.sub(r'(?<!\\)\_', r'\\_', text) # Use r'(?<!\\)_' to match '_' not preceded by '\'
+    return text
 
 class SiteManager:
     """ArXiv摘要网站管理器，处理文件清理、索引和归档页面生成"""
@@ -271,7 +280,6 @@ title: {title}
         print("Jekyll部署配置完成 - 直接部署index.md文件")
         return True
 
-
 def main():
     """主函数，处理命令行参数并执行站点管理任务"""
     parser = argparse.ArgumentParser(description="ArXiv Summary网站管理工具")
@@ -291,13 +299,24 @@ def main():
     # 获取排序后的文件列表（只需获取一次）
     sorted_files = site.get_sorted_summary_files()
     
+    # 针对所有的sorted_files, 进行转义
+    for file_path in sorted_files:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # 转义markdown字符
+        escaped_content = _escape_markdown_chars(content)
+        
+        # 写回文件
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(escaped_content)
+    
     # 执行各项任务
     site.copy_latest_to_index(sorted_files)
     site.create_archive_page(sorted_files)
     site.setup_site_structure()
     
     print("所有任务完成！")
-
 
 if __name__ == "__main__":
     main()
