@@ -10,14 +10,6 @@ from pathlib import Path
 import os
 import subprocess
 
-def _escape_markdown_chars(text):
-    """Escapes '|' and '_' characters in markdown text unless already escaped."""
-    # Escape '|' that is not already escaped
-    text = re.sub(r'(?<!\\)\|', r'\\|', text) # Use r'(?<!\\)\|' to match '|' not preceded by '\'
-    # Escape '_' that is not already escaped
-    text = re.sub(r'(?<!\\)\_', r'\\_', text) # Use r'(?<!\\)_' to match '_' not preceded by '\'
-    return text
-
 class SiteManager:
     """ArXiv摘要网站管理器，处理文件清理、索引和归档页面生成"""
     
@@ -39,6 +31,14 @@ title: {title}
         self.data_dir = Path(data_dir)
         self.github_dir = Path(github_dir) if github_dir else None
         self.data_dir.mkdir(exist_ok=True)  # 确保数据目录存在
+    
+    def _escape_markdown_chars(self, text):
+        """Escapes '|' and '_' characters in markdown text unless already escaped."""
+        # Escape '|' that is not already escaped
+        text = re.sub(r'(?<!\\)\|', r'\\|', text) # Use r'(?<!\\)\|' to match '|' not preceded by '\'
+        # Escape '_' that is not already escaped
+        text = re.sub(r'(?<!\\)\_', r'\\_', text) # Use r'(?<!\\)_' to match '_' not preceded by '\'
+        return text
     
     def clean_old_files(self, days=30):
         """清理超过指定天数的markdown文件
@@ -129,6 +129,16 @@ title: {title}
         
         if sorted_files:
             latest_file = sorted_files[0]
+            with open(latest_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+        
+            # 转义markdown字符
+            escaped_content = self._escape_markdown_chars(content)
+            
+            # 写回文件
+            with open(latest_file, 'w', encoding='utf-8') as f:
+                f.write(escaped_content)
+            
             print(f"找到最新文件: {latest_file}")
             print(f"更新index.md...")
             
@@ -251,16 +261,23 @@ title: {title}
                 with open(index_path, 'w', encoding='utf-8') as f:
                     f.write(self.DEFAULT_FRONT_MATTER.format(title=title) + main_content)
         
-        # 4. 复制mathjax配置（如果需要）
+        # 4. 复制layout配置
         layouts_dir = self.data_dir / "_layouts"
         mathjax_src = self.github_dir / "_layouts" / "default.html"
-        
         if mathjax_src.exists():
             layouts_dir.mkdir(exist_ok=True)
             mathjax_dest = layouts_dir / "default.html"
             shutil.copy2(mathjax_src, mathjax_dest)
         
-        # 5. 复制logo图片
+        # 5. 复制 mathjax.html 文件
+        includes_dir = self.data_dir / "_includes"
+        includes_src = self.github_dir / "_includes" / "mathjax.html"
+        if includes_src.exists():
+            includes_dir.mkdir(exist_ok=True)
+            includes_dest = includes_dir / "mathjax.html"
+            shutil.copy2(includes_src, includes_dest)
+        
+        # 6. 复制logo图片
         img_dir = self.data_dir / "img"
         img_dir.mkdir(exist_ok=True)
         
@@ -272,7 +289,7 @@ title: {title}
         else:
             print(f"警告：未找到logo文件 {logo_src}")
         
-        # 6. 删除可能存在的.nojekyll文件，因为我们希望使用Jekyll
+        # 7. 删除可能存在的.nojekyll文件，因为我们希望使用Jekyll
         nojekyll_path = self.data_dir / ".nojekyll"
         if nojekyll_path.exists():
             nojekyll_path.unlink()
@@ -298,18 +315,6 @@ def main():
     
     # 获取排序后的文件列表（只需获取一次）
     sorted_files = site.get_sorted_summary_files()
-    
-    # 针对所有的sorted_files, 进行转义
-    for file_path in sorted_files:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        # 转义markdown字符
-        escaped_content = _escape_markdown_chars(content)
-        
-        # 写回文件
-        with open(file_path, 'w', encoding='utf-8') as f:
-            f.write(escaped_content)
     
     # 执行各项任务
     site.copy_latest_to_index(sorted_files)
