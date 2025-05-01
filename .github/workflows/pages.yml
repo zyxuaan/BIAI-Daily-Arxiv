@@ -52,7 +52,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./data
-          key: ${{ runner.os }}-dist-${{ github.sha }}
+          key: ${{ runner.os }}-dist-${{ github.run_id }}
           restore-keys: |
             ${{ runner.os }}-dist-
 
