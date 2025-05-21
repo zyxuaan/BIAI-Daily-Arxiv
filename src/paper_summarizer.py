@@ -150,8 +150,19 @@ arXiv链接：{paper['entry_id']}
 
 ---
 
-
 请注意，以上是对每篇论文的总结格式示例。请确保输出格式与示例一致。
+
+以下是一个示例：
+
+---
+
+### [Lattice models with subsystem/weak non-invertible symmetry-protected topological order](http://arxiv.org/abs/2505.11419v1)
+- **作者:** Yuki Furukawa
+- **研究目的:** 构建具有子系统非可逆对称性保护拓扑 (SPT) 序的格点模型，并研究其界面模式以及弱SPT相。
+- **主要发现:** 构建了一系列具有子系统非可逆SPT序的格点模型，并展示了由平移对称性和非可逆对称性组合区分的弱SPT相之间的界面存在奇异的Lieb-Schultz-Mattis反常。
+
+---
+
 请根据以下论文信息生成总结：
 {batch_prompt}"""
 
