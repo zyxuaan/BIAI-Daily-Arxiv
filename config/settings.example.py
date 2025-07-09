@@ -17,31 +17,31 @@ SEARCH_CONFIG = {
 }
 
 # 固定搜索查询 - 领域
+# 针对脑启发AI (Brain Inspired AI) 领域优化的分类
 CATEGORIES = [
-    "cond-mat.supr-con",  # 超导物理
-    "cond-mat.str-el",    # 强关联电子系统
-    "cond-mat.mtrl-sci",   # 材料科学
-    "cond-mat.mes-hall",  # 量子霍尔效应
+    "cs.NE",    # 神经与演化计算 (核心)
+    "cs.AI",    # 人工智能 (高层概念)
+    "cs.LG",    # 机器学习 (算法验证)
+    "q-bio.NC"  # 神经元与认知 (生物学基础)
 ]
 
 # 搜索查询配置，用OR或用AND连接关键词，或者没有关键词也可以留空
-# QUERY = "nickelate OR cuprate"   # 搜索包含关键词nickelate或cuprate,并且在CATEGORIES中的所有文献
-# QUERY = "nickelate AND cuprate"   # 搜索包含关键词nickelate和cuprate,并且在CATEGORIES中的所有文献
-QUERY = ""     # 搜索CATEGORIES中的所有文献
+# 最终确定的关键词组合
+QUERY = '"Biologically Plausible" OR "Spiking Neural Network" OR SNN OR "Neuromorphic Computing" OR "Brain Inspired" OR "Event Camera"'
 
 # 语言模型API配置
 LLM_CONFIG = {
     'api_key': "YOUR_API_HERE",                                             # 在这里输入API密钥
     'model': 'gemini-2.5-flash',                                            # 模型名称
-    # 'model': 'gemini-2.0-flash',
+    # 'model': 'gemini-1.0-pro',
     'api_url': "https://generativelanguage.googleapis.com/v1beta/models",   # API基础URL
     'temperature': 0.5,                                                     # 温度参数
-    'max_output_tokens': 32648,                                             # 最大输出长度
+    'max_output_tokens': 8192,                                              # 最大输出长度
     'top_p': 0.8,                                                           # Top P 参数
     'top_k': 40,                                                            # Top K 参数
     'retry_count': 3,                                                       # API调用失败时的重试次数
     'retry_delay': 2,                                                       # 重试间隔（秒）
-    'timeout': 300,                                                          # API请求超时时间（秒）
+    'timeout': 300,                                                         # API请求超时时间（秒）
 }
 
 # 输出配置
