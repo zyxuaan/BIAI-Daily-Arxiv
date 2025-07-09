@@ -101,15 +101,15 @@ class PaperSummarizer:
 
     def _fix_markdown_links(self, text: str) -> str:
         """使用正则表达式修复未正确格式化的Markdown链接"""
-        # 正则表达式查找 '### Title (http...)' 或 '### Title(http...)' 格式
-        # 它会捕获标题文本和括号内的URL
-        pattern = re.compile(r'^(###\s*)(.*?)\s*\((https?://[^\s)]+)\)$', re.MULTILINE)
+        # 正则表达式查找 '### 1. Title (http...)' 或 '### 1. Title(http...)' 格式
+        # 它会捕获序号、标题文本和括号内的URL
+        pattern = re.compile(r'^(###\s*\d+\.\s*)(.*?)\s*\((https?://[^\s)]+)\)$', re.MULTILINE)
         
-        # 替换函数，将捕获的组重新格式化为 '[Title](URL)'
+        # 替换函数，将捕获的组重新格式化为 '### 1. [Title](URL)'
         def replacer(match):
-            prefix = match.group(1)
-            title = match.group(2).strip()
-            url = match.group(3)
+            prefix = match.group(1)  # '### 1. '
+            title = match.group(2).strip()  # 标题
+            url = match.group(3)  # URL
             return f'{prefix}[{title}]({url})'
             
         return pattern.sub(replacer, text)
@@ -140,8 +140,8 @@ class PaperSummarizer:
 **📅 发布日期**: 论文发布日期(YYYY-MM-DD格式)
 
 * **👥 作者**: 作者名
-* **🎯 研究目的**: 一句话总结研究的核心目标。
-* **⭐ 主要发现**: 一句话总结最重要的发现或贡献。
+* **🎯 研究目的**: 详细描述研究的背景、动机和核心目标，包括解决的问题和研究意义。
+* **⭐ 主要发现**: 详细阐述论文的核心贡献、创新点、实验结果和理论突破，以及对领域的潜在影响。
 
 ---
 
@@ -150,7 +150,7 @@ class PaperSummarizer:
 2.  **链接格式**: 论文标题必须作为可点击的Markdown链接，格式为 `[标题](链接)`。
 3.  **日期注释**: 在标题下方，必须插入HTML注释 `<!-- YYYY-MM-DD -->` 来标记发布日期，格式严格为YYYY-MM-DD。
 4.  **可见日期**: 在HTML注释后，必须添加可见的日期行：`**📅 发布日期**: YYYY-MM-DD`。
-5.  **内容**: "研究目的"和"主要发现"必须是简洁的一句话总结。
+5.  **内容丰富**: "研究目的"应包含研究背景、动机和目标；"主要发现"应详细描述核心贡献、创新点和实验结果。
 6.  **分隔符**: 每篇论文总结之后，必须使用 `---` 作为分隔符。
 7.  **语言**: 所有输出内容必须为中文。
 8.  **数学公式**: 你可以自由使用LaTeX语法（例如 `$E=mc^2$`）来表示数学公式。
@@ -165,7 +165,7 @@ class PaperSummarizer:
             return self._fix_markdown_links(content)
         except Exception as e:
             error_msg = f"[摘要生成失败: {str(e)}]"
-            return "\n".join([f"### {start_index + i}. {p['title']}\n<!-- {p['published'][:10]} -->\n**📅 发布日期**: {p['published'][:10]}\n\n* **👥 作者**: {', '.join(p['authors'])}\n* **🎯 研究目的**: {error_msg}\n* **⭐ 主要发现**: {error_msg}\n\n---" for i, p in enumerate(papers)])
+            return "\n".join([f"### {start_index + i}. {p['title']}\n<!-- {p['published'][:10]} -->\n**📅 发布日期**: {p['published'][:10]}\n\n* **👥 作者**: {', '.join(p['authors'])}\n* **🎯 研究目的**: 由于API调用失败，无法生成详细的研究目的摘要。{error_msg}\n* **⭐ 主要发现**: 由于API调用失败，无法生成详细的主要发现摘要。{error_msg}\n\n---" for i, p in enumerate(papers)])
 
     def _process_batch(self, papers: List[Dict[str, Any]], start_index: int) -> str:
         """处理一批论文"""
