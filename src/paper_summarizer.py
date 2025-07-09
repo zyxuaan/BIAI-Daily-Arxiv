@@ -2,6 +2,7 @@
 论文总结模块 - 使用大语言模型API生成论文摘要
 """
 import os
+import re
 import json
 from typing import List, Dict, Any, Optional
 from pathlib import Path
@@ -18,7 +19,7 @@ class ModelClient:
         self.api_key = api_key
         self.model = model or LLM_CONFIG['model']
         self.api_url = f"{LLM_CONFIG['api_url']}/{self.model}:generateContent"
-        self.timeout = LLM_CONFIG.get('timeout', 30)
+        self.timeout = LLM_CONFIG.get('timeout', 60) # 增加超时时间
         
     def _create_headers(self) -> Dict[str, str]:
         """创建请求头"""
@@ -33,15 +34,10 @@ class ModelClient:
         max_tokens: Optional[int] = None
     ) -> Dict[str, Any]:
         """创建请求体"""
-        # 将最后一条消息作为提示词
         prompt = messages[-1]["content"]
         
         return {
-            "contents": [{
-                "parts": [{
-                    "text": prompt
-                }]
-            }],
+            "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {
                 "temperature": temperature or LLM_CONFIG['temperature'],
                 "maxOutputTokens": max_tokens or LLM_CONFIG['max_output_tokens'],
@@ -69,11 +65,14 @@ class ModelClient:
                     timeout=self.timeout
                 )
                 
-                if response.status_code != 200:
-                    raise Exception(f"API 调用失败: {response.text}")
+                response.raise_for_status() # 如果状态码不是2xx，则抛出异常
                     
                 result = response.json()
                 
+                # 检查返回内容是否有效
+                if not result.get("candidates") or not result["candidates"][0].get("content"):
+                    raise ValueError("API返回了无效的响应内容")
+
                 return {
                     "choices": [{
                         "message": {
@@ -82,18 +81,15 @@ class ModelClient:
                         },
                         "finish_reason": "stop"
                     }],
-                    "usage": {
-                        "prompt_tokens": 0,
-                        "completion_tokens": 0,
-                        "total_tokens": 0
-                    }
+                    "usage": result.get("usageMetadata", {})
                 }
             except requests.Timeout:
-                print(f"请求超时（{self.timeout}秒），正在重试...")
+                print(f"请求超时({self.timeout}秒), 正在重试({attempt + 1}/{LLM_CONFIG['retry_count']})...")
                 if attempt == LLM_CONFIG['retry_count'] - 1:
-                    raise TimeoutError(f"API调用在{self.timeout}秒内未响应，已重试{LLM_CONFIG['retry_count']}次")
+                    raise
                 time.sleep(LLM_CONFIG['retry_delay'] * (2 ** attempt))
             except Exception as e:
+                print(f"API调用失败: {e}, 正在重试({attempt + 1}/{LLM_CONFIG['retry_count']})...")
                 if attempt == LLM_CONFIG['retry_count'] - 1:
                     raise
                 time.sleep(LLM_CONFIG['retry_delay'] * (2 ** attempt))
@@ -101,102 +97,76 @@ class ModelClient:
 class PaperSummarizer:
     def __init__(self, api_key: str, model: Optional[str] = None):
         self.client = ModelClient(api_key, model)
-        self.max_papers_per_batch = 25
+        self.max_papers_per_batch = 20 # 适当减少批处理数量，防止Prompt过长
+
+    def _fix_markdown_links(self, text: str) -> str:
+        """使用正则表达式修复未正确格式化的Markdown链接"""
+        # 正则表达式查找 '### Title (http...)' 或 '### Title(http...)' 格式
+        # 它会捕获标题文本和括号内的URL
+        pattern = re.compile(r'^(###\s*)(.*?)\s*\((https?://[^\s)]+)\)$', re.MULTILINE)
+        
+        # 替换函数，将捕获的组重新格式化为 '[Title](URL)'
+        def replacer(match):
+            prefix = match.group(1)
+            title = match.group(2).strip()
+            url = match.group(3)
+            return f'{prefix}[{title}]({url})'
+            
+        return pattern.sub(replacer, text)
 
     def _generate_batch_summaries(self, papers: List[Dict[str, Any]], start_index: int) -> str:
         """为一批论文生成总结"""
         batch_prompt = ""
         for i, paper in enumerate(papers, start=start_index):
+            # 确保摘要只取一部分，避免prompt过长
+            summary_snippet = (paper['summary'][:800] + '...') if len(paper['summary']) > 800 else paper['summary']
             batch_prompt += f"""
-论文 {i}：
-标题：{paper['title']}
-作者：{', '.join(paper['authors'])}
-发布日期：{paper['published'][:10]}
-arXiv链接：{paper['entry_id']}
-论文摘要：{paper['summary']}
-
+---
+论文 {i}:
+- 标题: {paper['title']}
+- 作者: {', '.join(paper['authors'])}
+- 发布日期: {paper['published'][:10]}
+- arXiv链接: {paper['entry_id']}
+- 摘要: {summary_snippet}
 """
         
-        # 修改了final_prompt，要求模型输出发布日期
-        final_prompt = f"""请为以下{len(papers)}篇论文分别生成markdown语言格式的总结。对每篇论文：
-1. 用一句话说明研究目的
-2. 用一句话说明主要发现
-请用中文回答，保持原有格式，对每篇论文的回答后加入markdown格式的"---"分隔符。
-确保对每篇论文的编号、标题等信息保持不变。
-你的输出环境同时支持markdown和LaTeX语法渲染，可以直接使用LaTeX语法来表示数学公式和符号。请将需要使用LaTeX语法的部分用美元符号$包裹起来，其中若需要下标或上标，请保证将相应的元素用大括号包裹。
-输出格式为：
+        final_prompt = f"""请为以下{len(papers)}篇来自ArXiv的论文生成中文总结。每篇论文的总结都需要遵循严格的Markdown格式。
 
-### [标题](文章链接)
-- **作者:** (作者)
-- **发布日期:** (发布日期)
-- **研究目的:** (研究目的)
-- **主要发现:** (主要发现)
+**必须遵循的输出格式:**
+对于每一篇论文，你的输出必须是以下格式，不得有任何变动：
+
+### [论文标题](论文的arXiv链接)
+* **作者**: 作者名
+* **研究目的**: 一句话总结研究的核心目标。
+* **主要发现**: 一句话总结最重要的发现或贡献。
 
 ---
 
-### [标题](文章链接)
-- **作者:** (作者)
-- **发布日期:** (发布日期)
-- **研究目的:** (研究目的)
-- **主要发现:** (主要发现)
+**关键指令:**
+1.  **链接格式**: 论文标题必须作为可点击的Markdown链接，格式为 `[标题](链接)`。
+2.  **隐藏日期**: 在标题下方，必须插入HTML注释 `` 来标记发布日期。
+3.  **内容**: “研究目的”和“主要发现”必须是简洁的一句话总结。
+4.  **分隔符**: 每篇论文总结之后，必须使用 `---` 作为分隔符。
+5.  **语言**: 所有输出内容必须为中文。
+6.  **数学公式**: 你可以自由使用LaTeX语法（例如 `$E=mc^2$`）来表示数学公式。
 
----
-
-......
-
----
-
-### [标题](文章链接)
-- **作者:** (作者)
-- **发布日期:** (发布日期)
-- **研究目的:** (研究目的)
-- **主要发现:** (主要发现)
-
----
-
-请注意，以上是对每篇论文的总结格式示例。请确保输出格式与示例一致。
-
-以下是一个示例：
-
----
-
-### [Lattice models with subsystem/weak non-invertible symmetry-protected topological order](http://arxiv.org/abs/2505.11419v1)
-- **作者:** Yuki Furukawa
-- **发布日期:** 2025-05-22
-- **研究目的:** 构建具有子系统非可逆对称性保护拓扑 (SPT) 序的格点模型，并研究其界面模式以及弱SPT相。
-- **主要发现:** 构建了一系列具有子系统非可逆SPT序的格点模型，并展示了由平移对称性和非可逆对称性组合区分的弱SPT相之间的界面存在奇异的Lieb-Schultz-Mattis反常。
-
----
-
-请根据以下论文信息生成总结：
-{batch_prompt}"""
-
+**需要你处理的论文信息如下:**
+{batch_prompt}
+"""
         try:
-            response = self.client.chat_completion([{
-                "role": "user",
-                "content": final_prompt
-            }])
-            return response["choices"][0]["message"]["content"].strip()
+            response = self.client.chat_completion([{"role": "user", "content": final_prompt}])
+            content = response["choices"][0]["message"]["content"].strip()
+            # 在返回内容后，立即进行链接修复
+            return self._fix_markdown_links(content)
         except Exception as e:
-            # 如果批处理失败，生成错误信息
-            error_summaries = []
-            for i, paper in enumerate(papers, start=start_index):
-                error_summaries.append(f"""
-论文 {i}：
-标题：{paper['title']}
-作者：{', '.join(paper['authors'])}
-发布日期：{paper['published'][:10]}
-arXiv链接：{paper['pdf_url']}
-研究目的：[生成失败: {str(e)}]
-主要发现：[生成失败: {str(e)}]
----""")
-            return "\n".join(error_summaries)
+            error_msg = f"[摘要生成失败: {str(e)}]"
+            return "\n".join([f"### {p['title']}\n- **研究目的**: {error_msg}\n- **主要发现**: {error_msg}\n---" for p in papers])
 
     def _process_batch(self, papers: List[Dict[str, Any]], start_index: int) -> str:
         """处理一批论文"""
         print(f"正在批量处理 {len(papers)} 篇论文...")
         summaries = self._generate_batch_summaries(papers, start_index)
-        time.sleep(2)  # 在批次之间添加短暂延迟
+        time.sleep(2)
         return summaries
 
     def _generate_batch_summary(self, papers: List[Dict[str, Any]]) -> str:
@@ -211,83 +181,38 @@ arXiv链接：{paper['pdf_url']}
             all_summaries.append(batch_summary)
             
             if i + self.max_papers_per_batch < total_papers:
-                print("批次处理完成，等待3秒后继续...")
-                time.sleep(3)  # 批次之间的冷却时间
+                print(f"批次处理完成，等待 {LLM_CONFIG['retry_delay']} 秒后继续...")
+                time.sleep(LLM_CONFIG['retry_delay'])
         
         return "\n".join(all_summaries)
 
     def summarize_papers(self, papers: List[Dict[str, Any]], output_file: str) -> bool:
-        """
-        批量处理所有论文并创建Markdown报告
+        """批量处理所有论文并创建Markdown报告"""
+        print(f"开始生成论文总结，共 {len(papers)} 篇...")
+        summaries = self._generate_batch_summary(papers)
         
-        Args:
-            papers: 论文列表
-            output_file: 输出文件路径
-            
-        Returns:
-            bool: 摘要生成是否真正成功。如果生成的摘要包含错误信息则返回False
-        """
-        api_success = True  # 标记API调用是否成功
+        api_success = "[生成失败:" not in summaries
+        if not api_success:
+            print("警告: 摘要生成过程中出现错误，结果可能不完整")
+
+        markdown_content = self._generate_markdown(papers, summaries)
         
-        try:
-            # 生成总结内容
-            print(f"开始生成论文总结，共 {len(papers)} 篇...")
-            summaries = self._generate_batch_summary(papers)
-            
-            # 检查生成的摘要是否包含错误信息
-            if "[生成失败:" in summaries:
-                api_success = False
-                print("警告: 摘要生成过程中出现错误，结果可能不完整")
-            
-            # 转换为markdown格式
-            markdown_content = self._generate_markdown(papers, summaries)
-            
-            # 保存为markdown文件
-            output_md = output_file.replace('.pdf', '.md')
-            with open(output_md, 'w', encoding='utf-8') as f:
-                f.write(markdown_content)
-            print(f"Markdown文件已保存：{output_md}")
-            
-            return api_success
-            
-        except Exception as e:
-            # 如果生成总结失败，保存基本信息为markdown格式
-            beijing_time = datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d %H:%M:%S')
-            error_content = f"""# Arxiv论文总结报告
-
-生成时间：{beijing_time}
-
-**生成总结时发生错误，以下是论文基本信息：**
-
-"""
-            for i, paper in enumerate(papers, 1):
-                error_content += f"""
-## 论文 {i}：
-- 标题：{paper['title']}
-- 作者：{', '.join(paper['authors'])}
-- 发布日期：{paper['published'][:10]}
-- arXiv链接：{paper['pdf_url']}
-
-"""
-            
-            # 保存错误信息为markdown文件
-            error_md = output_file.replace('.pdf', '_error.md')
-            with open(error_md, 'w', encoding='utf-8') as f:
-                f.write(error_content)
-            print(f"发生错误，已保存基本信息到：{error_md}")
-            
-            return False  # 发生异常，摘要生成肯定失败
+        output_md = Path(output_file).with_suffix('.md')
+        output_md.write_text(markdown_content, encoding='utf-8')
+        print(f"Markdown文件已保存：{output_md}")
+        
+        return api_success
 
     def _generate_markdown(self, papers: List[Dict[str, Any]], summaries: str) -> str:
         """生成markdown格式的报告"""
         beijing_time = datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d %H:%M:%S')
         
-        markdown_content = f"""# Arxiv论文总结报告
+        return f"""# Arxiv论文总结报告(Brain-inspired AI)
 
 ## 基本信息
-- 生成时间：{beijing_time}
-- 使用模型：{self.client.model}
-- 论文数量：{len(papers)} 篇
+- 生成时间: {beijing_time}
+- 使用模型: {self.client.model}
+- 论文数量: {len(papers)} 篇
 
 ---
 
@@ -298,8 +223,6 @@ arXiv链接：{paper['pdf_url']}
 ---
 
 ## 生成说明
-- 本报告由AI模型自动生成
-- 每篇论文的总结包含研究目的和主要发现
-- 如有错误或遗漏请以原文为准
+- 本报告由AI模型自动生成，摘要内容仅供参考。
+- 如有错误或遗漏，请以原始论文为准。
 """
-        return markdown_content
