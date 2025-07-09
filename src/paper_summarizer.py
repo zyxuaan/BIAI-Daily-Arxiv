@@ -137,19 +137,22 @@ class PaperSummarizer:
 
 ### [论文标题](论文的arXiv链接)
 <!-- 论文发布日期，格式：YYYY-MM-DD -->
-* **作者**: 作者名
-* **研究目的**: 一句话总结研究的核心目标。
-* **主要发现**: 一句话总结最重要的发现或贡献。
+**📅 发布日期**: 论文发布日期(YYYY-MM-DD格式)
+
+* **👥 作者**: 作者名
+* **🎯 研究目的**: 一句话总结研究的核心目标。
+* **⭐ 主要发现**: 一句话总结最重要的发现或贡献。
 
 ---
 
 **关键指令:**
 1.  **链接格式**: 论文标题必须作为可点击的Markdown链接，格式为 `[标题](链接)`。
 2.  **日期注释**: 在标题下方，必须插入HTML注释 `<!-- YYYY-MM-DD -->` 来标记发布日期，格式严格为YYYY-MM-DD。
-3.  **内容**: "研究目的"和"主要发现"必须是简洁的一句话总结。
-4.  **分隔符**: 每篇论文总结之后，必须使用 `---` 作为分隔符。
-5.  **语言**: 所有输出内容必须为中文。
-6.  **数学公式**: 你可以自由使用LaTeX语法（例如 `$E=mc^2$`）来表示数学公式。
+3.  **可见日期**: 在HTML注释后，必须添加可见的日期行：`**📅 发布日期**: YYYY-MM-DD`。
+4.  **内容**: "研究目的"和"主要发现"必须是简洁的一句话总结。
+5.  **分隔符**: 每篇论文总结之后，必须使用 `---` 作为分隔符。
+6.  **语言**: 所有输出内容必须为中文。
+7.  **数学公式**: 你可以自由使用LaTeX语法（例如 `$E=mc^2$`）来表示数学公式。
 
 **需要你处理的论文信息如下:**
 {batch_prompt}
@@ -161,7 +164,7 @@ class PaperSummarizer:
             return self._fix_markdown_links(content)
         except Exception as e:
             error_msg = f"[摘要生成失败: {str(e)}]"
-            return "\n".join([f"### {p['title']}\n<!-- {p['published'][:10]} -->\n- **研究目的**: {error_msg}\n- **主要发现**: {error_msg}\n---" for p in papers])
+            return "\n".join([f"### {p['title']}\n<!-- {p['published'][:10]} -->\n**📅 发布日期**: {p['published'][:10]}\n\n* **👥 作者**: {', '.join(p['authors'])}\n* **🎯 研究目的**: {error_msg}\n* **⭐ 主要发现**: {error_msg}\n\n---" for p in papers])
 
     def _process_batch(self, papers: List[Dict[str, Any]], start_index: int) -> str:
         """处理一批论文"""

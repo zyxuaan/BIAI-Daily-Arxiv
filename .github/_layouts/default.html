@@ -22,7 +22,6 @@
         margin: 1em 0 0.5em 0;
       }
       
-      /* 控制面板样式 */
       #controls-container {
         margin-bottom: 25px; 
         padding: 20px; 
@@ -34,6 +33,9 @@
         gap: 20px;
         border: 1px solid #dee2e6;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
       }
       
       .control-group { 
@@ -69,7 +71,6 @@
         font-family: inherit;
       }
       
-      /* 论文条目样式 */
       .paper-wrapper { 
         margin-bottom: 2rem; 
         padding: 1.5rem;
@@ -93,6 +94,7 @@
         color: #2c3e50;
         border-bottom: 2px solid #ecf0f1;
         padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
       }
       
       .paper-wrapper h3 a {
@@ -106,6 +108,11 @@
         text-decoration: underline;
       }
       
+      .paper-wrapper p strong {
+        color: #7f8c8d;
+        font-size: 0.9em;
+      }
+      
       .paper-wrapper ul {
         list-style-type: none;
         padding-left: 0;
@@ -115,6 +122,11 @@
       .paper-wrapper li {
         margin: 0.8rem 0;
         padding: 0.5rem 0;
+        border-bottom: 1px solid #f1f2f6;
+      }
+      
+      .paper-wrapper li:last-child {
+        border-bottom: none;
       }
       
       .paper-wrapper li strong {
@@ -122,11 +134,20 @@
         margin-right: 0.5rem;
       }
       
-      /* 响应式设计 */
+      .no-results {
+        text-align: center;
+        padding: 3rem;
+        color: #6c757d;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin: 2rem 0;
+      }
+      
       @media (max-width: 768px) {
         #controls-container {
           flex-direction: column;
           align-items: stretch;
+          position: relative;
         }
         
         .control-group {
@@ -140,24 +161,6 @@
         .paper-wrapper {
           padding: 1rem;
         }
-      }
-      
-      /* 加载状态指示器 */
-      .loading-indicator {
-        text-align: center;
-        padding: 2rem;
-        color: #6c757d;
-        font-style: italic;
-      }
-      
-      /* 无结果提示 */
-      .no-results {
-        text-align: center;
-        padding: 3rem;
-        color: #6c757d;
-        background: #f8f9fa;
-        border-radius: 8px;
-        margin: 2rem 0;
       }
     </style>
     {% include head-custom.html %}
@@ -205,55 +208,83 @@
       </div>
       
       <script>
+        //<![CDATA[
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('初始化论文排序和搜索功能...');
+            
             const sortBySelect = document.getElementById('sort-by');
             const sortOrderSelect = document.getElementById('sort-order');
             const searchInput = document.getElementById('search-input');
             const papersContainer = document.getElementById('papers-container');
             const noResultsDiv = document.getElementById('no-results');
 
-            if (!papersContainer) return;
+            if (!papersContainer) {
+                console.error('找不到papers-container元素');
+                return;
+            }
 
             let papersData = [];
-            // 修复的日期正则表达式，用于匹配HTML注释中的日期格式
-            const dateCommentRegex = /<!--\s*(\d{4}-\d{2}-\d{2})\s*-->/;
 
-            // 1. 改进的DOM解析函数
             function parsePaperElements() {
-                const contentHtml = papersContainer.innerHTML;
+                console.log('解析论文元素...');
                 
-                // 使用改进的方法分割论文条目
-                // 每个论文以### (h3标题)开始
-                const paperSections = contentHtml.split(/(?=###)/g).filter(section => section.trim().length > 0);
+                let wrappers = Array.from(papersContainer.querySelectorAll('.paper-wrapper'));
                 
-                papersContainer.innerHTML = ''; // 清空原始容器
-                
-                const parsedPapers = paperSections.map((sectionHtml, index) => {
-                    // 创建包装器元素
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'paper-wrapper';
-                    wrapper.innerHTML = sectionHtml.trim();
+                if (wrappers.length === 0) {
+                    console.log('创建paper-wrapper元素...');
+                    const h3Elements = Array.from(papersContainer.querySelectorAll('h3'));
                     
-                    // 添加到容器
-                    papersContainer.appendChild(wrapper);
-                    
-                    // 提取信息
+                    if (h3Elements.length === 0) {
+                        console.log('分割原始内容...');
+                        const contentHtml = papersContainer.innerHTML;
+                        const paperSections = contentHtml.split(/(?=###\s)/g).filter(s => s.trim());
+                        
+                        papersContainer.innerHTML = '';
+                        
+                        paperSections.forEach((section, index) => {
+                            const wrapper = document.createElement('div');
+                            wrapper.className = 'paper-wrapper';
+                            wrapper.innerHTML = section.trim();
+                            papersContainer.appendChild(wrapper);
+                            wrappers.push(wrapper);
+                        });
+                    } else {
+                        h3Elements.forEach((h3, index) => {
+                            let wrapper = h3.closest('.paper-wrapper');
+                            if (!wrapper) {
+                                wrapper = document.createElement('div');
+                                wrapper.className = 'paper-wrapper';
+                                
+                                const elementsToWrap = [h3];
+                                let nextElement = h3.nextElementSibling;
+                                while (nextElement && nextElement.tagName !== 'H3') {
+                                    elementsToWrap.push(nextElement);
+                                    nextElement = nextElement.nextElementSibling;
+                                }
+                                
+                                h3.parentNode.insertBefore(wrapper, h3);
+                                elementsToWrap.forEach(el => wrapper.appendChild(el));
+                                wrappers.push(wrapper);
+                            }
+                        });
+                    }
+                }
+                
+                const parsedPapers = wrappers.map((wrapper, index) => {
                     const titleEl = wrapper.querySelector('h3');
-                    const titleText = titleEl ? titleEl.textContent.trim() : `论文 ${index + 1}`;
+                    const titleText = titleEl ? titleEl.textContent.trim() : '论文 ' + (index + 1);
                     const fullText = wrapper.textContent.toLowerCase();
                     
-                    // 提取日期信息
-                    const dateMatch = sectionHtml.match(dateCommentRegex);
-                    let date = '1970-01-01'; // 默认日期
+                    let date = '1970-01-01';
                     
+                    // Look for date in HTML comments or text
+                    const dateMatch = wrapper.innerHTML.indexOf('<!--') !== -1 ? wrapper.innerHTML.match(/(\d{4}-\d{2}-\d{2})/) : null;
                     if (dateMatch) {
                         date = dateMatch[1];
                     } else {
-                        // 如果没有找到HTML注释中的日期，尝试从内容中提取
-                        const datePattern = /(\d{4}-\d{2}-\d{2})/;
-                        const contentDateMatch = sectionHtml.match(datePattern);
-                        if (contentDateMatch) {
-                            date = contentDateMatch[1];
+                        const textDateMatch = wrapper.textContent.match(/(\d{4}-\d{2}-\d{2})/);
+                        if (textDateMatch) {
+                            date = textDateMatch[1];
                         }
                     }
                     
@@ -262,15 +293,14 @@
                         title: titleText,
                         date: date,
                         fullText: fullText,
-                        relevance: 0,
-                        originalIndex: index
+                        relevance: 0
                     };
                 });
                 
+                console.log('解析完成，共 ' + parsedPapers.length + ' 篇论文');
                 return parsedPapers;
             }
 
-            // 2. 增强的搜索和排序功能
             function updateDisplay() {
                 const query = searchInput.value.toLowerCase().trim();
                 const sortBy = sortBySelect.value;
@@ -278,22 +308,20 @@
 
                 let visibleCount = 0;
 
-                // A. 过滤和计算相关度
                 papersData.forEach(paper => {
                     let isVisible = true;
                     
                     if (query !== '') {
-                        // 多关键词搜索支持
                         const keywords = query.split(/\s+/).filter(k => k.length > 0);
                         isVisible = keywords.every(keyword => paper.fullText.includes(keyword));
                         
-                        // 计算相关度分数
-                        paper.relevance = keywords.reduce((score, keyword) => {
-                            const matches = (paper.fullText.match(new RegExp(keyword, 'g')) || []).length;
-                            // 标题中的匹配权重更高
-                            const titleMatches = (paper.title.toLowerCase().match(new RegExp(keyword, 'g')) || []).length;
-                            return score + matches + titleMatches * 3;
-                        }, 0);
+                        if (isVisible) {
+                            paper.relevance = keywords.reduce((score, keyword) => {
+                                const matches = (paper.fullText.match(new RegExp(keyword, 'g')) || []).length;
+                                const titleMatches = (paper.title.toLowerCase().match(new RegExp(keyword, 'g')) || []).length;
+                                return score + matches + titleMatches * 3;
+                            }, 0);
+                        }
                     } else {
                         paper.relevance = 0;
                     }
@@ -302,10 +330,10 @@
                     if (isVisible) visibleCount++;
                 });
 
-                // 显示/隐藏无结果提示
-                noResultsDiv.style.display = visibleCount === 0 && query !== '' ? 'block' : 'none';
+                if (noResultsDiv) {
+                    noResultsDiv.style.display = visibleCount === 0 && query !== '' ? 'block' : 'none';
+                }
 
-                // B. 排序
                 const visiblePapers = papersData.filter(p => !p.element.classList.contains('hidden'));
                 
                 visiblePapers.sort((a, b) => {
@@ -322,7 +350,6 @@
                         case 'relevance':
                             valA = a.relevance;
                             valB = b.relevance;
-                            // 相关度相同时，按日期排序
                             if (valA === valB) {
                                 valA = new Date(a.date);
                                 valB = new Date(b.date);
@@ -337,26 +364,22 @@
                     return 0;
                 });
                 
-                // C. 重新排列DOM元素
                 visiblePapers.forEach(paper => {
                     papersContainer.appendChild(paper.element);
                 });
                 
-                console.log(`显示 ${visibleCount} 篇论文，排序方式: ${sortBy} (${sortOrder})`);
+                console.log('显示 ' + visibleCount + ' 篇论文，排序: ' + sortBy + ' (' + sortOrder + ')');
             }
 
-            // 3. 事件监听器
             function setupEventListeners() {
                 sortBySelect.addEventListener('change', updateDisplay);
                 sortOrderSelect.addEventListener('change', updateDisplay);
                 
-                // 防抖搜索
                 let searchTimeout;
-                searchInput.addEventListener('input', () => {
+                searchInput.addEventListener('input', function() {
                     clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(() => {
+                    searchTimeout = setTimeout(function() {
                         if (searchInput.value.trim() !== '') {
-                            // 搜索时自动切换为相关度排序
                             if (sortBySelect.value !== 'relevance') {
                                 sortBySelect.value = 'relevance';
                             }
@@ -365,8 +388,7 @@
                     }, 300);
                 });
                 
-                // 键盘快捷键支持
-                searchInput.addEventListener('keydown', (e) => {
+                searchInput.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape') {
                         searchInput.value = '';
                         sortBySelect.value = 'date';
@@ -375,17 +397,18 @@
                 });
             }
 
-            // 4. 初始化
-            try {
+            setTimeout(function() {
                 papersData = parsePaperElements();
-                setupEventListeners();
-                updateDisplay(); // 页面加载时执行一次，按默认设置排序
-                
-                console.log(`成功解析 ${papersData.length} 篇论文`);
-            } catch (error) {
-                console.error('初始化论文列表时出错:', error);
-            }
+                if (papersData.length > 0) {
+                    setupEventListeners();
+                    updateDisplay();
+                    console.log('初始化成功！');
+                } else {
+                    console.error('未找到论文数据');
+                }
+            }, 200);
         });
+        //]]>
       </script>
 
       <footer class="site-footer">
