@@ -135,7 +135,7 @@ class PaperSummarizer:
 **必须遵循的输出格式:**
 对于每一篇论文，你的输出必须是以下格式，不得有任何变动：
 
-### [论文标题](论文的arXiv链接)
+### {start_index}. [论文标题](论文的arXiv链接)
 <!-- 论文发布日期，格式：YYYY-MM-DD -->
 **📅 发布日期**: 论文发布日期(YYYY-MM-DD格式)
 
@@ -146,13 +146,14 @@ class PaperSummarizer:
 ---
 
 **关键指令:**
-1.  **链接格式**: 论文标题必须作为可点击的Markdown链接，格式为 `[标题](链接)`。
-2.  **日期注释**: 在标题下方，必须插入HTML注释 `<!-- YYYY-MM-DD -->` 来标记发布日期，格式严格为YYYY-MM-DD。
-3.  **可见日期**: 在HTML注释后，必须添加可见的日期行：`**📅 发布日期**: YYYY-MM-DD`。
-4.  **内容**: "研究目的"和"主要发现"必须是简洁的一句话总结。
-5.  **分隔符**: 每篇论文总结之后，必须使用 `---` 作为分隔符。
-6.  **语言**: 所有输出内容必须为中文。
-7.  **数学公式**: 你可以自由使用LaTeX语法（例如 `$E=mc^2$`）来表示数学公式。
+1.  **序号格式**: 每篇论文标题前必须有序号，从{start_index}开始递增。
+2.  **链接格式**: 论文标题必须作为可点击的Markdown链接，格式为 `[标题](链接)`。
+3.  **日期注释**: 在标题下方，必须插入HTML注释 `<!-- YYYY-MM-DD -->` 来标记发布日期，格式严格为YYYY-MM-DD。
+4.  **可见日期**: 在HTML注释后，必须添加可见的日期行：`**📅 发布日期**: YYYY-MM-DD`。
+5.  **内容**: "研究目的"和"主要发现"必须是简洁的一句话总结。
+6.  **分隔符**: 每篇论文总结之后，必须使用 `---` 作为分隔符。
+7.  **语言**: 所有输出内容必须为中文。
+8.  **数学公式**: 你可以自由使用LaTeX语法（例如 `$E=mc^2$`）来表示数学公式。
 
 **需要你处理的论文信息如下:**
 {batch_prompt}
@@ -164,7 +165,7 @@ class PaperSummarizer:
             return self._fix_markdown_links(content)
         except Exception as e:
             error_msg = f"[摘要生成失败: {str(e)}]"
-            return "\n".join([f"### {p['title']}\n<!-- {p['published'][:10]} -->\n**📅 发布日期**: {p['published'][:10]}\n\n* **👥 作者**: {', '.join(p['authors'])}\n* **🎯 研究目的**: {error_msg}\n* **⭐ 主要发现**: {error_msg}\n\n---" for p in papers])
+            return "\n".join([f"### {start_index + i}. {p['title']}\n<!-- {p['published'][:10]} -->\n**📅 发布日期**: {p['published'][:10]}\n\n* **👥 作者**: {', '.join(p['authors'])}\n* **🎯 研究目的**: {error_msg}\n* **⭐ 主要发现**: {error_msg}\n\n---" for i, p in enumerate(papers)])
 
     def _process_batch(self, papers: List[Dict[str, Any]], start_index: int) -> str:
         """处理一批论文"""
@@ -211,7 +212,7 @@ class PaperSummarizer:
         """生成markdown格式的报告"""
         beijing_time = datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d %H:%M:%S')
         
-        return f"""# Arxiv论文总结报告(Brain-inspired AI)
+        return f"""# Arxiv论文总结报告
 
 ## 基本信息
 - 生成时间: {beijing_time}
