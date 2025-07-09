@@ -55,7 +55,7 @@ title: {title}
         
         # 从第一个H1标题提取标题
         title_match = re.search(r'^#\s*(.*?)$', content, re.MULTILINE)
-        title = title_match.group(1).strip() if title_match else "Arxiv Daily Summary"
+        title = title_match.group(1).strip() if title_match else "Arxiv论文总结报告(Brain-inspired AI)"
         
         return title, content
     
@@ -67,7 +67,7 @@ title: {title}
         if not sorted_files:
             print("未找到任何摘要文件，创建空的index.md。")
             title = "Arxiv论文总结报告(Brain-inspired AI)"
-            content = "[查看所有摘要归档](archive.md)\n\n# Arxiv论文总结报告\n\n暂无可用摘要。"
+            content = "[查看所有摘要归档](archive.md)\n\n# Arxiv论文总结报告(Brain-inspired AI)\n\n暂无可用摘要。"
         else:
             latest_file = sorted_files[0]
             print(f"找到最新文件: {latest_file.name}，正在更新index.md...")
