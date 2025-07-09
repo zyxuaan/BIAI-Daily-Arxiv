@@ -129,15 +129,9 @@ title: {title}
         
         if sorted_files:
             latest_file = sorted_files[0]
-            with open(latest_file, 'r', encoding='utf-8') as f:
-                content = f.read()
-        
-            # 转义markdown字符
-            escaped_content = self._escape_markdown_chars(content)
             
-            # 写回文件
-            with open(latest_file, 'w', encoding='utf-8') as f:
-                f.write(escaped_content)
+            # 移除了对文件内容进行转义并写回的操作
+            # 这是导致链接损坏的可能原因
             
             print(f"找到最新文件: {latest_file}")
             print(f"更新index.md...")

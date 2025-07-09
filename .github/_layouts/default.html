@@ -19,6 +19,31 @@
       h1, h2, h3, h4, h5, h6 {
         font-family: "Vollkorn";
       }
+      #controls-container {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .control-group {
+        margin-right: 20px;
+        margin-bottom: 10px;
+      }
+      .control-group label {
+        margin-right: 10px;
+        font-weight: bold;
+      }
+       .control-group select, .control-group input {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+      #search-input {
+        width: 250px;
+      }
     </style>
     {% include head-custom.html %}
   </head>
@@ -38,7 +63,124 @@
     </header>
 
     <main id="content" class="main-content" role="main">
-      {{ content }}
+      <div id="controls-container">
+        <div class="control-group">
+            <label for="sort-by">排序方式:</label>
+            <select id="sort-by">
+              <option value="date">发布日期</option>
+              <option value="title">标题</option>
+            </select>
+            <select id="sort-order">
+              <option value="desc">降序</option>
+              <option value="asc">升序</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="search-input">搜索:</label>
+            <input type="text" id="search-input" placeholder="输入关键词搜索标题、作者等...">
+        </div>
+      </div>
+      
+      <div id="papers-container">
+        {{ content }}
+      </div>
+      
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sortBySelect = document.getElementById('sort-by');
+            const sortOrderSelect = document.getElementById('sort-order');
+            const searchInput = document.getElementById('search-input');
+            const papersContainer = document.getElementById('papers-container');
+
+            if (!papersContainer) return;
+
+            const paperNodes = [];
+            const paperTitles = papersContainer.querySelectorAll('h3');
+
+            // 1. 数据提取和结构化
+            // 将页面上的每篇论文及其相关HTML元素（标题、列表、分隔线）分组
+            paperTitles.forEach(titleEl => {
+                const paper = {
+                    title: titleEl.innerText.trim(),
+                    date: '1970-01-01', // 默认日期
+                    elements: [titleEl],
+                    fullText: ''
+                };
+
+                let currentEl = titleEl.nextElementSibling;
+                let textForSearch = titleEl.innerText; // 开始收集用于搜索的文本
+
+                while(currentEl && currentEl.tagName !== 'H3') {
+                    paper.elements.push(currentEl);
+                    textForSearch += ' ' + currentEl.innerText; // 聚合所有元素的文本
+                    
+                    if (currentEl.tagName === 'UL') {
+                        const items = currentEl.querySelectorAll('li');
+                        items.forEach(item => {
+                            if (item.innerText.includes('发布日期:')) {
+                                paper.date = item.innerText.replace('**发布日期:**', '').trim();
+                            }
+                        });
+                    }
+                    currentEl = currentEl.nextElementSibling;
+                }
+                paper.fullText = textForSearch.toLowerCase(); // 存储小写文本以供搜索
+                paperNodes.push(paper);
+            });
+
+            // 2. 核心功能函数
+            // 排序函数
+            function sortPapers() {
+                const sortBy = sortBySelect.value;
+                const sortOrder = sortOrderSelect.value;
+
+                paperNodes.sort((a, b) => {
+                    let valA, valB;
+                    if (sortBy === 'date') {
+                        valA = new Date(a.date);
+                        valB = new Date(b.date);
+                    } else { // title
+                        valA = a.title.toLowerCase();
+                        valB = b.title.toLowerCase();
+                    }
+
+                    if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
+                    if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
+                    return 0;
+                });
+
+                // 重新渲染排序后的论文
+                papersContainer.innerHTML = '';
+                paperNodes.forEach(paper => {
+                    paper.elements.forEach(el => papersContainer.appendChild(el));
+                });
+                
+                // 排序后要应用当前的搜索过滤器
+                filterPapers();
+            }
+
+            // 搜索/过滤函数
+            function filterPapers() {
+                const query = searchInput.value.toLowerCase().trim();
+
+                paperNodes.forEach(paper => {
+                    const isVisible = paper.fullText.includes(query);
+                    paper.elements.forEach(el => {
+                        el.style.display = isVisible ? '' : 'none';
+                    });
+                });
+            }
+
+            // 3. 绑定事件监听器
+            sortBySelect.addEventListener('change', sortPapers);
+            sortOrderSelect.addEventListener('change', sortPapers);
+            searchInput.addEventListener('input', filterPapers); // 'input'事件实时响应用户输入
+
+            // 4. 页面加载时初始化
+            // 页面加载时执行一次初始排序（按默认设置）
+            sortPapers();
+        });
+      </script>
 
       <footer class="site-footer">
         {% if site.github.is_project_page %}
