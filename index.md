@@ -1,0 +1,915 @@
+---
+layout: default
+title: Arxiv论文总结报告
+---
+
+[查看所有摘要归档](archive.md) | 更新日期: 2025-07-09
+
+# Arxiv论文总结报告
+
+## 基本信息
+- 生成时间：2025-07-09 18:19:10
+- 使用模型：gemini-2.5-flash
+- 论文数量：146 篇
+
+---
+
+## 论文总结
+
+### [Mamba-FETrack V2: Revisiting State Space Model for Frame-Event based Visual Object Tracking](http://arxiv.org/abs/2506.23783v1)
+- **作者:** Shiao Wang, Ju Huang, Qingchuan Ma, Jinfeng Gao, Chunyi Xu, Xiao Wang, Lan Chen, Bo Jiang
+- **研究目的:** 提出一个基于线性复杂度Vision Mamba网络的RGB-事件目标跟踪框架Mamba-FETrack V2，以解决现有方法在特征提取和融合中计算开销大、跨模态交互效率低的问题。
+- **主要发现:** Mamba-FETrack V2通过设计轻量级Prompt Generator和基于Vision Mamba的FEMamba骨干网络，实现了高效的特征提取、跨模态交互和融合，并在多个RGB-事件跟踪基准测试中展现出卓越的性能和效率。
+
+---
+
+### [An efficient neuromorphic approach for collision avoidance combining Stack-CNN with event cameras](http://arxiv.org/abs/2506.16436v1)
+- **作者:** Antonio Giulio Coretti, Mattia Varile, Mario Edoardo Bertaina
+- **研究目的:** 提出一种利用事件相机和Stack-CNN算法的创新碰撞避免系统，以应对空间碎片威胁，并应用于空间态势感知和空间交通管理。
+- **主要发现:** 该系统能够分析实时事件相机数据以检测微弱移动物体，并通过在地面数据上的测试证明了算法增强信噪比的能力，为机载空间成像和改进空间交通管理操作提供了有前景的方法。
+
+---
+
+### [Sparse Convolutional Recurrent Learning for Efficient Event-based Neuromorphic Object Detection](http://arxiv.org/abs/2506.13440v1)
+- **作者:** Shenqi Wang, Yingfu Xu, Amirreza Yousefzadeh, Sherif Eissa, Henk Corporaal, Federico Corradi, Guangzhi Tang
+- **研究目的:** 提出稀疏事件高效检测器（SEED），旨在解决事件相机目标检测中计算密集型卷积循环单元的挑战，实现资源受限边缘应用的高效处理。
+- **主要发现:** SEED引入了稀疏卷积循环学习，在循环处理中实现了超过$92\%$的激活稀疏度，显著降低了稀疏事件数据时空推理的成本，并在计算效率上为事件目标检测树立了新基准。
+
+---
+
+### [Towards Low-Latency Event Stream-based Visual Object Tracking: A Slow-Fast Approach](http://arxiv.org/abs/2505.12903v1)
+- **作者:** Shiao Wang, Xiao Wang, Liye Jin, Bo Jiang, Lin Zhu, Lan Chen, Yonghong Tian, Bin Luo
+- **研究目的:** 提出一种新颖的慢-快跟踪范式（SFTrack），旨在利用事件相机实现低延迟视觉目标跟踪，并灵活适应不同的计算资源和性能需求。
+- **主要发现:** SFTrack通过图基表示学习和FlashAttention骨干网络，提供了高精度慢速跟踪器和高效快速跟踪器两种模式，并通过知识蒸馏进一步提升性能，在多个公共基准测试中展现了有效性和效率。
+
+---
+
+### [Maximizing Asynchronicity in Event-based Neural Networks](http://arxiv.org/abs/2505.11165v1)
+- **作者:** Haiqing Hao, Nikola Zubić, Weihua He, Zhipeng Sui, Davide Scaramuzza, Wenhui Wang
+- **研究目的:** 提出一种名为EVA（EVent Asynchronous representation learning）的新型异步到同步（A2S）框架，旨在生成高度表达性和泛化性的逐事件表示，以弥合事件数据与标准机器学习之间的差距。
+- **主要发现:** EVA通过借鉴语言建模中的线性注意力和自监督学习，在识别任务上超越了现有的A2S方法，并首次成功应用于要求苛刻的检测任务，在Gen1数据集上达到了$47.7$ mAP，展示了其在实时事件视觉应用中的巨大潜力。
+
+---
+
+### [Contactless Cardiac Pulse Monitoring Using Event Cameras](http://arxiv.org/abs/2505.09529v2)
+- **作者:** Mohamed Moustafa, Joseph Lemley, Peter Corcoran
+- **研究目的:** 探讨利用事件相机记录的面部数据，通过监督卷积神经网络（CNN）模型，实现非接触式心跳信号重建的可行性。
+- **主要发现:** 实验结果证实，面部区域的生理心脏信息在事件流中得到有效保留，模型在事件帧上训练的心率计算均方根误差（RMSE）优于或接近传统相机，尤其是在高帧率下表现更佳，展示了事件相机在远程心率监测中的潜力。
+
+---
+
+### [A Survey of 3D Reconstruction with Event Cameras](http://arxiv.org/abs/2505.08438v2)
+- **作者:** Chuanzhi Xu, Haoxian Zhou, Langyi Chen, Haodong Chen, Ying Zhou, Vera Chung, Qiang Qu, Weidong Cai
+- **研究目的:** 提供首个全面回顾事件相机在3D重建中应用的综述，系统地分类现有方法，并总结公开数据集，以推动该领域的研究进展。
+- **主要发现:** 该综述将现有方法根据输入模态和重建方法进行分类，并按时间顺序组织，突出了关键概念的演变和进展，同时讨论了数据集可用性、标准化评估、有效表示和动态场景重建等开放挑战，为未来研究提供了方向。
+
+---
+
+### [Hybrid Spiking Vision Transformer for Object Detection with Event Cameras](http://arxiv.org/abs/2505.07715v1)
+- **作者:** Qi Xu, Jie Deng, Jiangrong Shen, Biwu Chen, Huajin Tang, Gang Pan
+- **研究目的:** 提出一种新颖的混合脉冲视觉Transformer（HsVT）模型，旨在利用事件相机的高时间分辨率和异步特性，提升事件目标检测的性能。
+- **主要发现:** HsVT通过整合空间特征提取模块和时间特征提取模块，有效捕获事件序列的时空特征，并在GEN1和新发布的Fall Detection数据集上实现了显著的性能提升，同时参数量更少。
+
+---
+
+### [Iterative Event-based Motion Segmentation by Variational Contrast Maximization](http://arxiv.org/abs/2504.18447v1)
+- **作者:** Ryo Yamaki, Shintaro Shiba, Guillermo Gallego, Yoshimitsu Aoki
+- **研究目的:** 提出一种迭代运动分割方法，通过将事件数据分类为背景和前景，扩展对比度最大化框架，以解决事件相机数据中的运动分割问题。
+- **主要发现:** 该方法成功地对事件簇进行分类，生成清晰、运动补偿的边缘状图像，并在移动物体检测基准测试中实现了超过$30\%$的准确率提升，展示了其应用于更复杂和嘈杂真实场景的可能性。
+
+---
+
+### [Event-Based Eye Tracking. 2025 Event-based Vision Workshop](http://arxiv.org/abs/2504.18249v1)
+- **作者:** Qinyu Chen, Chang Gao, Min Liu, Daniele Perrone, Yan Ru Pei, Zuowen Wang, Zhuo Zou, Shihang Tan, Tao Han, Guorui Lu, Zhen Xu, Junyuan Ding, Ziteng Wang, Zongwei Wu, Han Han, Yuliang Wu, Jinze Chen, Wei Zhai, Yang Cao, Zheng-jun Zha, Nuwan Bandara, Thivya Kandappu, Archan Misra, Xiaopeng Lin, Hongxiang Huang, Hongwei Ren, Bojun Cheng, Hoang M. Truong, Vinh-Thuan Ly, Huy G. Tran, Thuan-Phat Nguyen, Tram T. Doan
+- **研究目的:** 总结2025年CVPR事件视觉研讨会中事件相机眼动追踪挑战赛的创新方法，旨在促进未来事件眼动追踪研究的进展。
+- **主要发现:** 该综述回顾并总结了挑战赛中排名靠前的团队所提出的创新方法，报告了其准确性、模型大小和操作次数，并从硬件设计的角度讨论了事件眼动追踪。
+
+---
+
+### [DERD-Net: Learning Depth from Event-based Ray Densities](http://arxiv.org/abs/2504.15863v1)
+- **作者:** Diego de Oliveira Hitzges, Suman Ghosh, Guillermo Gallego
+- **研究目的:** 提出一个可扩展、灵活且适应性强的框架DERD-Net，用于事件相机在单目和立体设置下的像素级深度估计，以克服传统深度学习框架处理事件数据时的挑战。
+- **主要发现:** DERD-Net通过将3D场景结构编码为视差空间图像（DSIs）并结合3D卷积和循环结构进行处理，在MVSEC和DSEC数据集上实现了前所未有的有效性，单目数据可与现有立体方法媲美，立体数据则显著优于所有SOTA方法，将平均绝对误差至少降低了$42\%$。
+
+---
+
+### [Event2Vec: Processing neuromorphic events directly by representations in vector space](http://arxiv.org/abs/2504.15371v1)
+- **作者:** Wei Fang, Priyadarshini Panda
+- **研究目的:** 提出首个事件到向量（event2vec）表示方法，旨在解决事件相机输出的异步、稀疏和不规则事件与主流计算机视觉和深度学习方法不兼容的问题。
+- **主要发现:** Event2Vec在ASL-DVS数据集分类任务中展示了令人印象深刻的参数效率、准确性和速度，优于之前的基于图/图像/体素的表示方法，并有望将事件数据整合到大型语言和多模态模型中。
+
+---
+
+### [CM3AE: A Unified RGB Frame and Event-Voxel/-Frame Pre-training Framework](http://arxiv.org/abs/2504.12576v1)
+- **作者:** Wentao Wu, Xiao Wang, Chenglong Li, Bo Jiang, Jin Tang, Bin Luo, Qi Liu
+- **研究目的:** 提出一个新颖的CM3AE预训练框架，旨在解决现有事件数据预训练方法未能与RGB帧建立强连接的问题，从而限制其在多模态融合场景中的适用性。
+- **主要发现:** CM3AE
+### SDTrack: A Baseline for Event-based Tracking via Spiking Neural Networks (http://arxiv.org/abs/2503.08703v2)
+- **作者:** Yimeng Shan, Zhenbang Ren, Haodi Wu, Wenjie Wei, Rui-Jie Zhu, Shuai Wang, Dehao Zhang, Yichen Xiao, Jieyuan Zhang, Kexin Shi, Jingzhinan Wang, Jason K. Eshraghian, Haicheng Qu, Jiqing Zhang, Malu Zhang, Yang Yang
+- **研究目的:** 提出首个基于Transformer的脉冲驱动追踪管线SDTrack，以解决当前事件相机追踪方法在能效和架构上的局限性。
+- **主要发现:** SDTrack在多个事件相机追踪基准测试中实现了最先进的性能，同时保持了最低的参数数量和能耗，为神经形态视觉领域的未来研究奠定了坚实基础。
+
+---
+
+### ERetinex: Event Camera Meets Retinex Theory for Low-Light Image Enhancement (http://arxiv.org/abs/2503.02484v1)
+- **作者:** Xuejian Guo, Zhiqiang Tian, Yuehang Wang, Siqi Li, Yu Jiang, Shaoyi Du, Yue Gao
+- **研究目的:** 引入首个将Retinex理论与事件相机结合的方法，并提出一种新颖的基于Retinex的低光图像恢复框架ERetinex。
+- **主要发现:** ERetinex通过利用事件相机的高时间分辨率数据准确估计场景光照，并有效融合事件相机的高动态范围数据与传统图像的色彩信息，实现了优于SOTA方法的性能，PSNR增益为1.0613 dB，FLOPS减少了84.28%。
+
+---
+
+### EventSTR: A Benchmark Dataset and Baselines for Event Stream based Scene Text Recognition (http://arxiv.org/abs/2502.09020v1)
+- **作者:** Xiao Wang, Jingtao Jiang, Dong Li, Futian Wang, Lin Zhu, Yaowei Wang, Yongyong Tian, Jin Tang
+- **研究目的:** 提出使用仿生事件相机进行场景文本识别，通过收集和标注大规模基准数据集EventSTR，并提出新的事件流场景文本识别框架SimC-ESTR。
+- **主要发现:** 新提出的EventSTR数据集和SimC-ESTR模型（包含Q-former、记忆机制和基于相似度的错误校正）在实验中充分证明了其有效性，有望加速事件相机在各行业的应用。
+
+---
+
+### Neuromorphic Optical Tracking and Imaging of Randomly Moving Targets through Strongly Scattering Media (http://arxiv.org/abs/2501.03874v2)
+- **作者:** Ning Zhang, Timothy Shea, Arto Nurmikko
+- **研究目的:** 开发一种端到端的神经形态光学工程和计算方法，以跟踪和同时获取被强散射介质遮蔽的随机移动目标的图像。
+- **主要发现:** 该方法通过结合事件检测相机和多阶段神经形态深度学习策略，成功实现了在密集混浊介质中对通常不可见对象的跟踪和成像，并具有高计算效率和低功耗。
+
+---
+
+### Spatially-guided Temporal Aggregation for Robust Event-RGB Optical Flow Estimation (http://arxiv.org/abs/2501.00838v1)
+- **作者:** Qianang Zhou, Junhui Hou, Meiyi Yang, Yongjian Deng, Youfu Li, Junlin Xiong
+- **研究目的:** 提出一种新颖的方法，利用空间密集模态（帧）引导时间密集事件模态的聚合，以实现鲁棒的事件-RGB光流估计，充分利用两种模态的互补优势。
+- **主要发现:** 该框架通过事件增强帧表示、Transformer模块和混合融合编码器，在DSEC-Flow数据集上实现了领先性能，相比纯事件模型准确率提升10%，相比SOTA融合方法准确率提升4%并推理时间减少45%。
+
+---
+
+### Towards End-to-End Neuromorphic Voxel-based 3D Object Reconstruction Without Physical Priors (http://arxiv.org/abs/2501.00741v3)
+- **作者:** Chuanzhi Xu, Langyi Chen, Haodong Chen, Vera Chung, Qiang Qu
+- **研究目的:** 提出一种端到端的密集体素3D重建方法，使用神经形态相机且无需估计物理先验，并引入一种新颖的事件表示来增强边缘特征。
+- **主要发现:** 该方法通过增强边缘特征的事件表示和最优二值化阈值选择原则，实现了比基线方法高54.6%的重建精度。
+
+---
+
+### VELoRA: A Low-Rank Adaptation Approach for Efficient RGB-Event based Recognition (http://arxiv.org/abs/2412.20064v1)
+- **作者:** Lan Chen, Haoxiang Yang, Pengpeng Shao, Haoyu Song, Xiao Wang, Zhicheng Zhao, Yaowei Wang, Yonghong Tian
+- **研究目的:** 提出一种新颖的参数高效微调（PEFT）策略VELoRA，以适应预训练的基础视觉模型，实现高效的RGB-事件多模态识别。
+- **主要发现:** VELoRA通过模态特定的LoRA微调提取RGB和事件特征，并结合模态共享的LoRA微调进行高效的多模态特征学习，实现了对预训练视觉基础模型的有效适应。
+
+---
+
+### Learning Monocular Depth from Events via Egomotion Compensation (http://arxiv.org/abs/2412.19067v1)
+- **作者:** Haitao Meng, Chonghao Zhong, Sheng Tang, Lian JunJia, Wenwei Lin, Zhenshan Bing, Yi Chang, Gang Chen, Alois Knoll
+- **研究目的:** 提出一个可解释的单目深度估计框架，将物理运动原理融入事件相机数据处理中，并通过运动补偿效应明确确定各种深度假设的可能性。
+- **主要发现:** 该框架通过焦点成本判别（FCD）模块和假设间成本聚合（IHCA）模块，在真实和合成数据集上表现出优于最先进方法的性能，在绝对相对误差指标上提升高达10%。
+
+---
+
+### SLTNet: Efficient Event-based Semantic Segmentation with Spike-driven Lightweight Transformer-based Networks (http://arxiv.org/abs/2412.12843v2)
+- **作者:** Xiaxin Zhu, Fangming Guo, Xianlei Long, Qingyi Gu, Chao Chen, Fuqiang Gu
+- **研究目的:** 引入SLTNet，一个脉冲驱动的轻量级Transformer网络，旨在解决当前基于人工神经网络（ANN）的事件语义分割方法计算需求高和能耗大的问题。
+- **主要发现:** SLTNet在DDD17和DSEC-Semantic数据集上分别超越了最先进的SNN方法9.06%和9.39%的mIoU，同时能耗降低4.58倍，推理速度达到114 FPS。
+
+---
+
+### DriveGazen: Event-Based Driving Status Recognition using Conventional Camera (http://arxiv.org/abs/2412.11753v1)
+- **作者:** Xiaoyin Yang
+- **研究目的:** 介绍一种可穿戴驾驶状态识别设备、开源数据集以及一种新的实时方法，通过从传统强度帧生成事件帧并结合注意力驾驶状态网络（ADSN）来识别驾驶员的眼部驾驶状态。
+- **主要发现:** DriveGazen通过合成DVS事件、脉冲神经网络解码时间信息以及ADSN中的引导注意力模块提取空间线索，有效解决了传统相机在识别驾驶状态中的挑战，并在DriveGaze和SEE数据集上验证了其优越性。
+
+---
+
+### Labits: Layered Bidirectional Time Surfaces Representation for Event Camera-based Continuous Dense Trajectory Estimation (http://arxiv.org/abs/2412.08849v1)
+- **作者:** Zhongyang Zhang, Jiacheng Qiu, Shuyang Cui, Yijun Luo, Tauhidur Rahman
+- **研究目的:** 引入Labits：分层双向时间表面，一种新颖的事件表示，旨在同时保留细粒度时间信息、稳定的2D视觉特征和时间一致的信息密度，用于事件相机连续密集轨迹估计。
+- **主要发现:** Labits结合专门的活跃像素局部光流（APLOF）提取模块，在MultiFlow数据集上将轨迹终点误差（TEPE）比现有最先进方法降低了49%。
+
+---
+
+### Dense Depth from Event Focal Stack (http://arxiv.org/abs/2412.08120v1)
+- **作者:** Kenta Horikawa, Mariko Isogawa, Hideo Saito, Shohei Mori
+- **研究目的:** 提出一种从事件流中进行密集深度估计的方法，该事件流通过扫动连接到事件相机的驱动镜头的焦平面产生，并使用合成事件焦堆栈训练卷积神经网络。
+- **主要发现:** 该方法在合成和真实数据集上均表现出优于图像域中基于散焦深度（depth-from-defocus）方法的性能。
+
+---
+
+### EvRepSL: Event-Stream Representation via Self-Supervised Learning for Event-Based Vision (http://arxiv.org/abs/2412.07080v1)
+- **作者:** Qiang Qu, Xiaoming Chen, Yuk Ying Chung, Yiran Shen
+- **研究目的:** 引入EvRepSL，一种数据驱动的方法，旨在通过自监督学习提高事件流表示的质量，以增强事件视觉任务的性能。
+- **主要发现:** EvRepSL通过学习到的表示生成器（RepGen）将事件流转换为高质量表示，并在各种主流事件分类和光流数据集上展示了优于现有事件流表示的性能和多功能性。
+
+---
+
+### Object Detection using Event Camera: A MoE Heat Conduction based Detector and A New Benchmark Dataset (http://arxiv.org/abs/2412.06647v1)
+- **作者:** Xiao Wang, Yu Jin, Wentao Wu, Wei Zhang, Lin Zhu, Bo Jiang, Yonghong Tian
+- **研究目的:** 引入一种新颖的基于MoE（混合专家）热传导的事件流目标检测算法，旨在平衡精度和计算效率，并发布一个新的事件基准数据集EvDET200K。
+- **主要发现:** 所提出的算法通过MoE-HCO块和基于IoU的查询选择模块，在精度和计算效率之间实现了显著平衡，而EvDET200K数据集则为未来的事件目标检测研究提供了坚实基础。
+
+---
+
+### Frequency-Adaptive Low-Latency Object Detection Using Events and Frames (http://arxiv.org/abs/2412.04149v2)
+- **作者:** Haitian Zhang, Xiangyuan Wang, Chang Xu, Xinya Wang, Fang Xu, Huai Yu, Lei Yu, Wen Yang
+- **研究目的:** 提出频率自适应低延迟目标检测器（FAOD），以解决事件和RGB图像融合进行目标检测时存在的关键不匹配问题，即低延迟事件与高延迟RGB帧以及训练中时间稀疏标签与推理中连续流的矛盾。
+- **主要发现:** FAOD通过对齐模块和时间偏移训练策略，实现了事件和RGB帧的对齐，并在PKU-DAVIS-SOD和DSEC-Detection数据集上取得了SOTA性能，即使在80$\times$事件-RGB频率不匹配下也能保持鲁棒性能。
+
+---
+
+### ETAP: Event-based Tracking of Any Point (http://arxiv.org/abs/2412.00133v2)
+- **作者:** Friedhelm Hamann, Daniel Gehrig, Filbert Febryanto, Kostas Daniilidis, Guillermo Gallego
+- **研究目的:** 提出首个基于事件相机的任意点跟踪（TAP）方法ETAP，旨在解决传统传感器在困难光照条件和高速运动场景下运动估计的挑战。
+- **主要发现:** ETAP在平均Jaccard指标上比基线方法提高了136%，并在一个已建立的特征跟踪基准上比之前最好的纯事件方法提高了20%，甚至超越了之前最好的事件与帧结合的方法4.1%。
+
+---
+
+### Event USKT : U-State Space Model in Knowledge Transfer for Event Cameras (http://arxiv.org/abs/2411.15276v1)
+- **作者:** Yuhui Lin, Jiahao Zhang, Siyuan Li, Jimin Xiao, Ding Xu, Wenjun Wu, Jiaxuan Lu
+- **研究目的:** 引入一个定制的U形状态空间模型知识转移（USKT）框架，用于事件到RGB的知识转移，以解决事件数据量有限的挑战，并使事件数据能够有效重用预训练的RGB模型。
+- **主要发现:** USKT框架（包含双向反向状态空间模型BiR-SSM）与ResNet50结合后，在DVS128 Gesture、N-Caltech101和CIFAR-10-DVS数据集上分别将模型性能提高了0.95%、3.57%和2.9%，突显了其适应性和有效性。
+
+---
+
+### Noise Filtering Benchmark for Neuromorphic Satellites Observations (http://arxiv.org/abs/2411.11233v1)
+- **作者:** Sami Arja, Alexandre Marcireau, Nicholas Owen Ralph, Saeed Afshar, Gregory Cohen
+- **研究目的:** 提出新的事件驱动噪声过滤算法，专门针对神经形态卫星观测中非常稀疏的场景设计，并使用新的高分辨率卫星数据集对它们进行基准测试。
+- **主要发现:** 所提出的逻辑和学习算法，结合新的公开卫星数据集，在去除噪声和热像素同时保留信号方面表现出有效性，为稀疏场景下的事件相机噪声过滤提供了全面的基准。
+
+---
+
+### SpikMamba: When SNN meets Mamba in Event-based Human Action Recognition (http://arxiv.org/abs/2410.16746v1)
+- **作者:** Jiaqi Chen, Yan Yang, Shizhuo Deng, Da Teng, Liyuan Pan
+- **研究目的:** 提出SpikMamba框架，结合脉冲神经网络和Mamba的长序列建模能力，以高效地从空间稀疏和高时间分辨率的事件数据中捕获全局特征，用于基于事件的人体动作识别。
+- **主要发现:** SpikMamba在PAF、HARDVS、DVS128和E-FAction数据集上取得了显著的识别性能，分别超越了之前的最先进水平1.45%、7.22%、0.15%和3.92%。
+
+---
+
+### Non-Invasive Qualitative Vibration Analysis using Event Camera (http://arxiv.org/abs/2410.14364v1)
+- **作者:** Dwijay Bane, Anurag Gupta, Manan Suri
+- **研究目的:** 探讨事件视觉传感器在非侵入性定性振动分析中的应用，特别关注频率测量和运动放大。
+- **主要发现:** 事件传感器在振动分析的频率测量中展现出实时结构评估的巨大潜力，但在运动放大方面，尤其是在固定相机和孤立运动的场景中，仍面临相当大的挑战。
+
+---
+
+### Leveraging Event Streams with Deep Reinforcement Learning for End-to-End UAV Tracking (http://arxiv.org/abs/2410.14685v1)
+- **作者:** Ala Souissi, Hajer Fradi, Panagiotis Papadakis
+- **研究目的:** 提出一个端到端深度强化学习（DRL）框架，用于使用事件相机进行无人机主动跟踪，将原始事件流传感器数据直接映射到无人机的控制动作。
+- **主要发现:** 该DRL框架在模拟环境中通过领域随机化进行训练，能够学习到最优策略，并在快速移动目标和光照变化等挑战性场景中展现出改进的泛化能力和有效性。
+
+---
+
+### FACET: Fast and Accurate Event-Based Eye Tracking Using Ellipse Modeling for Extended Reality (http://arxiv.org/abs/2409.15584v1)
+- **作者:** Junyuan Ding, Ziteng Wang, Chang Gao, Min Liu, Qinyu Chen
+- **研究目的:** 提出FACET（快速准确的基于事件的眼动追踪），一个端到端神经网络，直接从事件数据输出瞳孔椭圆参数，并针对实时扩展现实（XR）应用进行优化。
+- **主要发现:** FACET在增强的EV-Eye测试集上实现了0.20像素的平均瞳孔中心误差和0.53 ms的推理时间，与现有技术EV-Eye相比，像素误差和推理时间分别减少了1.6$\times$和1.8$\times$，参数和算术运算量分别减少了4.4$\times$和11.7$\times$。
+
+---
+
+### EventAug: Multifaceted Spatio-Temporal Data Augmentation Methods for Event-based Learning (http://arxiv.org/abs/2409.11813v1)
+- **作者:** Yukun Tian, Hao Chen, Yongjian Deng, Feihong Shen, Kepan Liu, Wei You, Ziyang Zhang
+- **研究目的:** 引入EventAug，一种系统的多方面时空数据增强方案，旨在解决事件相机领域数据不足和多样性有限的挑战，从而丰富时空多样性。
+- **主要发现:** EventAug（包含多尺度时间积分MSTI、空间显著事件掩码SSEM和时间显著事件掩码TSEM）在不同任务和骨干网络上持续带来显著改进（例如，DVS128 Gesture数据集上准确率提升4.87%），增强了模型对不同移动速度、遮挡和动作中断的鲁棒性。
+
+---
+
+### SDformerFlow: Spatiotemporal swin spikeformer for event-based optical flow estimation (http://arxiv.org/abs/2409.04082v1)
+- **作者:** Yi Tian, Juan Andrade-Cetto
+- **研究目的:** 提出STTFlowNet和SDformerFlow两种解决方案，用于事件相机的快速鲁棒光流估计，灵感来源于Transformer和脉冲驱动Transformer（spikeformer）在其他计算机视觉任务中的潜力。
+- **主要发现:** SDformerFlow是首个将spikeformer用于密集光流估计的方法，在DSEC和MVSEC数据集上实现了SNN事件光流方法中的最先进性能，同时相比等效ANN显著降低了功耗。
+
+---
+
+### MouseSIS: A Frames-and-Events Dataset for Space-Time Instance Segmentation of Mice (http://arxiv.org/abs/2409.03358v1)
+- **作者:** Friedhelm Hamann, Hanxiong Li, Paul Mieske, Lars Lewejohann, Guillermo Gallego
+- **研究目的:** 引入一项名为“时空实例分割”的新任务和一个名为MouseSIS的新数据集，旨在为基于事件的学习型掩码级跟踪算法提供带注释的数据，以解决传统算法在恶劣条件和快速运动下的挑战。
+- **主要发现:** MouseSIS数据集和两个参考方法表明，利用事件数据可以持续提高跟踪性能，尤其是在与传统相机结合使用时，突显了事件辅助跟踪在挑战性场景中的潜力。
+
+---
+### Optimal OnTheFly Feedback Control of Event Sensors
+- **作者:** Valery Vishnevskiy, Greg Burman, Sebastian Kozerke, Diederik Paul Moeys
+- **研究目的:** 提出一种动态反馈控制方法，用于事件相机的激活阈值，以优化从事件流中重建视频的质量。
+- **主要发现:** 所提出的OnTheFly控制方案在视频重建质量方面（LPIPS感知图像差异度量提高6-12%）和事件率方面（降低49%）显著优于固定和随机变化的阈值方案，同时实现了性能精度与事件率之间的精细平衡。
+
+---
+
+### MambaEVT: Event Stream based Visual Object Tracking using State Space Model
+- **作者:** Xiao Wang, Chao wang, Shiao Wang, Xixi Wang, Zhicheng Zhao, Lin Zhu, Bo Jiang
+- **研究目的:** 提出一种新颖的基于Mamba的视觉跟踪框架，该框架采用状态空间模型作为骨干网络，并引入动态模板更新策略，用于基于事件流的视觉目标跟踪。
+- **主要发现:** MambaEVT框架通过有效结合动态和静态模板，在EventVOT、VisEvent和FE240hz等多个大型数据集上，在准确性和计算成本之间取得了良好的平衡。
+
+---
+
+### Evaluating Image-Based Face and Eye Tracking with Event Cameras
+- **作者:** Khadija Iddrisu, Waseem Shariff, Noel E. OConnor, Joseph Lemley, Suzanne Little
+- **研究目的:** 评估将传统图像算法与转换为帧格式的事件数据相结合，用于基于事件相机的面部和眼睛跟踪的可行性。
+- **主要发现:** 该方法成功证明了传统算法（如GR-YOLO和YOLOv8）可以有效地应用于帧格式的事件数据进行面部和眼睛检测，在验证数据集上取得了良好的预测性能，平均精度分数达到$0.91$。
+
+---
+
+### Event Stream based Human Action Recognition: A High-Definition Benchmark Dataset and Algorithms
+- **作者:** Xiao Wang, Shiao Wang, Pengpeng Shao, Bo Jiang, Lin Zhu, Yonghong Tian
+- **研究目的:** 提出一个大规模、高分辨率（$1280 \times 800$）的基于事件流的人体动作识别基准数据集CeleX-HAR，并提出一种新颖的Mamba视觉骨干网络EVMamba。
+- **主要发现:** CeleX-HAR数据集为事件流人体动作识别提供了全面的基准，而所提出的EVMamba网络通过编码和挖掘事件流的时空信息，在多个数据集上取得了良好的结果。
+
+---
+
+### Retina-Inspired Object Motion Segmentation for Event-Cameras
+- **作者:** Victoria Clerico, Shay Snyder, Arya Lohia, Md Abdullah-Al Kaiser, Gregory Schwartz, Akhilesh Jaiswal, Maryam Parsa
+- **研究目的:** 提出一种受视网膜启发的、领域无关且高效的算法，用于事件相机的自我运动补偿和像素级物体运动分割。
+- **主要发现:** 所提出的基于物体运动敏感性（OMS）的生物启发方法，与现有方法相比，将参数数量减少了$10^{\text{3}}$到$10^{\text{6}}$个数量级，实现了鲁棒、高速和低带宽的传感器内计算。
+
+---
+
+### Event-Stream Super Resolution using Sigma-Delta Neural Network
+- **作者:** Waseem Shariff, Joe Lemley, Peter Corcoran
+- **研究目的:** 引入一种利用Sigma-Delta神经网络（SDNNs）的新方法，以提高事件相机捕获的基于亮度变化的事件像素的时空分辨率。
+- **主要发现:** 所提出的SDNN方法在计算效率上显著优于现有最先进方法，事件稀疏性提高了$17.04$倍，突触操作效率提高了$32.28$倍，同时在准确性方面也表现更佳。
+
+---
+
+### A Framework for Pupil Tracking with Event Cameras
+- **作者:** Khadija Iddrisu, Waseem Shariff, Suzanne Little
+- **研究目的:** 提出一个利用事件相机进行瞳孔跟踪的框架，通过将事件数据转换为帧格式并应用YOLOv8等深度学习算法来实现。
+- **主要发现:** 该框架通过利用事件相机的高时间分辨率，成功实现了瞳孔的精确跟踪，展示了其在神经科学、眼科学和人机交互等领域的潜在应用。
+
+---
+
+### Embracing Events and Frames with Hierarchical Feature Refinement Network for Object Detection
+- **作者:** Hu Cao, Zehua Zhang, Yan Xia, Xinyi Li, Jiahao Xia, Guang Chen, Alois Knoll
+- **研究目的:** 提出一种新颖的层次化特征细化网络（FRN），用于有效融合异构的事件和帧模态数据，以改善挑战条件下的目标检测性能。
+- **主要发现:** 所提出的FRN及其粗到细的跨模态自适应特征细化（CAFR）模块，在DSEC数据集上显著超越了现有最先进方法（$8.0\%$ mAP提升），并对图像损坏表现出更好的鲁棒性。
+
+---
+
+### Motion-prior Contrast Maximization for Dense Continuous-Time Motion Estimation
+- **作者:** Friedhelm Hamann, Ziyun Wang, Ioannis Asmanis, Kenneth Chaney, Guillermo Gallego, Kostas Daniilidis
+- **研究目的:** 引入一种新颖的自监督损失函数，结合对比度最大化框架和非线性运动先验，用于事件相机的密集连续时间运动估计。
+- **主要发现:** 该方法在密集连续时间运动估计中，将合成训练模型在真实世界数据集EVIMO2上的零样本性能提高了$29\%$，并在DSEC光流基准测试中，使一个简单的UNet在自监督方法中达到了最先进的性能。
+
+---
+
+### Helios: An extremely low power event-based gesture recognition for always-on smart eyewear
+- **作者:** Prarthana Bhattacharyya, Joshua Mitton, Ryan Page, Owen Morgan, Ben Menzies, Gabriel Homewood, Kemi Jacobs, Paolo Baesso, David Trickett, Chris Mair, Taru Muhonen, Rory Clark, Louis Berridge, Richard Vigars, Iain Wallace
+- **研究目的:** 开发Helios，第一个极低功耗、实时、基于事件的手势识别系统，专为全天候智能眼镜设计。
+- **主要发现:** Helios系统成功识别七类手势，包括细微的微手势，准确率达$91\%$，并以$60$ms的极低延迟实现实时性能，功耗低于$350$mW，展示了其在智能眼镜中实现直观人机交互的潜力。
+
+---
+
+### Text-to-Events: Synthetic Event Camera Streams from Conditional Text Input
+- **作者:** Joachim Ott, Zuowen Wang, Shih-Chii Liu
+- **研究目的:** 报告一种通过使用文本到X模型（其中X是事件流）来创建新的带标签事件数据集的方法，直接从文本提示生成合成事件帧。
+- **主要发现:** 所提出的文本到事件模型能够从文本提示生成逼真的人体手势事件序列，其分类准确率在真实数据集上介于$42\%$到$92\%$之间，证明了该方法合成事件数据集的能力。
+
+---
+
+### EvGGS: A Collaborative Learning Framework for Event-based Generalizable Gaussian Splatting
+- **作者:** Jiaxu Wang, Junhao He, Ziyi Zhang, Mingyuan Sun, Jingkai Sun, Renjing Xu
+- **研究目的:** 提出EvGGS，第一个基于事件的通用3D重建框架，它以前馈方式仅从事件输入重建场景为3D高斯。
+- **主要发现:** EvGGS通过其协同训练的深度估计、强度重建和高斯回归模块，在重建质量和深度/强度预测方面显著优于所有基线方法，并具有令人满意的渲染速度，且无需重新训练即可推广到未见场景。
+
+---
+
+### A Novel Spike Transformer Network for Depth Estimation from Event Cameras via Cross-modality Knowledge Distillation
+- **作者:** Xin Zhang, Liangxiu Han, Tam Sobeih, Lianghao Han, Darren Dancey
+- **研究目的:** 提出一种新颖的、能量高效的Spike-Driven Transformer网络（SDT），通过跨模态知识蒸馏，利用事件相机的独特属性进行深度估计。
+- **主要发现:** SDT凭借其纯粹的脉冲驱动Transformer架构和跨模态知识蒸馏框架，实现了高精度深度估计和最小能耗，是面向真实世界视觉应用的节能神经形态计算领域的重要进展。
+
+---
+
+### Event-Based Eye Tracking. AIS 2024 Challenge Survey
+- **作者:** Zuowen Wang, Chang Gao, Zongwei Wu, Marcos V. Conde, Radu Timofte, Shih-Chii Liu, Qinyu Chen, Zheng-jun Zha, Wei Zhai, Han Han, Bohao Liao, Yuliang Wu, Zengyu Wan, Zhong Wang, Yang Cao, Ganchao Tan, Jinze Chen, Yan Ru Pei, Sasskia Brüers, Sébastien Crouzet, Douglas McLelland, Oliver Coenen, Baoheng Zhang, Yizhao Gao, Jingyuan Li, Hayden Kwok-Hay So, Philippe Bich, Chiara Boretti, Luciano Prono, Mircea Lică, David Dinucu-Jianu, Cătălin Grîu, Xiaopeng Lin, Hongwei Ren, Bojun Cheng, Xinan Zhang, Valentin Vial, Anthony Yezzi, James Tsai
+- **研究目的:** 综述AIS 2024基于事件的眼动追踪（EET）挑战赛，重点关注处理事件相机记录的眼动并预测瞳孔中心的方法。
+- **主要发现:** 该综述分析了挑战赛中提交的新颖多样的方法，突出了在实现基于事件的眼动追踪任务准确性和效率权衡方面的进展。
+
+---
+
+### A Lightweight Spatiotemporal Network for Online Eye Tracking with Event Camera
+- **作者:** Yan Ru Pei, Sasskia Brüers, Sébastien Crouzet, Douglas McLelland, Olivier Coenen
+- **研究目的:** 提出一种因果时空卷积网络，用于利用事件相机进行高效、低延迟的在线眼动追踪，适用于边缘计算环境。
+- **主要发现:** 该轻量级网络在AIS 2024基于事件的眼动追踪挑战赛中达到了$0.9916$的p10准确率，证明了其在资源受限硬件上进行在线推理的有效性。
+
+---
+
+### SpikeNVS: Enhancing Novel View Synthesis from Blurry Images via Spike Camera
+- **作者:** Gaole Dai, Zhenyu Wang, Qinwen Xu, Ming Lu, Wen Chen, Boxin Shi, Shanghang Zhang, Tiejun Huang
+- **研究目的:** 提出SpikeNVS，一种利用脉冲相机通过将脉冲流中的纹理重建作为真值来增强模糊图像新视图合成的新方法。
+- **主要发现:** SpikeNVS通过引入纹理从脉冲（TfS）损失，有效克服了事件-RGB方法的局限性，保持了可控的训练成本，并在合成和真实世界数据集上显著增强了NeRF和3DGS的新视图合成效果。
+
+---
+
+### A Neuromorphic Approach to Obstacle Avoidance in Robot Manipulation
+- **作者:** Ahmed Faisal Abdelrahman, Matias Valdenegro-Toro, Maren Bennewitz, Paul G. Plöger
+- **研究目的:** 探索受大脑启发的感知（事件相机）和数据处理（脉冲神经网络）在机器人操作中避障的效用。
+- **主要发现:** 该神经形态方法在模拟和真实世界实验中成功实现了对即将发生碰撞的可靠避障，证明了事件相机和SNN在反应式机器人控制中的潜力，并展现了计算与感知运动幅度相关以及对不同事件仿真方法的鲁棒性。
+
+---
+
+### Hypergraph-based Multi-View Action Recognition using Event Cameras
+- **作者:** Yue Gao, Jiaxuan Lu, Siqi Li, Yipeng Li, Shaoyi Du
+- **研究目的:** 提出HyperMV，一个基于超图的多视图事件相机动作识别框架，并发布一个大规模多视图事件动作数据集$\text{THU}^{\text{MV-EACT}}\text{-50}$，以弥补多视图事件数据利用的空白。
+- **主要发现:** HyperMV通过将事件数据转换为类帧表示并采用带有顶点注意力的多视图超图神经网络，在跨主体和跨视图场景中显著优于基线方法，并超越了基于帧的多视图动作识别的现有最先进技术。
+
+---
+
+### Tracking-Assisted Object Detection with Event Cameras
+- **作者:** Ting-Kang Yen, Igor Morawski, Shusil Dangi, Kai He, Chung-Yi Lin, Jia-Fong Yeh, Hung-Ting Su, Winston Hsu
+- **研究目的:** 提出一种跟踪辅助的目标检测方法，通过将静止的不可见物体视为伪遮挡物体来解决事件相机数据中目标检测的挑战。
+- **主要发现:** 所提出的方法通过引入可见性属性、自动标注算法和显式跟踪策略，显著提高了目标检测性能（绝对mAP提升$7.9\%$），有效保留了静止物体同时丢弃了真实遮挡物体。
+
+---
+
+### Ev-Edge:
+### [E2HQV: High-Quality Video Generation from Event Camera via Theory-Inspired Model-Aided Deep Learning](http://arxiv.org/abs/2401.08117v1)
+- **作者:** Qiang Qu, Yiran Shen, Xiaoming Chen, Yuk Ying Chung, Tongliang Liu
+- **研究目的:** 提出一种新颖的、由理论启发的模型辅助深度学习框架E2HQV，用于从事件流生成高质量视频帧，以克服现有纯数据驱动方法的局限性。
+- **主要发现:** E2HQV通过结合理论启发的事件到视频模型和时间偏移嵌入模块，在真实世界事件相机数据集上显著优于现有最先进的方法，尤其在复杂场景中能更好地重建细节纹理。
+
+---
+
+### [CRSOT: Cross-Resolution Object Tracking using Unaligned Frame and Event Cameras](http://arxiv.org/abs/2401.02826v1)
+- **作者:** Yabin Zhu, Xiao Wang, Chenglong Li, Bo Jiang, Lin Zhu, Zhixiang Huang, Yonghong Tian, Jin Tang
+- **研究目的:** 提出一种使用未对齐的帧相机和事件相机进行目标跟踪的方法，以解决实际应用中不同分辨率传感器难以严格时空对齐的问题。
+- **主要发现:** 作者构建了首个未对齐帧-事件数据集CRSOT，并提出了一种新颖的未对齐目标跟踪框架，该框架通过不确定性感知模块和模态不确定性融合模块，即使在松散对齐的RGB-事件数据下也能实现鲁棒的高性能跟踪。
+
+---
+
+### [EvPlug: Learn a Plug-and-Play Module for Event and Image Fusion](http://arxiv.org/abs/2312.16933v1)
+- **作者:** Jianping Jiang, Xinyu Zhou, Peiqi Duan, Boxin Shi
+- **研究目的:** 学习一个即插即用的事件与图像融合模块EvPlug，使其能够在不改变现有RGB模型结构或权重的情况下，增强其在HDR和快速运动场景下的鲁棒性，并实现高时间分辨率推理。
+- **主要发现:** EvPlug仅利用未标注的事件-图像对，成功地将事件流与图像特征融合，显著提升了RGB模型在目标检测、语义分割和3D手部姿态估计等任务上的性能，并使其能够适应高动态范围和快速运动场景。
+
+---
+
+### [Low-power, Continuous Remote Behavioral Localization with Event Cameras](http://arxiv.org/abs/2312.03799v2)
+- **作者:** Friedhelm Hamann, Suman Ghosh, Ignacio Juarez Martinez, Tom Hart, Alex Kacelnik, Guillermo Gallego
+- **研究目的:** 探索使用事件相机进行低功耗、连续的远程动物行为量化，以克服传统相机在野外监测中面临的照明和电源限制。
+- **主要发现:** 事件相机及其开发的检测方法能够有效监测和检测企鹅的“狂喜展示”行为，在挑战性照明条件下表现出鲁棒性，并且由于低功耗特性，能比传统相机记录更长时间。
+
+---
+
+### [Retina : Low-Power Eye Tracking with Event Camera and Spiking Hardware](http://arxiv.org/abs/2312.00425v2)
+- **作者:** Pietro Bonazzi, Sizhen Bian, Giovanni Lippolis, Yawei Li, Sadique Sheik, Michele Magno
+- **研究目的:** 提出一种基于纯事件数据的低功耗、高精度眼动追踪神经形态学方法，利用直接训练的脉冲神经网络（SNN）和边缘神经形态处理器。
+- **主要发现:** 所提出的“Retina”SNN模型在新建的“Ini-30”数据集上实现了仅$3.24$像素的瞳孔追踪误差，功耗介于$2.89-4.8$毫瓦之间，且计算复杂度远低于现有方法，展现了卓越的精度和效率。
+
+---
+
+### [GET: Group Event Transformer for Event-Based Vision](http://arxiv.org/abs/2310.02642v1)
+- **作者:** Yansong Peng, Yueyi Zhang, Zhiwei Xiong, Xiaoyan Sun, Feng Wu
+- **研究目的:** 提出一种新颖的基于组的事件视觉Transformer骨干网络（GET），旨在解耦事件的时间-极性信息与空间信息，以更有效地利用事件相机的独特属性。
+- **主要发现:** GET通过引入“组令牌”事件表示、事件双自注意力块和组令牌聚合模块，在多个事件分类和目标检测数据集上显著优于现有最先进的方法。
+
+---
+
+### [Event Stream-based Visual Object Tracking: A High-Resolution Benchmark Dataset and A Novel Baseline](http://arxiv.org/abs/2309.14611v1)
+- **作者:** Xiao Wang, Shiao Wang, Chuanming Tang, Lin Zhu, Bo Jiang, Yonghong Tian, Jin Tang
+- **研究目的:** 针对现有事件追踪方法在推理成本和噪声敏感性方面的局限性，提出一种利用多模态/多视图信息进行知识蒸馏的框架，并构建首个高分辨率事件追踪数据集。
+- **主要发现:** 所提出的分层知识蒸馏框架在训练时充分利用多模态信息，使得学生Transformer网络在测试时仅使用事件信号即可实现高速、低延迟的视觉追踪；同时，发布了首个大规模高分辨率事件追踪数据集EventVOT。
+
+---
+
+### [Dense Voxel 3D Reconstruction Using a Monocular Event Camera](http://arxiv.org/abs/2309.00385v1)
+- **作者:** Haodong Chen, Vera Chung, Li Tan, Xiaoming Chen
+- **研究目的:** 提出一种仅使用单目事件相机进行密集体素3D重建的新方法，以克服现有方法对多相机或半密集结果的依赖。
+- **主要发现:** 所提出的方法首次实现了直接从单目事件相机进行视觉上可区分的密集3D重建，无需复杂的管道，并且创建了一个新的合成数据集以促进该领域的研究。
+
+---
+
+### [3ET: Efficient Event-based Eye Tracking using a Change-Based ConvLSTM Network](http://arxiv.org/abs/2308.11771v1)
+- **作者:** Qinyu Chen, Zuowen Wang, Shih-Chii Liu, Chang Gao
+- **研究目的:** 提出一种基于稀疏变化卷积长短期记忆（CB-ConvLSTM）模型的事件相机眼动追踪方法，旨在实现高效、低延迟的实时眼动追踪，适用于资源受限的设备。
+- **主要发现:** CB-ConvLSTM架构能够高效地从事件流中提取时空特征进行瞳孔追踪，在不损失精度的情况下将算术运算减少约$4.7\times$，使其成为实时、资源受限设备中眼动追踪的理想选择。
+
+---
+
+### [SSTFormer: Bridging Spiking Neural Network and Memory Support Transformer for Frame-Event based Recognition](http://arxiv.org/abs/2308.04369v3)
+- **作者:** Xiao Wang, Yao Rong, Zongzhen Wu, Lin Zhu, Bo Jiang, Jin Tang, Yonghong Tian
+- **研究目的:** 提出一种新的RGB帧-事件融合识别框架SSTFormer，旨在通过融合RGB帧和事件流，平衡脉冲神经网络（SNN）的能效和人工神经网络（ANN）的高性能，并解决RGB-事件分类数据集稀缺的问题。
+- **主要发现:** SSTFormer通过记忆支持Transformer网络编码RGB帧、脉冲神经网络编码原始事件流以及多模态瓶颈融合模块，有效融合双模态特征，并在新提出的PokerEvent数据集上验证了其有效性。
+
+---
+
+### [Decisive Data using Multi-Modality Optical Sensors for Advanced Vehicular Systems](http://arxiv.org/abs/2307.13600v1)
+- **作者:** Muhammad Ali Farooq, Waseem Shariff, Mehdi Sefidgar Dilmaghani, Wang Yao, Moazam Soomro, Peter Corcoran
+- **研究目的:** 探讨多模态光学传感器（包括长波热成像、近红外、神经形态/事件相机、可见光CMOS和深度相机）在设计和开发先进车载系统中的关键作用。
+- **主要发现:** 论文讨论了每种光学模态的独特优势及其在实时环境中潜在的应用，强调了多模态数据如何增强人类视觉并为关键应用提供有意义的信息。
+
+---
+
+### [Best of Both Worlds: Hybrid SNN-ANN Architecture for Event-based Optical Flow Estimation](http://arxiv.org/abs/2306.02960v2)
+- **作者:** Shubham Negi, Deepika Sharma, Adarsh Kumar Kosta, Kaushik Roy
+- **研究目的:** 提出一种新颖的SNN-ANN混合架构，用于事件相机光流估计，旨在结合SNN的异步处理能力和ANN的训练与部署优势，同时克服SNN训练的挑战。
+- **主要发现:** 混合SNN-ANN架构在DSEC-flow数据集上实现了平均端点误差（AEE）的显著降低（相比全SNN降低$40\%$，相比全ANN降低$48\%$），同时保持了可比的能耗，为事件相机光流估计提供了性能和训练效率的优化平衡。
+
+---
+
+### [Deformable Convolutions and LSTM-based Flexible Event Frame Fusion Network for Motion Deblurring](http://arxiv.org/abs/2306.00834v1)
+- **作者:** Dan Yang, Mehmet Yamac
+- **研究目的:** 开发一种基于可变形卷积和LSTM的灵活事件帧融合网络（DLEFNet），用于运动去模糊，旨在解决事件数据与图像信息融合的挑战，特别是动态曝光时间下的问题。
+- **主要发现:** DLEFNet能够处理动态变化的事件帧数量，并在合成和真实世界数据集上，其去模糊性能优于现有最先进的网络，特别适用于曝光时间可变或存在快速移动物体的场景。
+
+---
+
+### [Spiking-Fer: Spiking Neural Network for Facial Expression Recognition With Event Cameras](http://arxiv.org/abs/2304.10211v1)
+- **作者:** Sami Barchid, Benjamin Allaert, Amel Aissaoui, José Mennesson, Chaabane Djéraba
+- **研究目的:** 首次将事件相机应用于面部表情识别（FER），并提出一种名为“Spiking-FER”的深度卷积脉冲神经网络（SNN）模型，以实现边缘设备的低能耗FER。
+- **主要发现:** Spiking-FER在事件相机FER任务上取得了与人工神经网络（ANN）相当的性能，但能耗降低了高达$65.39\times$，证明了SNN和事件相机在低能耗FER方面的巨大潜力。
+
+---
+
+### [Neuromorphic Optical Flow and Real-time Implementation with Event Cameras](http://arxiv.org/abs/2304.07139v2)
+- **作者:** Yannick Schnider, Stanislaw Wozniak, Mathias Gehrig, Jules Lecomte, Axel von Arnim, Luca Benini, Davide Scaramuzza, Angeliki Pantazi
+- **研究目的:** 提出一种新的神经形态光流网络架构，并开发一种模型简化方法，以实现事件相机的高速、实时光流预测，适用于边缘设备和机器人应用。
+- **主要发现:** 所提出的网络在脉冲和非脉冲模式下都提高了自监督光流的准确性，并且通过模型简化，实现了近两个数量级复杂度的降低，同时保持了准确性，为实时部署铺平了道路。
+
+---
+
+### [Learning Spatial-Temporal Implicit Neural Representations for Event-Guided Video Super-Resolution](http://arxiv.org/abs/2303.13767v2)
+- **作者:** Yunfan Lu, Zipeng Wang, Minjie Liu, Hongjian Wang, Lin Wang
+- **研究目的:** 首次尝试利用事件相机的高时间分辨率特性，通过学习时空隐式神经表示，解决任意尺度视频超分辨率（VSR）的挑战。
+- **主要发现:** 所提出的框架通过时空融合模块、时间滤波器模块和时空隐式表示模块，能够从查询的时空坐标和RGB帧与事件的特征中恢复任意分辨率的超分辨率帧，显著超越现有技术，并发布了新的真实世界数据集。
+
+---
+
+### [Unsupervised Domain Adaptation for Training Event-Based Networks Using Contrastive Learning and Uncorrelated Conditioning](http://arxiv.org/abs/2303.12424v1)
+- **作者:** Dayuan Jian, Mohammad Rostami
+- **研究目的:** 开发一种无监督域适应算法，用于训练基于事件数据的深度网络进行图像分类，以解决事件相机数据标注稀缺的挑战。
+- **主要发现:** 所提出的算法利用对比学习和不相关条件化，在训练事件相机图像分类网络方面优于现有算法，为解决事件数据稀缺问题提供了实用方案。
+
+---
+
+### [Taming Contrast Maximization for Learning Sequential, Low-latency, Event-based Optical Flow](http://arxiv.org/abs/2303.05214v2)
+- **作者:** Federico Paredes-Vallés, Kirk Y. W. Scheper, Christophe De Wagter, Guido C. H. E. de Croon
+- **研究目的:** 提出一种新颖的自监督学习管道，用于事件相机的序列、低延迟光流估计，通过对对比度最大化进行鲁棒性改进，使其能够扩展到高推理频率。
+- **主要发现:** 该方法基于一个持续运行的有状态神经模型，并采用了一种新颖的对比度最大化公式进行训练，在不使用真值的情况下，在准确性方面建立了事件相机光流自监督学习的新SOTA。
+
+---
+
+### [EvHandPose: Event-based 3D Hand Pose Estimation with Sparse Supervision](http://arxiv.org/abs/2303.02862v3)
+- **作者:** Jianping Jiang, Jiahe Li, Baowen Zhang, Xiaoming Deng, Boxin Shi
+- **研究目的:** 提出EvHandPose，一种基于事件相机的3D手部姿态估计方法，旨在解决快速运动和高动态范围场景下的挑战，并克服稀疏标注问题。
+- **主要发现:** EvHandPose通过新颖的手部流表示和弱监督框架（包含对比度最大化和手部边缘约束），在挑战性场景中实现了高精度、高时间分辨率的稳定手部姿态估计，并发布了首个大规模真实世界事件手部姿态数据集EvRealHands。
+
+---
+
+### [CERiL: Continuous Event-based Reinforcement Learning](http://arxiv.org/abs/2302.07667v1)
+- **作者:** Celyn Walters, Simon Hadfield
+- **研究目的:** 探索事件相机在实现连续时间强化学习方面的潜力，并提出CERiL算法，使其能够直接处理事件流以产生相应的输出动作流。
+- **主要发现:** CERiL算法使用专门的网络层直接在事件流上操作，其性能优于传统强化学习网络和标准SNN基线，成功解决了传统方法无法解决的任务，展示了事件流在强化学习中的优势。
+
+---
+
+### [Neuromorphic High-Frequency 3D Dancing Pose Estimation in Dynamic Environment](http://arxiv.org/abs/2301.06648v2)
+- **作者:** Zhongyang Zhang, Kaidong Chai, Haowen Yu, Ramzi Majaj, Francesca Walsh, Edward Wang, Upal Mahbub, Hava Siegelmann, Donghyun Kim, Tauhidur Rahman
+- **研究目的:** 提出YeLan，一个基于事件相机的3D高频人体姿态估计（HPE）系统，旨在克服传统RGB或RGB-D相机在低光照和动态背景下进行舞蹈姿态估计的局限性。
+- **主要发现:** YeLan在具有挑战性的条件下表现优于基线模型，对不同类型的服装、背景运动、视角、遮挡和光照波动具有鲁棒性，并且首次发布了事件相机舞蹈数据集和物理感知模拟器。
+
+---
+
+### [Revisiting Color-Event based Tracking: A Unified Network, Dataset, and Metric](http://arxiv.org/abs/2211.11010v2)
+- **作者:** Chuanming Tang, Xiao Wang, Ju Huang, Bo Jiang, Lin Zhu, Jianlin Zhang, Yaowei Wang, Yonghong Tian
+- **研究目的:** 提出一个单阶段、统一的Transformer骨干网络CEUTrack，用于鲁棒的颜色-事件目标追踪，以解决现有框架效率低下的问题，并发布新的大规模基准数据集COESOT和评估指标BOC。
+- **主要发现:** CEUTrack通过将特征提取、融合和匹配功能统一在一个Transformer骨干网络中，实现了超过$75$ FPS的SOTA性能；同时，COESOT数据集和BOC评估指标为颜色-事件追踪研究提供了更完善的平台。
+
+---
+
+### [HARDVS: Revisiting Human Activity Recognition with Dynamic Vision Sensors](http://arxiv.org/abs/2211.09648v1)
+- **作者:** Xiao Wang, Zongzhen Wu, Bo Jiang, Zhimin Bao, Lin Zhu, Guoqi Li, Yaowei Wang, Yonghong Tian
+- **研究目的:** 解决事件相机在人体活动识别（HAR）领域缺乏大规模真实世界数据集的问题，并提出一种新颖的时空特征学习与融合框架ESTF。
+- **主要发现:** 作者发布了首个大规模事件相机HAR基准数据集HARDVS，并提出了ESTF框架，该框架通过StemNet和Transformer网络有效编码和融合事件流的双视图表示，在多个数据集上验证了其有效性。
+
+---
+
+### [Frequency Cam: Imaging Periodic Signals in Real-Time](http://arxiv.org/abs/2211.00198v1)
+- **作者:** Bernd Pfrommer
+- **研究目的:** 提出一种高效、完全异步的事件相机算法Frequency Cam，用于实时检测图像像素的基频闪烁，以分析时间周期信号。
+- **主要发现:** Frequency Cam利用二阶IIR滤波器进行近似逐像素亮度重建，能鲁棒地检测频率，并发现下降沿和零电平交叉插值能提高精度，但指出读出带宽是全传感器高频成像的主要限制。
+
+---
+
+### [Adaptive-SpikeNet: Event-based Optical Flow Estimation using Spiking Neural Networks with Learnable Neuronal Dynamics](http://arxiv.org/abs/2209.11741v2)
+- **作者:** Adarsh Kumar Kosta, Kaushik Roy
+- **研究目的:** 提出Adaptive-SpikeNet，一个具有可学习神经元动力学的自适应全脉冲框架，用于事件相机光流估计，旨在缓解深度SNN中的脉冲消失问题并利用其效率优势。
+- **主要发现:** Adaptive-SpikeNet在MVSEC和DSEC-Flow数据集上，相比最先进的ANN，平均端点误差（AEE）平均降低了$13\%$，同时在网络参数（$48.3\times$）和计算能耗（$10.2\times$）方面实现了显著节省，证明了SNN在边缘应用中的优越性。
+
+---
+### [EDeNN: Event Decay Neural Networks for low latency vision](http://arxiv.org/abs/2209.04362v2)
+- **作者:** Celyn Walters, Simon Hadfield
+- **研究目的:** 开发一种新型神经网络，直接在事件数据流上操作，以实现低延迟计算机视觉，避免将事件转换回图像帧。
+- **主要发现:** 所提出的EDeNN在角速度回归方面达到最先进性能，并在光流估计方面具有竞争力，同时处理延迟显著降低，比其他实现少于$1/10$，持续推理可再提高一个数量级。
+
+---
+
+### [Visual Odometry with Neuromorphic Resonator Networks](http://arxiv.org/abs/2209.02000v3)
+- **作者:** Alpha Renner, Lazar Supic, Andreea Danielescu, Giacomo Indiveri, E. Paxon Frady, Friedrich T. Sommer, Yulia Sandamirskaya
+- **研究目的:** 提出一种模块化的神经形态算法，利用向量符号架构（VSA）作为抽象层来设计兼容神经形态硬件的视觉里程计（VO）解决方案。
+- **主要发现:** 基于VSA的神经形态VO方法在二维VO任务上实现了最先进的性能，通过存储和更新视觉环境的工作记忆来估计相机位置和方向。
+
+---
+
+### [Training Robust Spiking Neural Networks on Neuromorphic Data with Spatiotemporal Fragments](http://arxiv.org/abs/2207.11659v3)
+- **作者:** Haibo Shen, Yihao Luo, Xiang Cao, Liangqi Zhang, Juyu Xiao, Tianjiang Wang
+- **研究目的:** 提出一种新颖的事件时空片段（ESTF）数据增强方法，通过漂移或反转时空事件流的片段来模拟亮度变化，从而训练更鲁棒的脉冲神经网络（SNNs）。
+- **主要发现:** ESTF显著提高了SNNs在神经形态数据集上的性能，超越了纯几何变换和其他事件数据增强方法，并在CIFAR10-DVS数据集上达到了$83.9\%$的最先进准确率。
+
+---
+
+### [Fusing Frame and Event Vision for High-speed Optical Flow for Edge Application](http://arxiv.org/abs/2207.10720v1)
+- **作者:** Ashwin Sanjay Lele, Arijit Raychowdhury
+- **研究目的:** 融合帧基和事件基视觉的互补优势，以实现高速光流计算，同时保持低错误率，适用于边缘应用。
+- **主要发现:** 该仿生网络在MVSEC数据集上实现了$4$倍加速下仅有$19\%$的误差下降，证明了其在高速无人机跟踪等应用中的适用性。
+
+---
+
+### [How Many Events do You Need? Event-based Visual Place Recognition Using Sparse But Varying Pixels](http://arxiv.org/abs/2206.13673v3)
+- **作者:** Tobias Fischer, Michael Milford
+- **研究目的:** 探索从少量像素（几十到几百个）的事件流中提取独特性，用于视觉地点识别任务，以实现频繁且计算成本低的定位更新。
+- **主要发现:** 仅使用稀疏但变化大的像素（基于事件数量的绝对差）足以完成地点识别任务，在户外驾驶和室内机器人场景中均表现出竞争力，并对速度变化具有鲁棒性。
+
+---
+
+### [E2V-SDE: From Asynchronous Events to Fast and Continuous Video Reconstruction via Neural Stochastic Differential Equations](http://arxiv.org/abs/2206.07578v2)
+- **作者:** Jongwan Kim, DongJin Lee, Byunggook Na, Seongsik Park, Jeonghee Jo, Sungroh Yoon
+- **研究目的:** 引入E2V-SDE模型，其动态在潜在空间中由随机微分方程（SDE）控制，旨在从异步事件数据中快速重建高质量、连续的视频。
+- **主要发现:** E2V-SDE能够快速重建任意时间步的图像，并在图像清晰度和时间一致性方面表现出色，LPIPS分数提高了高达$12\%$，重建速度比ET-Net快$87\%$。
+
+---
+
+### [EventMix: An Efficient Augmentation Strategy for Event-Based Data](http://arxiv.org/abs/2205.12054v1)
+- **作者:** Guobin Shen, Dongcheng Zhao, Yi Zeng
+- **研究目的:** 提出一种高效的事件流数据增强策略EventMix，以解决神经形态数据集规模小且难以获取的问题，从而促进神经形态计算的发展。
+- **主要发现:** EventMix通过高斯混合模型精心设计不同事件流的混合，并在多个神经形态数据集上显著提高了ANNs和SNNs的性能，在DVS-CIFAR10、N-Caltech101、N-CARS和DVS-Gesture数据集上达到了最先进的性能。
+
+---
+
+### [TimeReplayer: Unlocking the Potential of Event Cameras for Video Interpolation](http://arxiv.org/abs/2203.13859v1)
+- **作者:** Weihua He, Kaichao You, Zhendong Qiao, Xu Jia, Ziyang Zhang, Wenhui Wang, Huchuan Lu, Yaoyuan Wang, Jianxing Liao
+- **研究目的:** 提出一种新颖的TimeReplayer算法，利用事件相机对普通相机捕获的视频进行插帧和外推，旨在克服传统方法对复杂运动建模的局限性，并消除对高速训练数据的需求。
+- **主要发现:** TimeReplayer采用无监督循环一致性训练方式，实现了视频插帧和外推的最先进结果，充分展现了事件相机在处理任意复杂运动方面的巨大潜力。
+
+---
+
+### [ESS: Learning Event-based Semantic Segmentation from Still Images](http://arxiv.org/abs/2203.10016v2)
+- **作者:** Zhaoning Sun, Nico Messikommer, Daniel Gehrig, Davide Scaramuzza
+- **研究目的:** 引入ESS（Event-based Semantic Segmentation），通过无监督域适应（UDA）将语义分割任务从现有标注图像数据集直接迁移到未标注事件数据，以解决高质量标注事件数据集的缺乏。
+- **主要发现:** ESS通过对齐循环、运动不变的事件嵌入与图像嵌入，仅使用图像标注就超越了现有UDA方法，并结合事件标注后甚至超越了DDD17和DSEC-Semantic数据集上的最先进监督方法。
+
+---
+
+### [Real-Time Event-Based Tracking and Detection for Maritime Environments](http://arxiv.org/abs/2202.04231v1)
+- **作者:** Stephanie Aelmore, Richard C. Ordonez, Shibin Parameswaran, Justin Mauger
+- **研究目的:** 开发一种实时事件基跟踪和检测方法，专门用于海上环境，以克服波浪产生大量事件等独特挑战，从而识别和跟踪船只。
+- **主要发现:** 通过过滤冗余事件并分析每个事件簇的运动，该方法能够有效识别和跟踪船只，同时忽略波浪产生的短暂且不规则的特征。
+
+---
+
+### [3D-FlowNet: Event-based optical flow estimation with 3D representation](http://arxiv.org/abs/2201.12265v1)
+- **作者:** Haixin Sun, Minh-Quan Dao, Vincent Fremont
+- **研究目的:** 提出3D-FlowNet，一种新的网络架构，通过将事件数据扩展到三维表示来更好地保留时间分布，从而改进事件基光流估计。
+- **主要发现:** 3D-FlowNet在MVSEC数据集上，以更少的训练周期（$30$个周期对比Spike-FlowNet的$100$个周期）超越了最先进的方法，证明了其3D输入表示的优越性。
+
+---
+
+### [Formulating Event-based Image Reconstruction as a Linear Inverse Problem with Deep Regularization using Optical Flow](http://arxiv.org/abs/2112.06242v3)
+- **作者:** Zelin Zhang, Anthony Yezzi, Guillermo Gallego
+- **研究目的:** 首次将事件基图像重建问题表述为结合运动和亮度估计的线性逆问题，从而无需训练图像重建循环神经网络（RNN）即可解决。
+- **主要发现:** 该方法利用经典和基于学习的正则化器（如图像去噪CNN）生成与最先进方法视觉质量相当的图像，且仅使用短时间间隔数据，同时具有可解释性和通用性。
+
+---
+
+### [Research on Event Accumulator Settings for Event-Based SLAM](http://arxiv.org/abs/2112.00427v4)
+- **作者:** Kun Xiao, Guohui Wang, Yi Chen, Yongfeng Xie, Hong Li, Sen Li
+- **研究目的:** 研究事件累加器设置对事件基SLAM性能的影响，旨在通过优化事件帧的累加方式，提高传统SLAM算法在事件相机数据上的表现。
+- **主要发现:** 所提出的事件累加器设置策略在大多数序列中均优于最先进的事件帧基SLAM算法，并在四旋翼无人机上进行了实际验证，显示出在真实场景中的应用潜力。
+
+---
+
+### [Lifelong Learning from Event-based Data](http://arxiv.org/abs/2111.08458v1)
+- **作者:** Vadym Gryshchuk, Cornelius Weber, Chu Kiong Loo, Stefan Wermter
+- **研究目的:** 探索从事件相机数据中进行终身学习的方法，并比较缓解灾难性遗忘的技术，使人工智能体能够在动态环境中增量积累知识。
+- **主要发现:** 所提出的结合特征提取和连续学习，并引入基于习惯化方法的模型，能够有效避免灾难性遗忘，实现从事件数据中增量学习。
+
+---
+
+### [A New Look at Spike-Timing-Dependent Plasticity Networks for Spatio-Temporal Feature Learning](http://arxiv.org/abs/2111.00791v4)
+- **作者:** Ali Safa, Ilja Ocket, André Bourdoux, Hichem Sahli, Francky Catthoor, Georges Gielen
+- **研究目的:** 为脉冲神经网络（SNNs）中的无监督脉冲时间依赖可塑性（STDP）学习提供新的理论基础，以减少设计时间并提高从事件相机学习时空特征的能力。
+- **主要发现:** 该通用框架和提出的SNN-STDP架构在N-MNIST、CIFAR10-DVS和IBM DVS128 Gesture数据集上显著提高了分类准确率（例如，CIFAR10-DVS上比传统事件基特征描述符提高$8.2\%$），为超低功耗学习和生物学合理视觉理论做出了贡献。
+
+---
+
+### [Moving Object Detection for Event-based vision using Graph Spectral Clustering](http://arxiv.org/abs/2109.14979v3)
+- **作者:** Anindya Mondal, Shashant R, Jhony H. Giraldo, Thierry Bouwmans, Ananda S. Chowdhury
+- **研究目的:** 提出一种无监督图谱聚类技术（GSCEventMOD），用于事件基数据中的运动目标检测，以应对事件数据噪声大、分辨率低且缺乏传统视觉信息的挑战。
+- **主要发现:** GSCEventMOD能够自动确定运动目标的最佳数量，并在公开数据集上比多项最先进技术高出高达$30\%$的性能，证明了其在事件基视觉中运动目标检测的鲁棒性。
+
+---
+
+### [StereoSpike: Depth Learning with a Spiking Neural Network](http://arxiv.org/abs/2109.13751v3)
+- **作者:** Ulysse Rançon, Javier Cuadrado-Anibarro, Benoit R. Cottereau, Timothée Masquelier
+- **研究目的:** 使用端到端神经形态方法解决深度估计问题，该方法结合了两台事件相机和一个经过修改的U-Net编码器-解码器架构的脉冲神经网络（SNN），命名为StereoSpike。
+- **主要发现:** StereoSpike作为第一个解决大规模回归问题的全脉冲网络，在MVSEC数据集上实现了最先进的测试准确率，甚至优于非脉冲对应网络，并且通过正则化可实现低放电率，为低功耗嵌入式系统铺平道路。
+
+---
+
+### [SiamEvent: Event-based Object Tracking via Edge-aware Similarity Learning with Siamese Networks](http://arxiv.org/abs/2109.13456v1)
+- **作者:** Yujeong Chae, Lin Wang, Kuk-Jin Yoon
+- **研究目的:** 提出一种新颖的事件基目标跟踪框架SiamEvent，利用孪生网络和边缘感知相似性学习，以克服现有方法对目标运动和独立性的假设限制。
+- **主要发现:** SiamEvent通过关联两个时间戳的嵌入事件来计算目标边缘相似度，在真实场景中实现了高达$15\%$的跟踪性能提升，并在挑战性的HDR和运动模糊条件下表现出更鲁棒的跟踪性能，同时还构建了一个新的数据集。
+
+---
+
+### [VisEvent: Reliable Object Tracking via Collaboration of Frame and Event Flows](http://arxiv.org/abs/2108.05015v4)
+- **作者:** Xiao Wang, Jianing Li, Lin Zhu, Zhipeng Zhang, Zhe Chen, Xin Li, Yaowei Wang, Yonghong Tian, Feng Wu
+- **研究目的:** 提出一个大规模可见光-事件基准（VisEvent）和一个简单有效的跟踪算法，通过跨模态Transformer实现可见光和事件数据之间的有效特征融合，从而提高目标跟踪的可靠性。
+- **主要发现:** VisEvent数据集促进了双模态跟踪研究，所提出的跨模态Transformer有效融合了特征，在多个数据集上验证了模型的有效性，并在低光照、高速和背景杂乱等挑战性场景中实现了更可靠的目标跟踪。
+
+---
+
+### [EVPropNet: Detecting Drones By Finding Propellers For Mid-Air Landing And Following](http://arxiv.org/abs/2106.15045v1)
+- **作者:** Nitin J. Sanket, Chahat Deep Singh, Chethan M. Parameshwara, Cornelia Fermüller, Guido C. H. E. de Croon, Yiannis Aloimonos
+- **研究目的:** 建模螺旋桨几何形状并生成模拟事件，用以训练深度神经网络EVPropNet，从而利用事件相机数据检测无人机螺旋桨，实现空中着陆和跟踪。
+- **主要发现:** EVPropNet能够以$85.1\%$的准确率检测螺旋桨（即使$60\%$被遮挡），在$2W$功耗预算下以高达$35Hz$运行，并在真实世界无人机跟踪和着陆任务中分别实现了$92\%$和$90\%$的成功率。
+
+---
+
+### [Self-Supervised Learning of Event-Based Optical Flow with Spiking Neural Networks](http://arxiv.org/abs/2106.01862v2)
+- **作者:** Jesse Hagenaars, Federico Paredes-Vallés, Guido de Croon
+- **研究目的:** 解决将学习算法从传统人工神经网络（ANNs）转移到脉冲神经网络（SNNs）的挑战，并实现真正异步和全神经形态的事件基光流自监督学习。
+- **主要发现:** 所提出的训练流程和重新制定的损失函数使SNNs和ANNs在事件基光流估计方面达到了与最先进自监督ANNs相当的性能，并强调了初始化和替代梯度宽度对SNNs学习的关键作用。
+
+---
+
+### [Bio-inspired visual attention for silicon retinas based on spiking neural networks applied to pattern classification](http://arxiv.org/abs/2105.14753v1)
+- **作者:** Amélie Gruel, Jean Martinet
+- **研究目的:** 探索如何将视觉注意力和显著性检测适应于事件相机（硅视网膜）的输出，并利用脉冲神经网络（SNNs）进行高效的事件模式处理和分类。
+- **主要发现:** 该研究引入了一种基于生物学的低级计算注意力机制，并将其应用于SNNs进行事件视频分类，取得了有前景的初步结果，表明SNNs是处理硅视网膜数据的合适选择。
+
+---
+
+### [Superevents: Towards Native Semantic Segmentation for Event-based Cameras](http://arxiv.org/abs/2105.06091v1)
+- **作者:** Weng Fei Low, Ankit Sonthalia, Zhi Gao, André van Schaik, Bharath Ramesh
+- **研究目的:** 引入“超事件”（superevents）作为事件流中感知一致的局部单元，旨在为事件相机提供中间层表示，从而改善语义分割等下游视觉任务。
+- **主要发现:** 所提出的方法通过生命周期增强和全卷积网络提取超事件，在基准数据集的多个序列上显示出对事件基语义分割和其他应用的巨大潜力。
+
+---
+
+### [Instantaneous Stereo Depth Estimation of Real-World Stimuli with a Neuromorphic Stereo-Vision Setup](http://arxiv.org/abs/2104.02541v1)
+- **作者:** Nicoletta Risi, Enrico Calabrese, Giacomo Indiveri
+- **研究目的:** 使用真实世界数据验证在混合信号神经形态处理器上实现的脑启发式事件基立体匹配架构，以实现实时深度估计。
+- **主要发现:** 该SNN架构由符合检测器和视差敏感神经元组成，能够实时提供输入视差的粗略估计，从而即时检测真实世界刺激在深度方向上的移动。
+
+---
+
+### [Fusion-FlowNet: Energy-Efficient Optical Flow Estimation using Sensor Fusion and Deep Fused Spiking-Analog Network Architectures](http://arxiv.org/abs/2103.10592v1)
+- **作者:** Chankyu Lee, Adarsh Kumar Kosta, Kaushik Roy
+- **研究目的:** 提出Fusion-FlowNet，一个传感器融合框架，结合帧基和事件基传感器以及深度融合的脉冲-模拟神经网络（SNN-ANN）架构，用于能量高效的光流估计。
+- **主要发现:** Fusion-FlowNet通过无监督学习在MVSEC数据集上实现了最先进的光流预测，利用了传感器的互补特性，并在网络参数数量和计算能耗方面显著节省。
+
+---
+### [Event-based Synthetic Aperture Imaging with a Hybrid Network](http://arxiv.org/abs/2103.02376v3)
+- **作者:** Xiang Zhang, Wei Liao, Lei Yu, Wen Yang, Gui-Song Xia
+- **研究目的:** 提出一种基于事件相机和混合网络的合成孔径成像 (SAI) 系统，以克服传统帧相机在密集遮挡和极端光照条件下的性能退化问题。
+- **主要发现:** 该方法利用纯事件数据和混合SNN-CNN网络，在处理密集遮挡和极端光照条件方面表现出色，能够重建高质量的视觉图像。
+
+---
+
+### [Learning Monocular Dense Depth from Events](http://arxiv.org/abs/2010.08350v2)
+- **作者:** Javier Hidalgo-Carrió, Daniel Gehrig, Davide Scaramuzza
+- **研究目的:** 提出一种循环架构，利用事件流的时间一致性，从单目事件数据中学习密集的深度预测。
+- **主要发现:** 该循环架构相对于现有基于事件的前馈方法，在平均深度误差上实现了高达50%的显著改进，并首次实现了单目事件设置下的密集深度预测。
+
+---
+
+### [Real-Time Face & Eye Tracking and Blink Detection using Event Cameras](http://arxiv.org/abs/2010.08278v1)
+- **作者:** Cian Ryan, Brian O Sullivan, Amr Elrasad, Joe Lemley, Paul Kielty, Christoph Posch, Etienne Perot
+- **研究目的:** 提出一种利用事件相机进行实时人脸和眼睛跟踪以及眨眼检测的新方法，特别适用于驾驶员监控系统。
+- **主要发现:** 该方法成功实现了人脸和眼睛的同步检测与跟踪，并利用事件相机的高时间分辨率检测和分析眨眼行为，为驾驶员疲劳度提供了更深入的洞察。
+
+---
+
+### [Learning to Detect Objects with a 1 Megapixel Event Camera](http://arxiv.org/abs/2009.13436v2)
+- **作者:** Etienne Perot, Pierre de Tournemire, Davide Nitti, Jonathan Masci, Amos Sironi
+- **研究目的:** 解决事件相机在目标检测任务中空间分辨率较低、缺乏大规模训练数据集以及缺乏成熟深度学习架构的问题。
+- **主要发现:** 作者发布了首个高分辨率大规模事件目标检测数据集，并引入了一种新颖的循环架构和时间一致性损失，通过直接从原始事件数据训练，实现了与帧相机检测器相当的性能。
+
+---
+
+### [Real-time Classification from Short Event-Camera Streams using Input-filtering Neural ODEs](http://arxiv.org/abs/2004.03156v1)
+- **作者:** Giorgio Giannone, Asha Anoosheh, Alessio Quaglino, Pierluca D'Oro, Marco Gallieri, Jonathan Masci
+- **研究目的:** 提出一种新颖的异步RNN类架构——输入滤波神经ODE (INODE)，用于直接从短事件相机流进行实时分类，无需大量预处理。
+- **主要发现:** INODE能够自然处理时间戳不规则的事件序列，在ASL任务上显著优于LSTM基线，在NCALTECH任务上与更大的LSTM相当，并且在事件数量很少时也能保持准确性。
+
+---
+
+### [Exploration of Reinforcement Learning for Event Camera using Car-like Robots](http://arxiv.org/abs/2004.00801v1)
+- **作者:** Riku Arakawa, Shintaro Shiba
+- **研究目的:** 首次将强化学习应用于配备事件相机的机器人，利用事件相机极低的延迟实现更快的机器人控制。
+- **主要发现:** 研究成功地在模拟器中训练了用于快速避障和障碍物跟踪的智能体，并将其迁移到真实机器人上，实现了对随机抛掷物体的快速避让。
+
+---
+
+### [Learning to Exploit Multiple Vision Modalities by Using Grafted Networks](http://arxiv.org/abs/2003.10959v3)
+- **作者:** Yuhuang Hu, Tobi Delbruck, Shih-Chii Liu
+- **研究目的:** 提出一种网络嫁接算法 (NGA)，使新型视觉传感器能够利用预训练的深度网络处理非常规视觉输入，以解决缺乏大规模标注训练数据集的问题。
+- **主要发现:** NGA成功地将预训练深度网络的前端替换为由非常规输入驱动的前端，在热成像和事件相机数据集上的目标检测任务中达到了与预训练网络相当的平均精度，并显著降低了训练成本和时间。
+
+---
+
+### [Event-based Asynchronous Sparse Convolutional Networks](http://arxiv.org/abs/2003.09148v2)
+- **作者:** Nico Messikommer, Daniel Gehrig, Antonio Loquercio, Davide Scaramuzza
+- **研究目的:** 提出一个通用框架，将基于同步图像的事件表示训练的模型转换为异步模型，直接利用事件数据的固有异步和稀疏特性，以降低计算复杂度和延迟。
+- **主要发现:** 该框架显著降低了高容量神经网络的计算复杂度和延迟（高达20倍），同时在预测精度上比现有异步方法高出24%，且不牺牲准确性。
+
+---
+
+### [Spike-FlowNet: Event-based Optical Flow Estimation with Energy-Efficient Hybrid Neural Networks](http://arxiv.org/abs/2003.06696v3)
+- **作者:** Chankyu Lee, Adarsh Kumar Kosta, Alex Zihao Zhu, Kenneth Chaney, Kostas Daniilidis, Kaushik Roy
+- **研究目的:** 提出Spike-FlowNet，一种集成SNN和ANN的深度混合神经网络架构，用于从稀疏事件相机输出中高效估计光流。
+- **主要发现:** Spike-FlowNet在光流预测能力上优于其对应的ANN方法，同时提供了显著的计算效率，解决了深度SNN处理异步事件数据的挑战。
+
+---
+
+### [Event-Based Angular Velocity Regression with Spiking Networks](http://arxiv.org/abs/2003.02790v1)
+- **作者:** Mathias Gehrig, Sumit Bam Shrestha, Daniel Mouritzen, Davide Scaramuzza
+- **研究目的:** 首次研究使用脉冲神经网络 (SNN) 直接从事件相机的不规则、异步事件输入中预测旋转事件相机的3自由度角速度这一时间回归问题。
+- **主要发现:** 该研究成功地在合成事件相机数据集上训练了SNN来执行角速度回归，证明了SNN从原始事件数据进行连续数值预测的能力，并利用了事件相机相比传统相机的优势。
+
+---
+
+### [Matching Neuromorphic Events and Color Images via Adversarial Learning](http://arxiv.org/abs/2003.00636v1)
+- **作者:** Fang Xu, Shijie Lin, Wen Yang, Lei Yu, Dengxin Dai, Gui-song Xia
+- **研究目的:** 通过提出事件图像检索 (EBIR) 问题和基于对抗学习的神经形态事件-彩色图像特征学习 (ECFL) 方法，解决神经形态事件与彩色图像之间的跨模态匹配挑战。
+- **主要发现:** 所提出的ECFL方法通过对抗学习将事件和图像建模到共同的嵌入空间中，有效地学习了模态不变的表示，并在新贡献的N-UKbench和EC180数据集上超越了现有方法。
+
+---
+
+### [Inceptive Event Time-Surfaces for Object Classification Using Neuromorphic Cameras](http://arxiv.org/abs/2002.11656v1)
+- **作者:** R Wes Baldwin, Mohammed Almatrafi, Jason R Kaufman, Vijayan Asari, Keigo Hirakawa
+- **研究目的:** 提出一种名为“初始事件时间曲面 (IETS)”的新型低级降维方法融合，用于神经形态相机数据中的高级对象分类。
+- **主要发现:** IETS通过增强对噪声的鲁棒性、促进空间一致性以及改进（移动）边缘的时间定位，克服了传统时间曲面的局限性，结合迁移学习后在事件相机目标分类问题上达到了最先进的性能。
+
+---
+
+### [A Large Scale Event-based Detection Dataset for Automotive](http://arxiv.org/abs/2001.08499v3)
+- **作者:** Pierre de Tournemire, Davide Nitti, Etienne Perot, Davide Migliore, Amos Sironi
+- **研究目的:** 引入首个用于汽车领域的大规模事件相机检测数据集，旨在推动事件视觉任务的重大进展。
+- **主要发现:** 该数据集包含超过39小时的ATIS传感器汽车记录，以及超过255,000个手动标注的汽车和行人边界框，有望显著促进事件目标检测、分类以及其他相关视觉任务的发展。
+
+---
+
+### [Exploiting Event Cameras for Spatio-Temporal Prediction of Fast-Changing Trajectories](http://arxiv.org/abs/2001.01248v2)
+- **作者:** Marco Monforte, Ander Arriandiaga, Arren Glover, Chiara Bartolozzi
+- **研究目的:** 探究如何将长短期记忆 (LSTM) 模型应用于事件相机数据，以改进机器人与快速移动目标交互时的时空轨迹预测。
+- **主要发现:** 该研究证明了使用异步采样的事件相机数据结合LSTM模型在预测快速变化的非线性轨迹方面的优势，这对于基于回归的方法而言具有挑战性。
+
+---
+
+### [EvAn: Neuromorphic Event-based Anomaly Detection](http://arxiv.org/abs/1911.09722v2)
+- **作者:** Lakshmi Annamalai, Anirban Chakraborty, Chetan Singh Thakur
+- **研究目的:** 利用事件相机的优势，通过双判别器条件生成对抗网络 (cGAN) 在事件域中建模运动动态，以实现视频异常检测。
+- **主要发现:** 所提出的EvAn方法，利用新颖的事件数据表示和cGAN，在计算复杂度上相比传统异常检测网络大幅降低，并在新提供的异常检测事件数据集上有效检测异常。
+
+---
+
+### [Event-based Vision: A Survey](http://arxiv.org/abs/1904.08405v3)
+- **作者:** Guillermo Gallego, Tobi Delbruck, Garrick Orchard, Chiara Bartolozzi, Brian Taba, Andrea Censi, Stefan Leutenegger, Andrew Davison, Joerg Conradt, Kostas Daniilidis, Davide Scaramuzza
+- **研究目的:** 全面概述事件视觉这一新兴领域，重点关注为发挥事件相机卓越特性而开发的应用和算法。
+- **主要发现:** 该综述详细介绍了事件相机的工作原理、可用传感器及其在从低级到高级视觉任务中的应用，讨论了包括学习方法和专用处理器在内的事件处理技术，并指出了未来的挑战和机遇。
+
+---
+
+### [Focus Is All You Need: Loss Functions For Event-based Vision](http://arxiv.org/abs/1904.07235v1)
+- **作者:** Guillermo Gallego, Mathias Gehrig, Davide Scaramuzza
+- **研究目的:** 提出并分类了二十二种客观函数，称为“焦点损失函数”，用于分析事件相机运动补偿方法中的事件对齐。
+- **主要发现:** 研究表明方差、梯度和拉普拉斯幅度是表现最佳的损失函数之一，并在旋转运动、深度和光流估计等多个任务中展示了其适用性，从而释放了事件相机的卓越性能。
+
+---
+
+### [Modeling Point Clouds with Self-Attention and Gumbel Subset Sampling](http://arxiv.org/abs/1904.03375v1)
+- **作者:** Jiancheng Yang, Qiang Zhang, Bingbing Ni, Linguo Li, Jinxian Liu, Mengdie Zhou, Qi Tian
+- **研究目的:** 引入点注意力变换器 (PATs) 并提出Gumbel子集采样 (GSS) 作为一种端到端可学习且任务无关的采样操作，用于处理点云数据。
+- **主要发现:** PATs展现了置换等变性和效率，GSS则能选择代表性子集，从而以更低的计算成本学习更强的输入集表示，并在DVS128手势数据集上通过将事件相机流作为点云处理，达到了最先进的性能。
+
+---
+
+### [EventNet: Asynchronous Recursive Event Processing](http://arxiv.org/abs/1812.07045v2)
+- **作者:** Yusuke Sekikawa, Kosuke Hara, Hideo Saito
+- **研究目的:** 提出EventNet，一种为实时、递归和事件级处理异步事件流而设计的神经网络，以利用事件相机稀疏且非冗余的数据表示。
+- **主要发现:** EventNet通过使用新颖的时间编码方案递归建模对因果事件的依赖性，以极少的乘加操作实现了实时性能和鲁棒性，使得在标准CPU上每秒处理超过1兆个事件成为可能。
+
+---
+
+### [Event-based Vision meets Deep Learning on Steering Prediction for Self-driving Cars](http://arxiv.org/abs/1804.01310v1)
+- **作者:** Ana I. Maqueda, Antonio Loquercio, Guillermo Gallego, Narciso Garcia, Davide Scaramuzza
+- **研究目的:** 将最先进的卷积架构应用于事件相机输出，以预测自动驾驶汽车的转向角，利用事件相机捕捉场景动态的能力。
+- **主要发现:** 该方法在传统相机失效的挑战性条件下也能实现鲁棒的转向预测，性能优于基于标准相机的最先进算法，并突出了从传统视觉到事件视觉进行迁移学习的优势。
+
+---
+
+### [NullHop: A Flexible Convolutional Neural Network Accelerator Based on Sparse Representations of Feature Maps](http://arxiv.org/abs/1706.01406v2)
+- **作者:** Alessandro Aimar, Hesham Mostafa, Enrico Calabrese, Antonio Rios-Navarro, Iulia-Alexandra Lungu, Moritz B. Milde, Federico Corradi, Alejandro Linares-Barranco, Shih-Chii Liu, Tobi Delbruck
+- **研究目的:** 提出NullHop，一种灵活高效的CNN加速器架构，通过利用CNN中神经元激活的稀疏性来加速计算并减少内存需求，适用于低功耗和低延迟应用场景。
+- **主要发现:** NullHop实现了368%的高效率，保持了超过98%的MAC单元利用率，并在6.3mm$^2$的核心面积内实现了超过3TOp/s/W的功率效率，成功处理了VGG19等大型CNN，并与神经形态事件相机进行了实时交互演示。
+
+---
+
+---
+
+## 生成说明
+- 本报告由AI模型自动生成
+- 每篇论文的总结包含研究目的和主要发现
+- 如有错误或遗漏请以原文为准
