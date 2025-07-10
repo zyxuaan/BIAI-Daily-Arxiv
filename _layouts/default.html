@@ -125,15 +125,12 @@
         line-height: 1.6;
       }
       
+      /* 优化搜索和控制条 */
       #controls-container {
         margin-bottom: 25px; 
-        padding: 24px; 
+        padding: 20px; 
         background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         border-radius: 16px; 
-        display: flex; 
-        flex-wrap: wrap; 
-        align-items: center; 
-        gap: 24px;
         border: 1px solid #e2e8f0;
         box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
         position: sticky;
@@ -142,10 +139,46 @@
         backdrop-filter: blur(10px);
       }
       
+      /* 搜索框样式 */
+      .search-container {
+        margin-bottom: 20px;
+      }
+      
+      .search-container input {
+        width: 100%;
+        padding: 14px 20px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 400;
+        background-color: #fff;
+        transition: all 0.2s ease;
+        font-family: inherit;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      }
+      
+      .search-container input:focus {
+        outline: none;
+        border-color: #3182ce;
+        box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+      }
+      
+      .search-container input::placeholder {
+        color: #a0aec0;
+      }
+      
+      /* 排序控制行 */
+      .sort-controls {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      
       .control-group { 
         display: flex; 
         align-items: center; 
-        gap: 12px;
+        gap: 8px;
       }
       
       .control-group label { 
@@ -156,8 +189,8 @@
         letter-spacing: 0.025em;
       }
       
-      .control-group select, .control-group input {
-        padding: 12px 16px; 
+      .control-group select {
+        padding: 8px 12px; 
         border: 2px solid #e2e8f0; 
         border-radius: 8px;
         font-size: 0.875rem; 
@@ -165,21 +198,16 @@
         background-color: #fff;
         transition: all 0.2s ease;
         font-family: inherit;
+        min-width: 100px;
       }
       
-      .control-group select:focus, .control-group input:focus {
+      .control-group select:focus {
         outline: none;
         border-color: #3182ce;
         box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
       }
       
-      #search-input { 
-        width: 300px; 
-        font-family: inherit;
-        font-size: 0.875rem;
-        placeholder-color: #a0aec0;
-      }
-      
+      /* 论文卡片样式 */
       .paper-wrapper { 
         margin-bottom: 2rem; 
         padding: 2rem;
@@ -188,6 +216,7 @@
         border: 1px solid #e2e8f0;
         box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
         transition: all 0.3s ease;
+        position: relative;
       }
       
       .paper-wrapper:hover {
@@ -199,6 +228,20 @@
         display: none; 
       }
       
+      /* 动态序号样式 */
+      .paper-number {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
       .paper-wrapper h3 {
         margin-top: 0;
         color: #1a202c;
@@ -208,6 +251,7 @@
         font-size: 1.375rem;
         font-weight: 600;
         line-height: 1.3;
+        padding-right: 5rem; /* 为序号留出空间 */
       }
       
       .paper-wrapper h3 a {
@@ -291,18 +335,17 @@
         }
         
         #controls-container {
+          padding: 16px;
+        }
+        
+        .sort-controls {
           flex-direction: column;
+          gap: 16px;
           align-items: stretch;
-          position: relative;
-          padding: 20px;
         }
         
         .control-group {
           justify-content: space-between;
-        }
-        
-        #search-input {
-          width: 100%;
         }
         
         .paper-wrapper {
@@ -311,6 +354,14 @@
         
         .paper-wrapper h3 {
           font-size: 1.25rem;
+          padding-right: 4rem;
+        }
+        
+        .paper-number {
+          top: 0.75rem;
+          right: 0.75rem;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
         }
         
         h1 { font-size: 2rem; }
@@ -339,6 +390,14 @@
         
         .paper-wrapper h3 {
           font-size: 1.125rem;
+          padding-right: 3.5rem;
+        }
+        
+        .paper-number {
+          top: 0.5rem;
+          right: 0.5rem;
+          padding: 0.3rem 0.6rem;
+          font-size: 0.7rem;
         }
       }
     </style>
@@ -356,24 +415,28 @@
 
     <main id="content" class="main-content" role="main">
       <div id="controls-container">
-        <div class="control-group">
+        <!-- 搜索框 -->
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="🔍 按关键词搜索标题、作者、摘要...">
+        </div>
+        
+        <!-- 排序控制 -->
+        <div class="sort-controls">
+          <div class="control-group">
             <label for="sort-by">排序方式:</label>
             <select id="sort-by">
               <option value="date" selected>发布日期</option>
               <option value="relevance">相关度</option>
               <option value="title">标题</option>
             </select>
-        </div>
-        <div class="control-group">
+          </div>
+          <div class="control-group">
             <label for="sort-order">排序顺序:</label>
             <select id="sort-order">
               <option value="desc" selected>降序</option>
               <option value="asc">升序</option>
             </select>
-        </div>
-        <div class="control-group">
-            <label for="search-input">搜索:</label>
-            <input type="text" id="search-input" placeholder="按关键词搜索标题、作者、摘要...">
+          </div>
         </div>
       </div>
       
@@ -416,7 +479,8 @@
                     if (h3Elements.length === 0) {
                         console.log('分割原始内容...');
                         const contentHtml = papersContainer.innerHTML;
-                        const paperSections = contentHtml.split(/(?=###\s)/g).filter(s => s.trim());
+                        // 使用更灵活的正则表达式来分割内容
+                        const paperSections = contentHtml.split(/(?=###\s*(?:\d+\.\s*)?)/g).filter(s => s.trim());
                         
                         papersContainer.innerHTML = '';
                         
@@ -451,7 +515,11 @@
                 
                 const parsedPapers = wrappers.map((wrapper, index) => {
                     const titleEl = wrapper.querySelector('h3');
-                    const titleText = titleEl ? titleEl.textContent.trim() : '论文 ' + (index + 1);
+                    let titleText = titleEl ? titleEl.textContent.trim() : '论文 ' + (index + 1);
+                    
+                    // 移除标题中的序号（如果存在）
+                    titleText = titleText.replace(/^\d+\.\s*/, '');
+                    
                     const fullText = wrapper.textContent.toLowerCase();
                     
                     let date = '1970-01-01';
@@ -480,6 +548,32 @@
                 return parsedPapers;
             }
 
+            function updatePaperNumbers() {
+                // 更新可见论文的序号
+                const visiblePapers = papersData.filter(paper => !paper.element.classList.contains('hidden'));
+                
+                visiblePapers.forEach((paper, index) => {
+                    // 移除旧的序号元素
+                    const oldNumber = paper.element.querySelector('.paper-number');
+                    if (oldNumber) {
+                        oldNumber.remove();
+                    }
+                    
+                    // 添加新的序号元素
+                    const numberEl = document.createElement('div');
+                    numberEl.className = 'paper-number';
+                    numberEl.textContent = index + 1;
+                    paper.element.appendChild(numberEl);
+                    
+                    // 更新标题中的序号（如果标题是H3）
+                    const titleEl = paper.element.querySelector('h3');
+                    if (titleEl) {
+                        // 移除旧的序号
+                        titleEl.innerHTML = titleEl.innerHTML.replace(/^\d+\.\s*/, '');
+                    }
+                });
+            }
+
             function updateDisplay() {
                 const query = searchInput.value.toLowerCase().trim();
                 const sortBy = sortBySelect.value;
@@ -489,7 +583,7 @@
 
                 papersData.forEach(paper => {
                     let isVisible = true;
-                    
+
                     if (query !== '') {
                         const keywords = query.split(/\s+/).filter(k => k.length > 0);
                         isVisible = keywords.every(keyword => paper.fullText.includes(keyword));
@@ -546,6 +640,9 @@
                 visiblePapers.forEach(paper => {
                     papersContainer.appendChild(paper.element);
                 });
+                
+                // 更新序号
+                updatePaperNumbers();
                 
                 console.log('显示 ' + visibleCount + ' 篇论文，排序: ' + sortBy + ' (' + sortOrder + ')');
             }
