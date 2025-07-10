@@ -7,82 +7,192 @@
     {% seo %}
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="icon" href="{{ '/img/paper.png' | relative_url }}" type="image/png" />
-    <link rel="preload" href="https://fonts.googleapis.com/css?family=Vollkorn:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <!-- 优化字体加载 -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" as="style" type="text/css" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <style>
+      /* 基础字体设置 - 优化中英文混排 */
       body { 
-        font-family: "Vollkorn", serif; 
-        line-height: 1.6;
+        font-family: 
+          "Inter", 
+          "Noto Sans SC", 
+          -apple-system, 
+          BlinkMacSystemFont, 
+          "Segoe UI", 
+          "PingFang SC", 
+          "Hiragino Sans GB", 
+          "Microsoft YaHei UI", 
+          "Microsoft YaHei", 
+          "Helvetica Neue", 
+          Arial, 
+          sans-serif;
+        font-size: 16px;
+        line-height: 1.7;
+        font-weight: 400;
+        color: #2c3e50;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
       }
+      
+      /* 标题字体层级 */
       h1, h2, h3, h4, h5, h6 { 
-        font-family: "Vollkorn", serif; 
-        margin: 1em 0 0.5em 0;
+        font-family: 
+          "Inter", 
+          "Noto Sans SC", 
+          -apple-system, 
+          BlinkMacSystemFont, 
+          "Segoe UI", 
+          "PingFang SC", 
+          "Hiragino Sans GB", 
+          "Microsoft YaHei UI", 
+          "Microsoft YaHei", 
+          "Helvetica Neue", 
+          Arial, 
+          sans-serif;
+        font-weight: 600;
+        line-height: 1.4;
+        margin: 1.5em 0 0.8em 0;
+        color: #1a202c;
+        letter-spacing: -0.025em;
+      }
+      
+      h1 { font-size: 2.25rem; font-weight: 700; }
+      h2 { font-size: 1.875rem; font-weight: 600; }
+      h3 { font-size: 1.5rem; font-weight: 600; }
+      h4 { font-size: 1.25rem; font-weight: 500; }
+      h5 { font-size: 1.125rem; font-weight: 500; }
+      h6 { font-size: 1rem; font-weight: 500; }
+      
+      /* 页面头部字体 */
+      .page-header .project-name {
+        font-size: 3rem;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      }
+      
+      .page-header .project-tagline {
+        font-size: 1.25rem;
+        font-weight: 400;
+        opacity: 0.9;
+        letter-spacing: 0.025em;
+      }
+      
+      /* 段落和文本优化 */
+      p {
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 1.25rem;
+        color: #4a5568;
+      }
+      
+      /* 强调文本 */
+      strong, b {
+        font-weight: 600;
+        color: #2d3748;
+      }
+      
+      /* 链接样式 */
+      a {
+        color: #3182ce;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+      
+      a:hover {
+        color: #2c5282;
+        text-decoration: underline;
+      }
+      
+      /* 代码字体 */
+      code, pre {
+        font-family: 
+          "JetBrains Mono", 
+          "Fira Code", 
+          "SF Mono", 
+          Monaco, 
+          "Cascadia Code", 
+          "Roboto Mono", 
+          Consolas, 
+          "Courier New", 
+          monospace;
+        font-size: 0.875rem;
+        line-height: 1.6;
       }
       
       #controls-container {
         margin-bottom: 25px; 
-        padding: 20px; 
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border-radius: 12px; 
+        padding: 24px; 
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        border-radius: 16px; 
         display: flex; 
         flex-wrap: wrap; 
         align-items: center; 
-        gap: 20px;
-        border: 1px solid #dee2e6;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        gap: 24px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
         position: sticky;
         top: 0;
         z-index: 100;
+        backdrop-filter: blur(10px);
       }
       
       .control-group { 
         display: flex; 
         align-items: center; 
-        gap: 8px;
+        gap: 12px;
       }
       
       .control-group label { 
-        font-weight: bold; 
-        font-size: 0.9em; 
-        color: #495057;
+        font-weight: 500; 
+        font-size: 0.875rem; 
+        color: #4a5568;
         min-width: 70px;
+        letter-spacing: 0.025em;
       }
       
       .control-group select, .control-group input {
-        padding: 10px 14px; 
-        border: 2px solid #ced4da; 
-        border-radius: 6px;
-        font-size: 0.9em; 
+        padding: 12px 16px; 
+        border: 2px solid #e2e8f0; 
+        border-radius: 8px;
+        font-size: 0.875rem; 
+        font-weight: 400;
         background-color: #fff;
-        transition: border-color 0.3s, box-shadow 0.3s;
+        transition: all 0.2s ease;
+        font-family: inherit;
       }
       
       .control-group select:focus, .control-group input:focus {
         outline: none;
-        border-color: #80bdff;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        border-color: #3182ce;
+        box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
       }
       
       #search-input { 
         width: 300px; 
         font-family: inherit;
+        font-size: 0.875rem;
+        placeholder-color: #a0aec0;
       }
       
       .paper-wrapper { 
         margin-bottom: 2rem; 
-        padding: 1.5rem;
+        padding: 2rem;
         background: #fff;
-        border-radius: 8px;
-        border: 1px solid #e9ecef;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        transition: box-shadow 0.3s ease;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
+        transition: all 0.3s ease;
       }
       
       .paper-wrapper:hover {
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        transform: translateY(-1px);
       }
       
       .paper-wrapper.hidden { 
@@ -91,38 +201,52 @@
       
       .paper-wrapper h3 {
         margin-top: 0;
-        color: #2c3e50;
-        border-bottom: 2px solid #ecf0f1;
-        padding-bottom: 0.5rem;
-        margin-bottom: 1rem;
+        color: #1a202c;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 0.75rem;
+        margin-bottom: 1.5rem;
+        font-size: 1.375rem;
+        font-weight: 600;
+        line-height: 1.3;
       }
       
       .paper-wrapper h3 a {
-        color: #3498db;
+        color: #2b6cb0;
         text-decoration: none;
-        transition: color 0.3s ease;
+        transition: color 0.2s ease;
       }
       
       .paper-wrapper h3 a:hover {
-        color: #2980b9;
+        color: #2c5282;
         text-decoration: underline;
       }
       
+      .paper-wrapper p {
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 1.25rem;
+        color: #4a5568;
+      }
+      
       .paper-wrapper p strong {
-        color: #7f8c8d;
-        font-size: 0.9em;
+        color: #2d3748;
+        font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: 0.025em;
       }
       
       .paper-wrapper ul {
         list-style-type: none;
         padding-left: 0;
-        margin: 1rem 0;
+        margin: 1.5rem 0;
       }
       
       .paper-wrapper li {
-        margin: 0.8rem 0;
-        padding: 0.5rem 0;
-        border-bottom: 1px solid #f1f2f6;
+        margin: 1rem 0;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 0.95rem;
+        line-height: 1.7;
       }
       
       .paper-wrapper li:last-child {
@@ -130,24 +254,47 @@
       }
       
       .paper-wrapper li strong {
-        color: #34495e;
+        color: #2d3748;
         margin-right: 0.5rem;
+        font-weight: 600;
+        font-size: 0.875rem;
       }
       
       .no-results {
         text-align: center;
         padding: 3rem;
-        color: #6c757d;
-        background: #f8f9fa;
-        border-radius: 8px;
+        color: #718096;
+        background: #f7fafc;
+        border-radius: 12px;
         margin: 2rem 0;
+        font-size: 1rem;
       }
       
+      .no-results h3 {
+        color: #4a5568;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      
+      /* 移动端优化 */
       @media (max-width: 768px) {
+        body {
+          font-size: 15px;
+        }
+        
+        .page-header .project-name {
+          font-size: 2.25rem;
+        }
+        
+        .page-header .project-tagline {
+          font-size: 1.125rem;
+        }
+        
         #controls-container {
           flex-direction: column;
           align-items: stretch;
           position: relative;
+          padding: 20px;
         }
         
         .control-group {
@@ -159,7 +306,39 @@
         }
         
         .paper-wrapper {
-          padding: 1rem;
+          padding: 1.5rem;
+        }
+        
+        .paper-wrapper h3 {
+          font-size: 1.25rem;
+        }
+        
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1.75rem; }
+        h3 { font-size: 1.375rem; }
+        h4 { font-size: 1.125rem; }
+      }
+      
+      /* 小屏幕优化 */
+      @media (max-width: 480px) {
+        body {
+          font-size: 14px;
+        }
+        
+        .page-header .project-name {
+          font-size: 2rem;
+        }
+        
+        .page-header .project-tagline {
+          font-size: 1rem;
+        }
+        
+        .paper-wrapper {
+          padding: 1.25rem;
+        }
+        
+        .paper-wrapper h3 {
+          font-size: 1.125rem;
         }
       }
     </style>
