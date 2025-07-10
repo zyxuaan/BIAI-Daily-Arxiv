@@ -19,10 +19,12 @@ SEARCH_CONFIG = {
 # 固定搜索查询 - 领域
 # 针对脑启发AI (Brain Inspired AI) 领域优化的分类
 CATEGORIES = [
-    "cs.NE",    # 神经与演化计算 (核心)
-    "cs.AI",    # 人工智能 (高层概念)
-    "cs.LG",    # 机器学习 (算法验证)
-    "q-bio.NC"  # 神经元与认知 (生物学基础)
+    "cs.NE",
+    "cs.AI",
+    "cs.LG",
+    "cs.CV",
+    "cs.CL",
+    "q-bio.NC"
 ]
 
 # 搜索查询配置，用OR或用AND连接关键词，或者没有关键词也可以留空
