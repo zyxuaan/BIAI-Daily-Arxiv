@@ -549,12 +549,14 @@
             }
 
             function updatePaperNumbers() {
-                // 更新可见论文的序号
-                const visiblePapers = papersData.filter(paper => !paper.element.classList.contains('hidden'));
+                // 获取当前DOM中实际可见的论文（按显示顺序）
+                const visibleWrappers = Array.from(papersContainer.querySelectorAll('.paper-wrapper:not(.hidden)'));
                 
-                visiblePapers.forEach((paper, index) => {
+                console.log(`更新序号：找到 ${visibleWrappers.length} 个可见论文`);
+                
+                visibleWrappers.forEach((wrapper, index) => {
                     // 移除旧的序号元素
-                    const oldNumber = paper.element.querySelector('.paper-number');
+                    const oldNumber = wrapper.querySelector('.paper-number');
                     if (oldNumber) {
                         oldNumber.remove();
                     }
@@ -563,13 +565,17 @@
                     const numberEl = document.createElement('div');
                     numberEl.className = 'paper-number';
                     numberEl.textContent = index + 1;
-                    paper.element.appendChild(numberEl);
+                    wrapper.appendChild(numberEl);
                     
-                    // 更新标题中的序号（如果标题是H3）
-                    const titleEl = paper.element.querySelector('h3');
-                    if (titleEl) {
-                        // 移除旧的序号
-                        titleEl.innerHTML = titleEl.innerHTML.replace(/^\d+\.\s*/, '');
+                    console.log(`论文 ${index + 1}: ${wrapper.querySelector('h3')?.textContent?.slice(0, 30) || '未知标题'}...`);
+                });
+                
+                // 同时清理所有隐藏论文的序号
+                const hiddenWrappers = Array.from(papersContainer.querySelectorAll('.paper-wrapper.hidden'));
+                hiddenWrappers.forEach(wrapper => {
+                    const oldNumber = wrapper.querySelector('.paper-number');
+                    if (oldNumber) {
+                        oldNumber.remove();
                     }
                 });
             }
@@ -581,6 +587,7 @@
 
                 let visibleCount = 0;
 
+                // 第一步：设置可见性和相关度
                 papersData.forEach(paper => {
                     let isVisible = true;
 
@@ -603,10 +610,12 @@
                     if (isVisible) visibleCount++;
                 });
 
+                // 第二步：显示无结果提示
                 if (noResultsDiv) {
                     noResultsDiv.style.display = visibleCount === 0 && query !== '' ? 'block' : 'none';
                 }
 
+                // 第三步：排序可见论文
                 const visiblePapers = papersData.filter(p => !p.element.classList.contains('hidden'));
                 
                 visiblePapers.sort((a, b) => {
@@ -637,12 +646,16 @@
                     return 0;
                 });
                 
+                // 第四步：重新排列DOM
                 visiblePapers.forEach(paper => {
                     papersContainer.appendChild(paper.element);
                 });
                 
-                // 更新序号
-                updatePaperNumbers();
+                // 第五步：强制重新渲染后更新序号
+                // 使用 requestAnimationFrame 确保DOM更新完成
+                requestAnimationFrame(() => {
+                    updatePaperNumbers();
+                });
                 
                 console.log('显示 ' + visibleCount + ' 篇论文，排序: ' + sortBy + ' (' + sortOrder + ')');
             }
