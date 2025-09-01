@@ -29,7 +29,7 @@ CATEGORIES = [
 
 # 搜索查询配置，用OR或用AND连接关键词，或者没有关键词也可以留空
 # 最终确定的关键词组合
-QUERY = "Biologically Plausible" OR "Spiking Neural Networks" OR SNN OR "Neuromorphic Computing" OR "Brain Inspired" OR "Event Camera"
+QUERY = "Biologically OR Spiking OR SNN OR Neuromorphic OR Event"
 
 # 语言模型API配置
 LLM_CONFIG = {
